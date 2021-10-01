@@ -29,7 +29,7 @@
             id="email"
             value="{{ old('email') }}"
             name="email"
-            class="txt txt-l @error('name') is-invalid @enderror"
+            class="txt txt-l @error('email') is-invalid @enderror"
             placeholder="ایمیل *"
             required
         >
@@ -44,7 +44,7 @@
             id="mobile"
             name="mobile"
             value="{{ old('mobile') }}"
-            class="txt txt-l"
+            class="txt txt-l @error('mobile') is-invalid @enderror"
             placeholder="شماره موبایل"
         >
         @error('mobile')
