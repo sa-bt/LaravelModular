@@ -1,28 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
-            </div>
+    <form action="" class="form" method="post">
+        <a class="account-logo" href="index.html">
+            <img src="img/weblogo.png" alt="">
+        </a>
+        <div class="card-header">
+            <p class="activation-code-title">کد فرستاده شده به ایمیل  <span>Mohammadniko3@gmail.com</span>
+                را وارد کنید . ممکن است ایمیل به پوشه spam فرستاده شده باشد
+            </p>
         </div>
-    </div>
-</div>
-@endsection
+        <div class="form-content form-content1">
+            <input class="activation-code-input" placeholder="فعال سازی">
+            <br>
+            <button class="btn i-t">تایید</button>
+
+        </div>
+        <div class="form-footer">
+            <a href="login.html">صفحه ثبت نام</a>
+        </div>
+    </form>@endsection
