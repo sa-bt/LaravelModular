@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('User::master')
 
 @section('content')
 <form action="{{route('register')}}" class="form" method="post">

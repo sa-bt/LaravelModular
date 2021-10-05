@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('User::master')
 
 @section('content')
     <form action="{{route('verification.resend')}}" class="form" method="post">
