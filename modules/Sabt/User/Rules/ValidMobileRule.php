@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace Sabt\User\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 

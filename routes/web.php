@@ -13,15 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function ()
-{
-    return  \App\Models\User::find(1)->sendEmailVerificationNotification();
-});
+
 Route::get('/', function ()
 {
     return view('index');
 });
 
-Auth::routes(['verify' => true]);
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
