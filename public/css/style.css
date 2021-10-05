@@ -3675,3 +3675,9 @@ textarea {
  } .mrt-170{
      margin-top:170px;
  }
+.invalid-feedback{
+ color: red;
+}
+.is-invalid{
+    border: 1px solid red;
+}

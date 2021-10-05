@@ -58,7 +58,7 @@
             id="password"
             name="password"
             autocomplete="new-password"
-            class="txt txt-l"
+            class="txt txt-l @error('password') is-invalid @enderror"
             placeholder="رمز عبور *"
         >
         @error('password')
@@ -73,10 +73,10 @@
             name="password_confirmation"
             required
             autocomplete="new-password"
-            class="txt txt-l"
+            class="txt txt-l @error('password_confirmation') is-invalid @enderror"
             placeholder="تایید رمز عبور *"
         >
-        <span class="rules">رمز عبور باید حداقل ۶ کاراکتر و ترکیبی از حروف بزرگ، حروف کوچک، اعداد و کاراکترهای غیر الفبا مانند !@#$%^&*() باشد.</span>
+        <span class="rules">رمز عبور باید حداقل 8 کاراکتر و ترکیبی از حروف بزرگ، حروف کوچک، اعداد و کاراکترهای غیر الفبا مانند !@#$%^&*() باشد.</span>
 
 
         <br>
@@ -84,7 +84,7 @@
 
     </div>
     <div class="form-footer">
-        <a href="login.html">صفحه ورود</a>
+        <a href="{{route('login')}}">صفحه ورود</a>
     </div>
 </form>
 @endsection

@@ -7,6 +7,11 @@
             <img src="/img/weblogo.png" alt="">
         </a>
         <div class="form-content form-account">
+            @if(session('status'))
+                <div class="alert alert-success">
+                   {{session('status')}}
+                </div>
+            @endif
             <input type="text"
                    class="txt-l txt @error('email') is-invalid @enderror"
                    placeholder="ایمیل"
@@ -15,6 +20,12 @@
                    required
                    autocomplete="email"
                    autofocus>
+
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
             <br>
             <button class="btn btn-recoverpass" type="submit">بازیابی</button>
         </div>
