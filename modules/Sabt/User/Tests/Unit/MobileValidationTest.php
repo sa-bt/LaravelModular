@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Sabt\User\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Sabt\User\Rules\ValidMobileRule;
