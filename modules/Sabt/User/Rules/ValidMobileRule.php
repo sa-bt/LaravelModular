@@ -25,7 +25,7 @@ class ValidMobileRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^09[0-9]{9}/',$value);
+        return preg_match('/^09[0-9]{9}$/',$value);
     }
 
     /**

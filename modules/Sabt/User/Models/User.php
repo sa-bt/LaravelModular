@@ -44,8 +44,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-//    protected static function newFactory()
-//    {
-//        return UserFactory::new();
-//    }
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
 }
