@@ -24,8 +24,4 @@ class UserServiceProvider extends ServiceProvider
 
     }
 
-    public function provides()
-    {
-        return [UserFactory::class];
-    }
 }
