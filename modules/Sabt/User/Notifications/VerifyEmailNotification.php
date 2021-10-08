@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Sabt\User\Mail\VerifyCodeMail;
+use Sabt\User\Services\VerifyCodeService;
 
 class VerifyEmailNotification extends Notification
 {
@@ -41,15 +42,10 @@ class VerifyEmailNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $code = random_int(100000, 999999);
-        cache()->set(
-            'verify_code' . $notifiable->id,
-            $code,
-            now()->addHour()
-        );
-        return (new VerifyCodeMail( $code))
-            ->to($notifiable->email)
-            ->subject(env('APP_NAME').'-ایجاد حساب کاربری');
+        $code = VerifyCodeService::generate();
+        VerifyCodeService::store($notifiable->id, $code);
+        return (new VerifyCodeMail($code))
+            ->to($notifiable->email);
     }
 
     /**
