@@ -10,9 +10,18 @@ Route::group([
              ], function ()
 {
     Auth::routes(['verify' => true]);
+    Route::get('/verify_sabt/{user}/', function ()
+    {
+        if (request()->hasValidSignature())
+            return "salaaaaaaaaam";
+
+        return "Nooo";
+    })->name('verify_sabt');
+
     Route::get('/test', function ()
     {
-        return  User::factory(1)->create();
+        $url = \Illuminate\Support\Facades\URL::temporarySignedRoute('verify_sabt', now()->addSeconds(20), ['user' => 2]);
+        dd($url);
     });
 
 });

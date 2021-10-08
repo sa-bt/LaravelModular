@@ -54,7 +54,7 @@ class RegistrationTest extends TestCase
     {
         return $this->post(route('register'), [
             "name"                  => "sabt",
-            "email"                 => "sabt@sabt.com",
+            "email"                 => "testbakhshian@gmail.com",
             "mobile"                => "09169630567",
             "password"              => "q@Q111111",
             "password_confirmation" => "q@Q111111",
