@@ -34,7 +34,7 @@ class ResetPasswordController extends Controller
     {
         $token = $request->route()->parameter('token');
 
-        return view('User::passwords.reset')->with(
+        return view('User::auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
