@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Sabt\User\Http\Controllers\Auth\VerificationController;
 use Sabt\User\Models\User;
 
 Route::group([
@@ -10,6 +11,7 @@ Route::group([
              ], function ()
 {
     Auth::routes(['verify' => true]);
+    Route::post('email/verify',[VerificationController::class,'verify'])->name('verification.verify');
 //    Route::get('/verify_sabt/{user}/', function ()
 //    {
 //        if (request()->hasValidSignature())
