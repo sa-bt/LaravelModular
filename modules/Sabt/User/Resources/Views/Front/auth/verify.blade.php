@@ -24,9 +24,8 @@
                 <br>
                 <button class="btn i-t">تایید</button>
                 <a href="#"
-                    onclick="event.preventDefault();
-                    document.getElementById('resendVerification').submit()
-">ارسال مجدد کد فعال سازی</a>
+                   onclick="event.preventDefault();
+                    document.getElementById('resendVerification').submit()">ارسال مجدد کد فعال سازی</a>
 
             </div>
             <div class="form-footer">

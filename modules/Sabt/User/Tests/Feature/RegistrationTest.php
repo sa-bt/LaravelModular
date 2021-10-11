@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Sabt\User\Models\User;
+use Sabt\User\Services\VerifyCodeService;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -48,6 +49,22 @@ class RegistrationTest extends TestCase
         auth()->user()->markEmailAsVerified();
         $response = $this->get(route('home'));
         $response->assertOk();
+    }
+
+
+    /** @test */
+    public function user_can_verify_account()
+    {
+        $user = User::factory(1)->create()->first();
+        $code=VerifyCodeService::generate();
+        VerifyCodeService::store($user->id,$code);
+        auth()->loginUsingId($user->id);
+        $this->assertAuthenticated();
+        $this->post(route('verification.verify'),[
+            'verify_code'=>$code
+        ]);
+        $this->assertEquals(true,$user->hasVerifiedEmail());
+
     }
 
     public function register()
