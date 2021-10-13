@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Sabt\User\Http\Requests\ChangePasswordRequest;
 
 class ResetPasswordController extends Controller
 {
@@ -32,11 +33,16 @@ class ResetPasswordController extends Controller
 
     public function showResetForm(Request $request)
     {
-        $token = $request->route()->parameter('token');
-
         return view('User::auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
+            ['email' => $request->email]
         );
+    }
+
+    public function reset(ChangePasswordRequest $request)
+    {
+        auth()->user()->password = bcrypt($request->password);
+        auth()->user()->save();
+        return redirect(route('home'));
     }
 
 }

@@ -1,8 +1,7 @@
 @extends('User::auth.master')
 
 @section('content')
-    <form action="{{route('password.email')}}" class="form" method="post">
-        @csrf
+    <form action="{{route('password.sendVerifyCodeEmail')}}" class="form" method="get">
         <a class="account-logo" href="{{route('home')}}">
             <img src="/img/weblogo.png" alt="">
         </a>
@@ -30,7 +29,7 @@
             <button class="btn btn-recoverpass" type="submit">بازیابی</button>
         </div>
         <div class="form-footer">
-            <a href="login.html">صفحه ورود</a>
+            <a href="{{route('login')}}">صفحه ورود</a>
         </div>
     </form>
 @endsection

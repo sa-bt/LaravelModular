@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sabt\User\Tests\Feature;
+namespace Sabt\User\Tests\Unit;
 
 
 use Sabt\User\Services\VerifyCodeService;
@@ -20,7 +20,7 @@ class VerifyCodeServiceTest extends TestCase
     public function test_verify_code_can_store()
     {
         $code = VerifyCodeService::generate();
-        VerifyCodeService::store(1,$code);
+        VerifyCodeService::store(1,$code,120);
 
         $this->assertEquals($code,cache()->get('verify_code_1'));
     }

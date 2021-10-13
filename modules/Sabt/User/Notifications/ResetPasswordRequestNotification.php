@@ -6,14 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Sabt\User\Mail\ResetPasswordRequestMail;
 use Sabt\User\Mail\VerifyCodeMail;
 use Sabt\User\Services\VerifyCodeService;
 
-class VerifyEmailNotification extends Notification
+class ResetPasswordRequestNotification extends Notification
 {
     use Queueable;
-
-    private $time = 60 * 120; # for 2 hours
+    private $time = 120;
 
     public function __construct()
     {
@@ -31,7 +31,7 @@ class VerifyEmailNotification extends Notification
     {
         $code = VerifyCodeService::generate();
         VerifyCodeService::store($notifiable->id, $code, $this->time);
-        return (new VerifyCodeMail($code))
+        return (new ResetPasswordRequestMail($code))
             ->to($notifiable->email);
     }
 

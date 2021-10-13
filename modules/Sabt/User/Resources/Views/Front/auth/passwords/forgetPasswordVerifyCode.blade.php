@@ -3,13 +3,14 @@
 @section('content')
 
     <div class="account act">
-        <form action="{{route('verification.verify')}}" class="form" method="post">
+        <form action="{{route('password.checkVerifyCode')}}" class="form" method="post">
             @csrf
             <a class="account-logo" href="{{route('home')}}">
                 <img src="/img/weblogo.png" alt="">
             </a>
+            <input type="hidden" name="email" value="{{request()->email}}">
             <div class="card-header">
-                <p class="activation-code-title">کد فرستاده شده به ایمیل <span>{{auth()->user()->email}}</span>
+                <p class="activation-code-title">کد فرستاده شده به ایمیل <span>{{request()->email}}</span>
                     را وارد کنید . ممکن است ایمیل به پوشه spam فرستاده شده باشد
                 </p>
             </div>

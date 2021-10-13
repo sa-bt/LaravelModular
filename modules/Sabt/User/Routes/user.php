@@ -28,9 +28,16 @@ Route::group([
 
     // Reset Password
     Route::get('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-//    Route::post('/password/reset', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::get('/password/reset', [ForgotPasswordController::class, 'showVerifyCodeRequestForm'])->name('password.request');
+    Route::get('/password/reset/send', [ForgotPasswordController::class, 'sendVerifyCodeEmail'])->name('password.sendVerifyCodeEmail');
+    Route::post('/password/reset/checkVerifyCode', [ForgotPasswordController::class, 'checkVerifyCode'])
+         ->middleware('throttle:5,1')
+         ->name('password.checkVerifyCode');
+
+    Route::get('/password/change', [ResetPasswordController::class, 'showResetForm'])
+        ->middleware('auth')
+        ->name('password.showResetForm');
+    Route::post('/password/change', [ResetPasswordController::class, 'reset'])->name('password.update');
 
     //Register
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');

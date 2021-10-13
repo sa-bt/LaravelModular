@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Sabt\User\Database\Factories\UserFactory;
+use Sabt\User\Notifications\ResetPasswordRequestNotification;
 use Sabt\User\Notifications\VerifyEmailNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -53,5 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
+    }
+
+    public function sendResetPasswordRequestNotification()
+    {
+        $this->notify(new ResetPasswordRequestNotification());
     }
 }
