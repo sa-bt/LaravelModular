@@ -13,7 +13,7 @@ use Sabt\User\Services\VerifyCodeService;
 class ResetPasswordRequestNotification extends Notification
 {
     use Queueable;
-    private $time = 120;
+    private $time = 3600;
 
     public function __construct()
     {

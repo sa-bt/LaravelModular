@@ -25,6 +25,7 @@
         "psr-4": {
             "App\\": "app/",
             "Sabt\\User\\": "modules/Sabt/User/",
+            "Sabt\\Dashboard\\": "modules/Sabt/Dashboard/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
