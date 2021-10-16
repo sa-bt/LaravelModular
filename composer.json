@@ -26,6 +26,7 @@
             "App\\": "app/",
             "Sabt\\User\\": "modules/Sabt/User/",
             "Sabt\\Dashboard\\": "modules/Sabt/Dashboard/",
+            "Sabt\\Category\\": "modules/Sabt/Category/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },

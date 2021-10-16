@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         \Sabt\User\Providers\UserServiceProvider::class,
         \Sabt\Dashboard\Providers\DashboardServiceProvider::class,
+        \Sabt\Category\Providers\CategoryServiceProvider::class,
         /*
          * Package Service Providers...
          */
