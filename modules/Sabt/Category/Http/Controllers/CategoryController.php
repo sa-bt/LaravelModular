@@ -25,6 +25,26 @@ class CategoryController extends Controller
                              "slug"      => $request->input('slug'),
                              "parent_id" => $request->input('parent_id'),
                          ]);
-return back();
+        return back();
+    }
+
+    public function edit(Category $category)
+    {
+        //todo CategoryRepository
+        $categories = Category::query()->where('id','!=',$category->id)->get();
+        return view('Category::edit', compact('categories','category'));
+
+    }
+
+    public function update(CategoryRequest $request,Category $category)
+    {
+        //todo CategoryRepository
+        $category->update([
+                             "name"      => $request->input('name'),
+                             "slug"      => $request->input('slug'),
+                             "parent_id" => $request->input('parent_id'),
+                         ]);
+        return redirect()->route('categories.index');
+
     }
 }

@@ -22,9 +22,9 @@
                         <td>{{$category->slug}}</td>
                         <td>{{$category->parent}}</td>
                         <td>
-                            <a href="" class="item-delete mlg-15" title="حذف"></a>
+                            <a href="" class="item-delete mlg-15"  title="حذف"></a>
                             <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                            <a href="edit-category.html" class="item-edit " title="ویرایش"></a>
+                            <a href="{{route('categories.edit',$category->id)}}" class="item-edit " title="ویرایش"></a>
                         </td>
                     </tr>
                     @endforeach
