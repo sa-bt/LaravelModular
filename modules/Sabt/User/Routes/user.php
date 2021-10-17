@@ -56,9 +56,5 @@ Route::group([
 //        $url = \Illuminate\Support\Facades\URL::temporarySignedRoute('verify_sabt', now()->addSeconds(20), ['user' => 2]);
 //        dd($url);
 //    });
-    Route::get('/test', function ()
-    {
-        return new \Sabt\User\Mail\VerifyCodeMail(9999556);
-    });
 
 });

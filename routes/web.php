@@ -20,5 +20,10 @@ Route::get('/', function ()
 });
 
 
+Route::get('/test', function ()
+{
+    $record=\Sabt\Category\Models\Category::factory(1)->create()->first();
+    dd($record);
+});
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
