@@ -16,17 +16,20 @@
                     </thead>
                     <tbody>
                     @foreach($categories as $category)
-                    <tr role="row" class="">
-                        <td><a href="">{{$category->id}}</a></td>
-                        <td><a href="">{{$category->name}}</a></td>
-                        <td>{{$category->slug}}</td>
-                        <td>{{$category->parent}}</td>
-                        <td>
-                            <a href="" class="item-delete mlg-15"  title="حذف"></a>
-                            <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                            <a href="{{route('categories.edit',$category->id)}}" class="item-edit " title="ویرایش"></a>
-                        </td>
-                    </tr>
+                        <tr role="row" class="">
+                            <td><a href="">{{$category->id}}</a></td>
+                            <td><a href="">{{$category->name}}</a></td>
+                            <td>{{$category->slug}}</td>
+                            <td>{{$category->parent}}</td>
+                            <td>
+                                <a href=""
+                                   onclick="event.preventDefault(); deleteItem(event,'{{route('categories.destroy',$category->id)}}')"
+                                   class="item-delete mlg-15" title="حذف"></a>
+                                <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
+                                <a href="{{route('categories.edit',$category->id)}}" class="item-edit "
+                                   title="ویرایش"></a>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
@@ -36,4 +39,52 @@
             @include('Category::create')
         </div>
     </div>
+@endsection
+@section('js')
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+
+
+        function deleteItem(event, route) {
+            Swal.fire({
+                title: 'حذف رکورد',
+                text: "آیا از حذف این رکورد اطمینان دارید؟",
+                icon: 'error',
+                showDenyButton: true,
+                // showCancelButton: true,
+                confirmButtonText: 'بله',
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.post(route, {
+                        _method: "delete",
+                        _token: "{{csrf_token()}}"
+                    })
+                        .done(function (response) {
+                            event.target.closest('tr').remove()
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.message
+                            })
+                        })
+                        .fail()
+                }
+                // else if (result.isDenied) {
+                //     Swal.fire('Changes are not saved', '', 'info')
+                // }
+            })
+        }
+    </script>
 @endsection

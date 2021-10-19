@@ -6,6 +6,7 @@ namespace Sabt\Category\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Sabt\Category\Http\Requests\CategoryRequest;
 use Sabt\Category\Models\Category;
 
@@ -46,5 +47,11 @@ class CategoryController extends Controller
                          ]);
         return redirect()->route('categories.index');
 
+    }
+
+    public function destroy(Category $category)
+    {
+//        $category->delete();
+        return response()->json(["message"=>"عملیات حذف با موفقیت انجام شد"], Response::HTTP_OK);
     }
 }
