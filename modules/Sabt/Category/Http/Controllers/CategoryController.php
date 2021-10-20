@@ -9,49 +9,45 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Sabt\Category\Http\Requests\CategoryRequest;
 use Sabt\Category\Models\Category;
+use Sabt\Category\Repositories\CategoryRepository;
 
 class CategoryController extends Controller
 {
+    public $repository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->repository = $categoryRepository;
+    }
+
     public function index()
     {
-        //todo CategoryRepository
-        $categories = Category::all();
+        $categories = $this->repository->all();
         return view('Category::index', compact('categories'));
     }
 
     public function store(CategoryRequest $request)
     {
-        Category::create([
-                             "name"      => $request->input('name'),
-                             "slug"      => $request->input('slug'),
-                             "parent_id" => $request->input('parent_id'),
-                         ]);
+        $this->repository->create($request);
         return back();
     }
 
     public function edit(Category $category)
     {
-        //todo CategoryRepository
-        $categories = Category::query()->where('id','!=',$category->id)->get();
-        return view('Category::edit', compact('categories','category'));
+        $categories = $this->repository->allExceptById($category->id);
+        return view('Category::edit', compact('categories', 'category'));
 
     }
 
-    public function update(CategoryRequest $request,Category $category)
+    public function update(Category $category, CategoryRequest $request)
     {
-        //todo CategoryRepository
-        $category->update([
-                             "name"      => $request->input('name'),
-                             "slug"      => $request->input('slug'),
-                             "parent_id" => $request->input('parent_id'),
-                         ]);
+        $this->repository->edit($category, $request);
         return redirect()->route('categories.index');
 
     }
 
     public function destroy(Category $category)
     {
-//        $category->delete();
-        return response()->json(["message"=>"عملیات حذف با موفقیت انجام شد"], Response::HTTP_OK);
+        $this->repository->delete($category);
     }
 }
