@@ -1,4 +1,8 @@
 @extends('Dashboard::master')
+@section('breadcrumb')
+    <li><a href="{{route('categories.index')}}" title="دسته بندی ها">دسته بندی ها</a></li>
+    <li><a href="#" title="ویرایش دسته بندی ها">ویرایش دسته بندی ها</a></li>
+@endsection
 @section('content')
         <div class="col-4 bg-white" style="margin: auto" >
             <p class="box__title">بروزرسانی دسته بندی جدید</p>
