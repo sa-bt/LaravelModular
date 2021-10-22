@@ -1,6 +1,8 @@
 var offset = 120;
 
-
+$(document).ready(function() {
+    $('.select2').select2();
+});
 function checkCampagin() {
     if ($(window).width() <= 991) {
         setTimeout(function () {

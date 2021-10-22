@@ -22,7 +22,7 @@ Route::get('/', function ()
 
 Route::get('/test', function ()
 {
-    $record=\Sabt\Category\Models\Category::factory(1)->create()->first();
+    $record=\Spatie\Permission\Models\Permission::create(['name'=>'permission'.random_int(1,100)]);
     dd($record);
 });
 

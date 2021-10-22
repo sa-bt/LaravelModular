@@ -13,6 +13,7 @@ class RolePermissionServiceProviders extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         $this->loadViewsFrom(__DIR__.'/../Resources/Views/','RolePermissions');
         $this->loadRoutesFrom(__DIR__.'/../Routes/RolePermissionsRoutes.php');
+        $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/Lang');
 
     }
 

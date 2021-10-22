@@ -1431,6 +1431,7 @@ span.tagRemove:hover {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    padding-right: 30px;
 }
 
 .ui-checkbox input {
@@ -1872,4 +1873,14 @@ span.tagRemove:hover {
 }
 .notification__box .title__noti{
     padding: 15px 0;
+}
+
+.pt-10{
+    padding-top: 10px;
+}
+.pb-10{
+    padding-bottom: 10px;
+}
+.mt-10{
+    margin-top: 10px;
 }
