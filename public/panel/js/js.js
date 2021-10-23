@@ -211,3 +211,54 @@ $('.discounts #discounts-field-2').on('click', function (e) {
 $('.discounts #discounts-field-1').on('click', function (e) {
     $('.discounts .dropdown-select').removeClass('is-active')
 });
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+
+
+
+function deleteItem(event, route) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'حذف رکورد',
+        text: "آیا از حذف این رکورد اطمینان دارید؟",
+        icon: 'error',
+        showDenyButton: true,
+        // showCancelButton: true,
+        confirmButtonText: 'بله',
+        denyButtonText: `خیر`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.post(route, {
+                _method: "delete",
+                _token: $('meta[name="_token"]').attr('content')
+            })
+                .done(function (response) {
+                    event.target.closest('tr').remove()
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.message
+                    })
+                })
+                .fail(function (response) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: "عملیات ناموفق"
+                    })
+                })
+        }
+        // else if (result.isDenied) {
+        //     Swal.fire('Changes are not saved', '', 'info')
+        // }
+    })
+}

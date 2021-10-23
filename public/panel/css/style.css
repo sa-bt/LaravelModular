@@ -685,6 +685,11 @@ textarea {
     content: '\e111';
 }
 
+
+.sidebar__nav .i-role-permissions a::before {
+    content: '\e084';
+}
+
 .sidebar__nav.is-active ul li {
     margin: 0 9px;
 }
@@ -1883,4 +1888,12 @@ span.tagRemove:hover {
 }
 .mt-10{
     margin-top: 10px;
+}
+.is-invalid{
+    border: 1px solid red;
+}
+
+.invalid-feedback{
+    color: red;
+    font-size: small;
 }

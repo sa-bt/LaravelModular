@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Sabt\RolePermissions\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class RoleUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class RoleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "id"=>"required|exists:roles,id",
+            "name"=>"required|string|min:3|max:100|unique:roles,name,".request()->id,
+            "permissions"=>"required|array|min:1"
         ];
     }
 }

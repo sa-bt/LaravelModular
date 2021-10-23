@@ -25,7 +25,7 @@ class RoleStoreRequest extends FormRequest
     {
         return [
             "name"=>"required|string|min:3|max:100|unique:roles,name",
-            "permissions"=>"array|min:1"
+            "permissions"=>"required|array|min:1"
         ];
     }
 }

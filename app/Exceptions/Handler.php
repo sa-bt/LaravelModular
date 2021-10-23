@@ -38,4 +38,19 @@ class Handler extends ExceptionHandler
             //
         });
     }
+//
+//    public function render($request,$exception) {
+//
+//        if(!$request->ajax()){
+//            view('error_handler', compact('exception'));
+//    }
+//        if ($exception->getCode()==404);
+//        return response()->json([
+//                                    'code' => $exception->getCode(),
+//                                    'status' => 'error',
+//                                    'message' => $exception->getMessage(),
+//                                    'data' => 'sample data'
+//                                ]);
+//
+//    }
 }

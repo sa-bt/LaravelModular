@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Sabt\Category\Http\Requests\CategoryRequest;
 use Sabt\Category\Models\Category;
 use Sabt\Category\Repositories\CategoryRepository;
+use Sabt\Category\Responses\AjaxResponses;
 
 class CategoryController extends Controller
 {
@@ -49,5 +50,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $this->repository->delete($category);
+        return AjaxResponses::success();
+
     }
 }

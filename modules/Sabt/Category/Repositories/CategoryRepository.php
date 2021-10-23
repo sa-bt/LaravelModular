@@ -43,6 +43,5 @@ class CategoryRepository
     public function delete($category)
     {
         return $category->delete();
-        return AjaxResponses::success();
     }
 }

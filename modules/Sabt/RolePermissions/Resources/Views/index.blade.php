@@ -21,7 +21,15 @@
                         <tr role="row" class="">
                             <td><a href="">{{$role->id}}</a></td>
                             <td><a href="">{{$role->name}}</a></td>
-                            <td>{{'$role->permissions'}}</td>
+                            <td>
+                                <ul>
+                                    @foreach($role->permissions as $permission)
+                                        <li>
+                                            @lang($permission->name)
+                                        </li>
+                                        @endforeach
+                                </ul>
+                            </td>
                             <td>
                                 <a href=""
                                    onclick="event.preventDefault(); deleteItem(event,'{{route('roles.destroy',$role->id)}}')"
@@ -43,49 +51,6 @@
 @endsection
 @section('js')
     <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
 
-
-
-        function deleteItem(event, route) {
-            Swal.fire({
-                title: 'حذف رکورد',
-                text: "آیا از حذف این رکورد اطمینان دارید؟",
-                icon: 'error',
-                showDenyButton: true,
-                // showCancelButton: true,
-                confirmButtonText: 'بله',
-                denyButtonText: `خیر`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    $.post(route, {
-                        _method: "delete",
-                        _token: "{{csrf_token()}}"
-                    })
-                        .done(function (response) {
-                            event.target.closest('tr').remove()
-                            Toast.fire({
-                                icon: 'success',
-                                title: response.message
-                            })
-                        })
-                        .fail()
-                }
-                // else if (result.isDenied) {
-                //     Swal.fire('Changes are not saved', '', 'info')
-                // }
-            })
-        }
     </script>
 @endsection

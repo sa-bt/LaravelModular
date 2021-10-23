@@ -1,28 +1,50 @@
 @extends('Dashboard::master')
 @section('breadcrumb')
-    <li><a href="{{route('categories.index')}}" title="دسته بندی ها">دسته بندی ها</a></li>
-    <li><a href="#" title="ویرایش دسته بندی ها">ویرایش دسته بندی ها</a></li>
+    <li><a href="{{route('roles.index')}}" title="نقش ها">نقش ها</a></li>
+    <li><a href="#" title="ویرایش نقش ها">ویرایش نقش ها</a></li>
 @endsection
 @section('content')
-        <div class="col-4 bg-white" style="margin: auto" >
-            <p class="box__title">بروزرسانی دسته بندی جدید</p>
-            <form action="{{route('categories.update', $category->id)}}" method="post" class="padding-30">
-                @csrf
-                @method('put')
-                <input type="text" name="name" required placeholder="نام دسته بندی" class="text"
-                       value="{{$category->name}}">
-                <input type="text" name="slug" required placeholder="نام انگلیسی دسته بندی" class="text"
-                       value="{{$category->slug}}">
-                <p class="box__title margin-bottom-15">انتخاب دسته والد</p>
-                <select name="parent_id" id="">
-                    <option value="">ندارد</option>
-                    @foreach($categories as $cat)
-                        <option value="{{$cat->id}}"
-                                @if($category->parent_id == $cat->id) selected @endif>{{$cat->name}}</option>
-                    @endforeach
-                </select>
-                <button type="submit" class="btn btn-webamooz_net">بروزرسانی</button>
-            </form>
+    <div class="col-4 bg-white" style="margin: auto">
+        <p class="box__title">بروزرسانی نقش جدید</p>
+        <form action="{{route('roles.update', $role->id)}}" method="post" class="padding-30">
+            @csrf
+            @method('put')
+            <input type="hidden" name="id" value="{{$role->id}}"/>
+            <input type="text" name="name" required placeholder="نام نقش کاربری" class="text"
+                   value="{{$role->name}}">
+
+            @error('name')
+            <span class="invalid-feedback margin-bottom-10 " role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
+
+            <p class="box__title margin-bottom-15">انتخاب مجوزها</p>
+            @foreach($permissions as $permission)
+                <label class="ui-checkbox pt-10">
+                    <input
+                        type="checkbox"
+                        class="sub-checkbox" name="permissions[{{$permission->id}}]"
+                        @if(is_array(old('permissions')) && array_key_exists($permission->id,old('permissions')) ||
+                          $role->hasPermissionTo($permission->name)) checked @endif
+                        value="{{$permission->id}}">
+                    <span class="checkmark"></span>
+                    @lang($permission->name)
+                </label>
+            @endforeach
+            @error('permissions')
+            <span class="invalid-feedback margin-bottom-10 " role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
+            @error('id')
+            <span class="invalid-feedback margin-bottom-10 " role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
+
+            <button type="submit" class="btn btn-webamooz_net mt-10">بروزرسانی</button>
+        </form>
     </div>
 
 @endsection
