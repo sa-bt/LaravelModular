@@ -29,6 +29,7 @@
             "Sabt\\Dashboard\\": "modules/Sabt/Dashboard/",
             "Sabt\\Category\\": "modules/Sabt/Category/",
             "Sabt\\RolePermissions\\": "modules/Sabt/RolePermissions/",
+            "Sabt\\Course\\": "modules/Sabt/Course/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },

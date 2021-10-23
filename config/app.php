@@ -165,6 +165,7 @@ return [
         \Sabt\Dashboard\Providers\DashboardServiceProvider::class,
         \Sabt\Category\Providers\CategoryServiceProvider::class,
         \Sabt\RolePermissions\Providers\RolePermissionServiceProviders::class,
+        \Sabt\Course\Providers\CourseServiceProvider::class,
         /*
          * Package Service Providers...
          */
