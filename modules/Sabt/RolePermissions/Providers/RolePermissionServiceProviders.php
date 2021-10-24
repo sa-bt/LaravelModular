@@ -4,7 +4,9 @@
 namespace Sabt\RolePermissions\Providers;
 
 
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\ServiceProvider;
+use Sabt\RolePermissions\Database\Seeders\RoleAndPermissionSeeder;
 
 class RolePermissionServiceProviders extends ServiceProvider
 {
@@ -14,6 +16,7 @@ class RolePermissionServiceProviders extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../Resources/Views/','RolePermissions');
         $this->loadRoutesFrom(__DIR__.'/../Routes/RolePermissionsRoutes.php');
         $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/Lang');
+        DatabaseSeeder::$seeders[]=RoleAndPermissionSeeder::class;
 
     }
 

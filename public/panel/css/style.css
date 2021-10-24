@@ -1896,4 +1896,5 @@ span.tagRemove:hover {
 .invalid-feedback{
     color: red;
     font-size: small;
+    margin-bottom: 10px;
 }
