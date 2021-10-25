@@ -4,102 +4,89 @@
     <li><a href="#" title="ویرایش دوره ها">ایجاد دوره</a></li>
 @endsection
 @section('content')
-    <div class="col-10 bg-white" style="margin: auto" >
+    <div class="col-10 bg-white" style="margin: auto">
         <p class="box__title">ایجاد دوره جدید</p>
         <form action="{{route('courses.store')}}" class="padding-30" method="post">
             @csrf
-            <input
+            <x-input
                 type="text"
-                class="text @error('title') is-invalid @enderror"
+                class=""
                 name="title"
                 placeholder="عنوان دوره"
+                required
+            />
 
-            >
-            <x-ValidationError field="title"/>
-
-
-            <input
+            <x-input
                 type="text"
                 name="slug"
-                class="text text-left @error('slug') is-invalid @enderror"
+                class="text-left "
                 placeholder="نام انگلیسی دوره"
+                required
+            />
 
-            >
-            <x-ValidationError field="slug"/>
-
-            <div class="d-flex multi-text">
-                <input type="text" name="priority" class="text text-left mlg-15 @error('priority') is-invalid @enderror" placeholder="ردیف دوره">
-                <x-ValidationError field="priority"/>
-
-
-                <input type="text" name="price" placeholder="مبلغ دوره"  class="text-left text mlg-15 @error('price') is-invalid @enderror">
-                <x-ValidationError field="price"/>
-
-
-                <input type="number" name="percent" placeholder="درصد مدرس"  class="text-left text @error('percent') is-invalid @enderror">
-                <x-ValidationError field="percent"/>
-
+            <div class="d-flex multi-text ">
+                <x-input
+                    type="text"
+                    name="priority"
+                    class="text-left "
+                    placeholder="ردیف دوره"
+                />
+                <x-input
+                    type="text"
+                    name="price"
+                    placeholder="مبلغ دوره"
+                    class="text-left "
+                    required
+                />
+                <x-input
+                    type="number"
+                    name="percent"
+                    placeholder="درصد مدرس"
+                    class="text-left"
+                    required
+                />
             </div>
-            <select name="teacher_id" >
+
+            <x-select name="teacher_id">
                 <option value="">انتخاب مدرس دوره</option>
                 @foreach($teachers as $teacher)
-                    <option value="{{$teacher->id}}">{{$teacher->name}}</option>
-                    @endforeach
-            </select>
-            <x-ValidationError field="teacher_id"/>
+                    <option
+                        value="{{$teacher->id}}" @if($teacher->id == old('teacher_id')) selected @endif>{{$teacher->name}}</option>
+                @endforeach
+            </x-select>
 
 
-            <ul class="tags">
-
-                <li class="addedTag">dsfsdf<span class="tagRemove" onclick="$(this).parent().remove();">x</span>
-                    <input type="hidden" value="dsfsdf" name="tags[]"></li>
-                <li class="addedTag">dsfsdf<span class="tagRemove" onclick="$(this).parent().remove();">x</span>
-                    <input type="hidden" value="dsfsdf" name="tags[]"></li>
-                <li class="tagAdd taglist">
-                    <input type="text" id="search-field" placeholder="برچسب ها">
-                </li>
-            </ul>
-            <select name="type" >
+            <x-tag-select name="tags"/>
+            <x-select name="type">
                 <option value="">نوع دوره</option>
                 @foreach(\Sabt\Course\Models\Course::$types as $type)
-                    <option value="{{$type}}">@lang($type)</option>
+                    <option value="{{$type}}" @if($type == old('type')) selected @endif >@lang($type)</option>
                 @endforeach
-            </select>
-            <x-ValidationError field="type"/>
+            </x-select>
 
-            <select name="status" >
+            <x-select name="status">
                 <option value="">وضعیت دوره</option>
                 @foreach(\Sabt\Course\Models\Course::$statuses as $status)
-                    <option value="{{$status}}">@lang($status)</option>
+                    <option value="{{$status}}" @if($status == old('status')) selected @endif >@lang($status)</option>
                 @endforeach
-            </select>
-            <x-ValidationError field="status"/>
+            </x-select>
 
-            <select name="category_id" >
+            <x-select name="category_id">
                 <option value="0">دسته بندی والد</option>
                 @foreach($categories as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
-            </select>
-            <x-ValidationError field="category_id"/>
+            </x-select>
 
             {{--            <select name="">--}}
-{{--                <option value="0">زیر دسته بندی</option>--}}
-{{--                <option value="1">وب</option>--}}
-{{--                <option value="2">ویندوز</option>--}}
-{{--                <option value="3">اندروید</option>--}}
-{{--            </select>--}}
-            <div class="file-upload">
-                <div class="i-file-upload">
-                    <span>آپلود بنر دوره</span>
-                    <input type="file" class="file-upload" id="files" name="image" />
-                    <x-ValidationError field="image"/>
-
-                </div>
-                <span class="filesize"></span>
-                <span class="selectedFiles">فایلی انتخاب نشده است</span>
-            </div>
-            <textarea placeholder="توضیحات دوره" class="text h" name="body"></textarea>
+            {{--                <option value="0">زیر دسته بندی</option>--}}
+            {{--                <option value="1">وب</option>--}}
+            {{--                <option value="2">ویندوز</option>--}}
+            {{--                <option value="3">اندروید</option>--}}
+            {{--            </select>--}}
+            <x-file placeholder="آپلود بنر دوره" name="image"/>
+            <x-textarea placeholder="توضیحات دوره" name="body"/>
+            <br>
             <button type="submit" class="btn btn-webamooz_net">ایجاد دوره</button>
         </form>
     </div>

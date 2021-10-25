@@ -127,14 +127,13 @@ a, span {
     height: 42px;
     line-height: 40px;
     border: solid 2px #e2e2e2;
-    margin-bottom: 15px;
+    margin-top: 15px;
     text-align: right;
     font-size: 13px !important;
 }
 textarea {
     resize: none;
     padding: 12px;
-    margin-bottom: 15px;
     border: solid 2px #e2e2e2;
     border-radius: 3px;
     width: 100%;
@@ -1097,7 +1096,7 @@ select {
     display: none;
 }
 .dropdown-select {
-    margin-bottom: 15px;
+    margin-top: 15px;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
     background-repeat: repeat-x;
     background-color: #fff;
@@ -1341,7 +1340,7 @@ select {
     padding: 0.5em;
     width: 100%;
     justify-content: flex-start;
-    margin-bottom: 12px;
+    margin-top: 12px;
     align-items: center;
 	flex-wrap: wrap;
 }
@@ -1897,4 +1896,7 @@ span.tagRemove:hover {
     color: red;
     font-size: small;
     margin-bottom: 10px;
+}
+.w-100{
+    width: 100%;
 }
