@@ -30,4 +30,12 @@ class CourseStoreRequest extends FormRequest
             "image"       => "required|mimes:jpg,png,jpeg",
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            "priority" => "ردیف دوره",
+            'slug'     => 'عنوان انگلیسی',
+        ];
+    }
 }

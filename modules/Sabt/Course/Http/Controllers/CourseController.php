@@ -7,10 +7,22 @@ namespace Sabt\Course\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Sabt\Category\Repositories\CategoryRepository;
 use Sabt\Course\Http\Requests\CourseStoreRequest;
+use Sabt\Course\Repositories\CourseRepository;
 use Sabt\User\Repositories\UserRepository;
 
 class CourseController extends Controller
 {
+    /**
+     * @var CourseRepository
+     */
+    private $courseRepository;
+
+    public function __construct(CourseRepository $courseRepository)
+    {
+
+        $this->courseRepository = $courseRepository;
+    }
+
     public function index()
     {
 }
@@ -24,6 +36,7 @@ class CourseController extends Controller
 
     public function store(CourseStoreRequest $request)
     {
-dd(11);
+        return $this->courseRepository->store($request);
+dd($request->all());
 }
 }

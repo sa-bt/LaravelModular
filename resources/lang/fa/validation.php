@@ -134,7 +134,7 @@ return [
             'between' => 'کد وارد شده معتبر نمی باشد!',
         ],
     ],
-    'attributes' => [
+    'attributes'           => [
         'address'               => 'نشانی',
         'age'                   => 'سن',
         'area'                  => 'منطقه',
@@ -170,4 +170,11 @@ return [
         'title'                 => 'عنوان',
         'username'              => 'نام کاربری',
         'year'                  => 'سال',
+        'type'                  => 'نوع',
+        'teacher_id'            => 'مدرس',
+        'percent'               => 'درصد',
+        'price'                 => 'قیمت',
+        'status'                => 'وضعیت',
+        'category_id'           => 'دسته بندی',
+        'image'                 => 'تصویر',
     ],];

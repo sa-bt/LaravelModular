@@ -6,7 +6,7 @@
 @section('content')
     <div class="col-10 bg-white" style="margin: auto">
         <p class="box__title">ایجاد دوره جدید</p>
-        <form action="{{route('courses.store')}}" class="padding-30" method="post">
+        <form action="{{route('courses.store')}}" class="padding-30" method="post" enctype="multipart/form-data">
             @csrf
             <x-input
                 type="text"
@@ -72,7 +72,7 @@
             </x-select>
 
             <x-select name="category_id">
-                <option value="0">دسته بندی والد</option>
+                <option value="">دسته بندی والد</option>
                 @foreach($categories as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
