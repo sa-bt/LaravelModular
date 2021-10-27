@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Sabt\Category\Repositories\CategoryRepository;
 use Sabt\Course\Http\Requests\CourseStoreRequest;
 use Sabt\Course\Repositories\CourseRepository;
+use Sabt\Media\Services\MediaUploadService;
 use Sabt\User\Repositories\UserRepository;
 
 class CourseController extends Controller
@@ -36,6 +37,7 @@ class CourseController extends Controller
 
     public function store(CourseStoreRequest $request)
     {
+        $request->request->add(['banner_id'=>MediaUploadService::upload($request->file('image'))->id]);
         return $this->courseRepository->store($request);
 dd($request->all());
 }

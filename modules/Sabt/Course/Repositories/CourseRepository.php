@@ -25,6 +25,7 @@ class CourseRepository
                                   "percent"     => $values->percent,
                                   "type"        => $values->type,
                                   "status"      => $values->status,
+                                  "banner_id"   => $values->banner_id,
                                   "body"        => $values->body,
                               ]);
     }

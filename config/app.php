@@ -166,6 +166,7 @@ return [
         \Sabt\Category\Providers\CategoryServiceProvider::class,
         \Sabt\RolePermissions\Providers\RolePermissionServiceProviders::class,
         \Sabt\Course\Providers\CourseServiceProvider::class,
+        \Sabt\Media\Providers\MediaServiceProvider::class,
         /*
          * Package Service Providers...
          */
