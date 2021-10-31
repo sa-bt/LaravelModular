@@ -4,7 +4,9 @@
 namespace Sabt\Category\Providers;
 
 
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\ServiceProvider;
+use Sabt\Category\Database\Seeders\CategorySeeder;
 
 class CategoryServiceProvider extends ServiceProvider
 {
@@ -12,15 +14,16 @@ class CategoryServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__ . '/../Routes/categoryRoutes.php');
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views/', 'Category');
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations/');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/');
+        DatabaseSeeder::$seeders[] = CategorySeeder::class;
     }
 
     public function boot()
     {
-        config()->set('Sidebar.items.categories',[
-            "icon"=>"i-categories",
-            "url"=>route('categories.index'),
-            "title"=>"دسته بندی ها",
+        config()->set('Sidebar.items.categories', [
+            "icon"  => "i-categories",
+            "url"   => route('categories.index'),
+            "title" => "دسته بندی ها",
         ]);
     }
 }
