@@ -8,7 +8,7 @@ use Intervention\Image\Facades\Image;
 
 class ImageFileService
 {
-    protected static $sizes = ['300', '600'];
+    protected static $sizes = ['100','300', '600'];
 
     public static function upload($file)
     {
@@ -23,10 +23,10 @@ class ImageFileService
     private static function resize($img, $dir, $fileName, $extension)
     {
         $img                = Image::make($img);
-        $images['original'] = $dir . $fileName . $extension;
+        $images['original'] = $fileName . $extension;
         foreach (self::$sizes as $size)
         {
-            $images[$size] = $dir . $fileName . '_' . $size . '.' . $extension;
+            $images[$size] = $fileName . '_' . $size . '.' . $extension;
             $img->resize($size, null, function ($aspect)
             {
                 $aspect->aspectRatio();

@@ -21,7 +21,7 @@ class CourseServiceProvider extends ServiceProvider
         config()->set('Sidebar.items.courses',[
             "icon"=>"i-courses",
             "url"=>route('courses.index'),
-            "title"=>"دسته بندی ها",
+            "title"=>"دوره ها",
         ]);
     }
 }

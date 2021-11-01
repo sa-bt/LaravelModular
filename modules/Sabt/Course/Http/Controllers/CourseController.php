@@ -26,19 +26,22 @@ class CourseController extends Controller
 
     public function index()
     {
-}
+        $courses = $this->courseRepository->all();
+        return view('Course::index', compact('courses'));
+
+    }
 
     public function create(UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
-        $teachers=$userRepository->getTeachers();
-        $categories=$categoryRepository->all();
-        return view('Course::create',compact('teachers','categories'));
-}
+        $teachers   = $userRepository->getTeachers();
+        $categories = $categoryRepository->all();
+        return view('Course::create', compact('teachers', 'categories'));
+    }
 
     public function store(CourseStoreRequest $request)
     {
-        $request->request->add(['banner_id'=>MediaUploadService::upload($request->file('image'))->id]);
-        return $this->courseRepository->store($request);
-dd($request->all());
-}
+        $request->request->add(['banner_id' => MediaUploadService::upload($request->file('image'))->id]);
+        $this->courseRepository->store($request);
+        return redirect()->route('courses.index');
+    }
 }
