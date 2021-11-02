@@ -19,7 +19,11 @@ class Media extends Model
     {
         static::deleting(function ($media){
             MediaUploadService::delete($media);
-            dd(99);
         });
+    }
+
+    public function getThumbAttribute()
+    {
+        return '/storage/'.$this->files[100];
     }
 }

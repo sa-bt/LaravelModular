@@ -30,7 +30,7 @@ class CourseRepository
                               ]);
     }
 
-    public function delete(Course $course)
+    public function delete($course)
     {
         return $course->delete();
     }

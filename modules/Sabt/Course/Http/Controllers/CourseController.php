@@ -47,6 +47,14 @@ class CourseController extends Controller
         return redirect()->route('courses.index');
     }
 
+    public function edit(Course $course,UserRepository $userRepository, CategoryRepository $categoryRepository)
+    {
+        $teachers   = $userRepository->getTeachers();
+        $categories = $categoryRepository->all();
+        return view('Course::edit', compact('teachers', 'categories','course'));
+    }
+
+
     public function destroy(Course $course)
     {
         if ($course->banner)

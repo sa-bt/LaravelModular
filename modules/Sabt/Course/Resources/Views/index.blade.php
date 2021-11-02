@@ -25,7 +25,7 @@
                         <tr role="row" class="">
                             <td>{{$course->id}}</td>
                             <td>{{$course->priority}}</td>
-                            <td><img src="{{$course->thumb}}" alt="" ></td>
+                            <td><img src="{{$course->banner->thumb}}" alt="" ></td>
                             <td><a href="">{{$course->title}}</a></td>
                             <td><a href="">{{$course->teacher->name}}</a></td>
                             <td>@lang($course->type)</td>

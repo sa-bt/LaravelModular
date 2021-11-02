@@ -5,6 +5,7 @@
         name="{{$name}}"
         placeholder="{{$placeholder}}"
         {{$attributes->merge(['class'=>'w-100 '])}}
+        value="{{old($name)}}"
     >
     <x-ValidationError field="{{$name}}"/>
 </div>

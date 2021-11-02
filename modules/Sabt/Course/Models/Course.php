@@ -28,10 +28,7 @@ class Course extends Model
         return $this->belongsTo(Media::class , 'banner_id');
     }
 
-    public function getThumbAttribute()
-    {
-        return '/storage/'.$this->banner->files[100];
-    }
+
 
     public function teacher()
     {
