@@ -4,6 +4,7 @@
 namespace Sabt\Media\Services;
 
 
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ImageFileService
@@ -23,7 +24,7 @@ class ImageFileService
     private static function resize($img, $dir, $fileName, $extension)
     {
         $img                = Image::make($img);
-        $images['original'] = $fileName . $extension;
+        $images['original'] = $fileName . '.' . $extension;
         foreach (self::$sizes as $size)
         {
             $images[$size] = $fileName . '_' . $size . '.' . $extension;
@@ -33,5 +34,12 @@ class ImageFileService
             })->save(storage_path($dir) . $fileName . '_' . $size . '.' . $extension);
         }
         return $images;
+    }
+
+    public static function delete($media)
+    {
+        foreach ($media->files as $file){
+            Storage::delete('public\\'.$file);
+        }
     }
 }

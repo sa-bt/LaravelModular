@@ -5,6 +5,7 @@ namespace Sabt\Media\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Sabt\Media\Services\MediaUploadService;
 
 class Media extends Model
 {
@@ -13,4 +14,12 @@ class Media extends Model
     protected $casts=[
         'files'=>'json'
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($media){
+            MediaUploadService::delete($media);
+            dd(99);
+        });
+    }
 }

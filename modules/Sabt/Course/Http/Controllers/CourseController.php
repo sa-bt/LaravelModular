@@ -6,7 +6,9 @@ namespace Sabt\Course\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Sabt\Category\Repositories\CategoryRepository;
+use Sabt\Category\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\CourseStoreRequest;
+use Sabt\Course\Models\Course;
 use Sabt\Course\Repositories\CourseRepository;
 use Sabt\Media\Services\MediaUploadService;
 use Sabt\User\Repositories\UserRepository;
@@ -43,5 +45,15 @@ class CourseController extends Controller
         $request->request->add(['banner_id' => MediaUploadService::upload($request->file('image'))->id]);
         $this->courseRepository->store($request);
         return redirect()->route('courses.index');
+    }
+
+    public function destroy(Course $course)
+    {
+        if ($course->banner)
+        {
+            $course->banner->delete();
+        }
+        $this->courseRepository->delete($course);
+        return AjaxResponses::success();
     }
 }

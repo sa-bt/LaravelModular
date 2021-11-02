@@ -20,6 +20,7 @@ class Course extends Model
 
     static $statuses = [self::STATUS_COMPLETED, self::STATUS_NOT_COMPLETED, self::STATUS_LOCKED];
 
+
     protected $guarded = [];
 
     public function banner()

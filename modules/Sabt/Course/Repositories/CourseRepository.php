@@ -29,4 +29,9 @@ class CourseRepository
                                   "body"        => $values->body,
                               ]);
     }
+
+    public function delete(Course $course)
+    {
+        return $course->delete();
+    }
 }

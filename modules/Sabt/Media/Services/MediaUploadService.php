@@ -27,4 +27,12 @@ class MediaUploadService
                 break;
         }
     }
+
+    public static function delete($media)
+    {
+        switch ($media->type){
+            case 'image':
+                ImageFileService::delete($media);
+        }
+    }
 }
