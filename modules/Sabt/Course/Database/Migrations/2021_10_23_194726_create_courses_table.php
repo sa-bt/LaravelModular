@@ -24,8 +24,9 @@ class CreateCoursesTable extends Migration
             $table->float('priority')->nullable();
             $table->string('price', 10);
             $table->string('percent', 5);
-            $table->enum('type', ['free', 'cash']);
-            $table->enum('status', ['completed', 'not-completed', 'lock'])->default('not-completed');
+            $table->enum('type', \Sabt\Course\Models\Course::$types);
+            $table->enum('status', \Sabt\Course\Models\Course::$statuses);
+            $table->enum('confirmation_status', \Sabt\Course\Models\Course::$confirmationStatuses)->default('pending');
             $table->text('body')->nullable();
             $table->timestamps();
 

@@ -225,7 +225,6 @@ const Toast = Swal.mixin({
 })
 
 
-
 function deleteItem(event, route) {
     event.preventDefault();
     Swal.fire({
@@ -254,6 +253,41 @@ function deleteItem(event, route) {
                     Toast.fire({
                         icon: 'error',
                         title: "عملیات ناموفق"
+                    })
+                })
+        }
+        // else if (result.isDenied) {
+        //     Swal.fire('Changes are not saved', '', 'info')
+        // }
+    })
+}
+
+function updateConfirmationStatus(event, route, message, status, class_name = 'confirmation_status') {
+    event.preventDefault();
+    Swal.fire({
+        text: message,
+        showDenyButton: true,
+        // showCancelButton: true,
+        confirmButtonText: 'بله',
+        denyButtonText: `خیر`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.post(route, {
+                _method: "PUT",
+                _token: $('meta[name="_token"]').attr('content')
+            })
+                .done(function (response) {
+                    $(event.target).closest('tr').find('td.' + class_name).text(status)
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.message
+                    })
+                })
+                .fail(function (response) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: response.message
                     })
                 })
         }

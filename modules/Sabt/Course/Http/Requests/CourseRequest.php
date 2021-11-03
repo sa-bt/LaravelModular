@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Sabt\Course\Models\Course;
 
-class CourseStoreRequest extends FormRequest
+class CourseRequest extends FormRequest
 {
 
     public function authorize()
@@ -17,7 +17,7 @@ class CourseStoreRequest extends FormRequest
 
     public function rules()
     {
-        return [
+       $rules= [
             "title"       => "required|min:3|max:190",
             "slug"        => "required|min:3|max:190|unique:courses,slug",
             "priority"    => "nullable|numeric",
@@ -29,6 +29,11 @@ class CourseStoreRequest extends FormRequest
             "category_id" => "required|exists:categories,id",
             "image"       => "required|mimes:jpg,png,jpeg",
         ];
+       if (request()->method==='PUT'){
+           $rules['slug']="required|min:3|max:190|unique:courses,slug,".request()->route('course')->id;
+           $rules['image']="nullable|mimes:jpg,png,jpeg";
+       }
+       return $rules;
     }
 
     public function attributes()

@@ -6,8 +6,9 @@
 @section('content')
     <div class="col-10 bg-white" style="margin: auto">
         <p class="box__title">ویرایش دوره </p>
-        <form action="{{route('courses.store')}}" class="padding-30" method="post" enctype="multipart/form-data">
+        <form action="{{route('courses.update',$course->id)}}" class="padding-30" method="post" enctype="multipart/form-data">
             @csrf
+            @method('put')
             <x-input
                 type="text"
                 class=""

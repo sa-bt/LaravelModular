@@ -17,6 +17,7 @@
                         <th>مدرس</th>
                         <th>نوع دوره</th>
                         <th>وضعیت</th>
+                        <th>وضعیت تایید</th>
                         <th>عملیات</th>
                     </tr>
                     </thead>
@@ -25,18 +26,38 @@
                         <tr role="row" class="">
                             <td>{{$course->id}}</td>
                             <td>{{$course->priority}}</td>
-                            <td><img src="{{$course->banner->thumb}}" alt="" ></td>
+                            <td><img src="{{$course->banner->thumb}}" alt=""></td>
                             <td><a href="">{{$course->title}}</a></td>
                             <td><a href="">{{$course->teacher->name}}</a></td>
                             <td>@lang($course->type)</td>
-                            <td>@lang($course->status)</td>
+                            <td class="status">@lang($course->status)</td>
+                            <td class="confirmation_status">@lang($course->confirmation_status)</td>
                             <td>
                                 <a href=""
                                    onclick="deleteItem(event,'{{route('courses.destroy',$course->id)}}')"
                                    class="item-delete mlg-15" title="حذف"></a>
                                 <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                                <a href="{{route('courses.edit',$course->id)}}" class="item-edit "
+                                <a href="{{route('courses.edit',$course->id)}}" class="item-edit mlg-15"
                                    title="ویرایش"></a>
+                                <a href="" class="item-confirm mlg-15"
+                                   onclick="updateConfirmationStatus(
+                                       event,
+                                       '{{route('courses.accept',$course->id)}}',
+                                       'آیا از تایید این آیتم اطمینان دارید؟',
+                                       'تایید شده')"></a>
+                                <a href="" class="item-reject mlg-15"
+                                   onclick="updateConfirmationStatus(
+                                       event,
+                                       '{{route('courses.reject',$course->id)}}',
+                                       'آیا از رد این آیتم اطمینان دارید؟',
+                                       'رد شده')"></a>
+                                <a href="" class="item-lock mlg-15"
+                                   onclick="updateConfirmationStatus(
+                                       event,
+                                       '{{route('courses.lock',$course->id)}}',
+                                       'آیا از قفل کردن این آیتم اطمینان دارید؟',
+                                       'قفل شده',
+                                       'status')"></a>
                             </td>
                         </tr>
                     @endforeach
