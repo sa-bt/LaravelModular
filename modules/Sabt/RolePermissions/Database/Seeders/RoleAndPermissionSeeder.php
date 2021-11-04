@@ -15,11 +15,15 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::findOrCreate('manage categories');
-        Permission::findOrCreate('manage roles');
-        Permission::findOrCreate('teach');
+        foreach (\Sabt\RolePermissions\Models\Permission::$permissions as $permission)
+        {
+            Permission::findOrCreate($permission);
+        }
 
-        Role::findOrCreate('teacher')->givePermissionTo(['teach']);
+        foreach (\Sabt\RolePermissions\Models\Role::$roles as $name => $permissions)
+        {
+            Role::findOrCreate($name)->givePermissionTo($permissions);
+        }
 
     }
 }

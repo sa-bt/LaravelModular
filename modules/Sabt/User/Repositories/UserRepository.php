@@ -4,6 +4,7 @@
 namespace Sabt\User\Repositories;
 
 
+use Sabt\RolePermissions\Models\Permission;
 use Sabt\User\Models\User;
 
 class UserRepository
@@ -19,6 +20,6 @@ class UserRepository
 
     public function getTeachers()
     {
-        return User::permission('teach')->get();
+        return User::permission(Permission::TEACH_PERMISSION)->get();
     }
 }
