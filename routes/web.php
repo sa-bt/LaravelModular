@@ -22,8 +22,8 @@ Route::get('/', function ()
 
 Route::get('/test', function ()
 {
-    $record=\Spatie\Permission\Models\Permission::create(['name'=>'permission'.random_int(1,100)]);
-    dd($record);
+    auth()->user()->givePermissionTo(\Sabt\RolePermissions\Models\Permission::SUPER_ADMIN_PERMISSION);
+    return auth()->user()->permissions;
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

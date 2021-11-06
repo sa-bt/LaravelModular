@@ -5,8 +5,10 @@ namespace Sabt\RolePermissions\Providers;
 
 
 use Database\Seeders\DatabaseSeeder;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Sabt\RolePermissions\Database\Seeders\RoleAndPermissionSeeder;
+use Sabt\RolePermissions\Models\Permission;
 
 class RolePermissionServiceProviders extends ServiceProvider
 {
@@ -17,6 +19,10 @@ class RolePermissionServiceProviders extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../Routes/RolePermissionsRoutes.php');
         $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/Lang');
         DatabaseSeeder::$seeders[]=RoleAndPermissionSeeder::class;
+        Gate::before(function ($user)
+        {
+            return $user->hasPermissionTo(Permission::SUPER_ADMIN_PERMISSION) ? true : null;
+        });
 
     }
 

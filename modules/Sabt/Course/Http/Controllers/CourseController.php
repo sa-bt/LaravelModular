@@ -29,6 +29,7 @@ class CourseController extends Controller
 
     public function index()
     {
+        $this->authorize('index',Course::class);
         $courses = $this->courseRepository->all();
         return view('Course::index', compact('courses'));
 
