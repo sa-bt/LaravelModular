@@ -4,6 +4,7 @@ namespace Sabt\Course\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Sabt\Course\Database\Factories\CourseFactory;
 use Sabt\Media\Models\Media;
 use Sabt\User\Models\User;
 
@@ -31,6 +32,12 @@ class Course extends Model
 
 
     protected $guarded = [];
+
+
+    protected static function newFactory()
+    {
+        return CourseFactory::new();
+    }
 
     public function banner()
     {

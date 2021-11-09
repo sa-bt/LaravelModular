@@ -23,18 +23,21 @@ class CategoryController extends Controller
 
     public function index()
     {
+        $this->authorize('manage',Category::class);
         $categories = $this->repository->all();
         return view('Category::index', compact('categories'));
     }
 
     public function store(CategoryRequest $request)
     {
+        $this->authorize('manage',Category::class);
         $this->repository->create($request);
         return back();
     }
 
     public function edit(Category $category)
     {
+        $this->authorize('manage',Category::class);
         $categories = $this->repository->allExceptById($category->id);
         return view('Category::edit', compact('categories', 'category'));
 
@@ -42,6 +45,7 @@ class CategoryController extends Controller
 
     public function update(Category $category, CategoryRequest $request)
     {
+        $this->authorize('manage',Category::class);
         $this->repository->edit($category, $request);
         return redirect()->route('categories.index');
 
@@ -49,6 +53,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $this->authorize('manage',Category::class);
         $this->repository->delete($category);
         return AjaxResponses::success();
 

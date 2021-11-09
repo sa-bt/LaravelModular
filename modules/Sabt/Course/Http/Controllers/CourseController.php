@@ -37,6 +37,7 @@ class CourseController extends Controller
 
     public function create(UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
+        $this->authorize('create',Course::class);
         $teachers   = $userRepository->getTeachers();
         $categories = $categoryRepository->all();
         return view('Course::create', compact('teachers', 'categories'));
@@ -51,6 +52,7 @@ class CourseController extends Controller
 
     public function edit(Course $course, UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
+        $this->authorize('edit', $course);
         $teachers   = $userRepository->getTeachers();
         $categories = $categoryRepository->all();
         return view('Course::edit', compact('teachers', 'categories', 'course'));

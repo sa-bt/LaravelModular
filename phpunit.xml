@@ -20,6 +20,9 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./modules/Sabt/Category/Tests/Feature</directory>
         </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./modules/Sabt/Course/Tests/Feature</directory>
+        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>

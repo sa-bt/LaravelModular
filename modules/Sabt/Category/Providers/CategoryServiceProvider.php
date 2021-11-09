@@ -5,8 +5,11 @@ namespace Sabt\Category\Providers;
 
 
 use Database\Seeders\DatabaseSeeder;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Sabt\Category\Database\Seeders\CategorySeeder;
+use Sabt\Category\Models\Category;
+use Sabt\Category\Policies\CategoryPolicy;
 
 class CategoryServiceProvider extends ServiceProvider
 {
@@ -16,6 +19,8 @@ class CategoryServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views/', 'Category');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/');
         DatabaseSeeder::$seeders[] = CategorySeeder::class;
+        Gate::policy(Category::class,CategoryPolicy::class);
+
     }
 
     public function boot()
