@@ -9,16 +9,16 @@ use Intervention\Image\Facades\Image;
 
 class ImageFileService
 {
-    protected static $sizes = ['100','300', '600'];
+    protected static $sizes = ['100', '300', '600'];
 
     public static function upload($file)
     {
         $fileName  = uniqid();
         $extension = $file->getClientOriginalExtension();
-        $dir       = 'app\public\\';
-        $file->move(storage_path($dir), $fileName . '.' . $extension);
-        $path = $dir . '\\' . $fileName . '.' . $extension;
-        return self::resize(storage_path($path), $dir, $fileName, $extension);
+        $dir       = 'public\\';
+        Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
+        $path = $dir . $fileName . '.' . $extension;
+        return self::resize(Storage::path($path), $dir, $fileName, $extension);
     }
 
     private static function resize($img, $dir, $fileName, $extension)
@@ -31,15 +31,16 @@ class ImageFileService
             $img->resize($size, null, function ($aspect)
             {
                 $aspect->aspectRatio();
-            })->save(storage_path($dir) . $fileName . '_' . $size . '.' . $extension);
+            })->save(Storage::path($dir) . $fileName . '_' . $size . '.' . $extension);
         }
         return $images;
     }
 
     public static function delete($media)
     {
-        foreach ($media->files as $file){
-            Storage::delete('public\\'.$file);
+        foreach ($media->files as $file)
+        {
+            Storage::delete('public\\' . $file);
         }
     }
 }

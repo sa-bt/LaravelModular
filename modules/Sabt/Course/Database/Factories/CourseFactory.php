@@ -33,7 +33,6 @@ class CourseFactory extends Factory
             'percent'=>70,
             'type'=>Course::TYPE_CASH,
             'status'=>Course::STATUS_COMPLETED,
-            'confirmation_status'=>Course::CONFIRMATION_STATUS_ACCEPTED,
         ];
     }
 
