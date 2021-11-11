@@ -4,6 +4,7 @@ namespace Sabt\Course\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Sabt\Category\Models\Category;
 use Sabt\Course\Database\Factories\CourseFactory;
 use Sabt\Media\Models\Media;
 use Sabt\User\Models\User;
@@ -48,5 +49,10 @@ class Course extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

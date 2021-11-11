@@ -51,11 +51,9 @@ class CourseTest extends TestCase
     {
         $this->actionAsUser();
         auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION, Permission::TEACH_PERMISSION);
-        $category = Category::factory()->create();
-        Storage::fake('local');
-        $response = $this->post(route('courses.store'), $this->createCourse());
+        $response = $this->createCourse();
         $response->assertRedirect(route('courses.index'));
-        $this->assertEquals(Course::count(),1);
+        $this->assertEquals(Course::count(), 1);
     }
 
     public function test_permitted_user_can_see_edit_course_page()
@@ -89,6 +87,93 @@ class CourseTest extends TestCase
         $this->get(route('courses.edit', $course->id))->assertStatus(403);
     }
 
+    public function test_permitted_user_can_update_course()
+    {
+        $this->actionAsUser();
+        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION, Permission::TEACH_PERMISSION);
+        $course   = Course::factory()->create();
+        $response = $this->put(route('courses.update', $course->id), [
+            "title"       => "update title",
+            "slug"        => "test",
+            "priority"    => 12,
+            "price"       => 150000,
+            "percent"     => 90,
+            "body"        => 90,
+            "teacher_id"  => auth()->id(),
+            "category_id" => $course->category->id,
+            "type"        => Course::TYPE_CASH,
+            "status"      => Course::STATUS_COMPLETED,
+            "image"       => UploadedFile::fake()->image('bannerTest.jpg'),
+        ]);
+        $response->assertRedirect(route('courses.index'));
+        $course->refresh();
+        $this->assertEquals('update title', $course->title);
+    }
+
+    public function test_normal_user_can_not_update_course()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $title  = $course->title;
+
+        $this->actionAsUser();
+        auth()->user()->givePermissionTo(Permission::TEACH_PERMISSION);
+        $response = $this->put(route('courses.update', $course->id), [
+            "title"       => "update title",
+            "slug"        => "test",
+            "priority"    => 12,
+            "price"       => 150000,
+            "percent"     => 90,
+            "body"        => 90,
+            "teacher_id"  => auth()->id(),
+            "category_id" => $course->category->id,
+            "type"        => Course::TYPE_CASH,
+            "status"      => Course::STATUS_COMPLETED,
+            "image"       => UploadedFile::fake()->image('bannerTest.jpg'),
+        ]);
+        $response->assertStatus(403);
+        $course->refresh();
+        $this->assertEquals($title, $course->title);
+    }
+
+    public function test_permitted_user_can_delete_course()
+    {
+        $this->actionAsAdmin();
+        $course   = Course::factory()->create();
+        $this->delete(route('courses.destroy', $course->id))->assertOk();
+        $this->assertEquals(0, Course::count());
+    }
+
+    public function test_normal_user_can_not_delete_course()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+
+        $this->actionAsUser();
+        $this->delete(route('courses.destroy', $course->id))->assertStatus(403);
+        $this->assertEquals(1,Course::count());
+    }
+
+    public function test_permitted_user_can_change_confirmation_status_course()
+    {
+        $this->actionAsAdmin();
+        $course   = Course::factory()->create();
+        $this->put(route('courses.accept', $course->id))->assertOk();
+        $this->put(route('courses.reject', $course->id))->assertOk();
+        $this->put(route('courses.lock', $course->id))->assertOk();
+    }
+
+    public function test_normal_user_can_not_change_confirmation_status_course()
+    {
+
+        $this->actionAsAdmin();
+        $course   = Course::factory()->create();
+
+        $this->actionAsUser();
+        $this->put(route('courses.accept', $course->id))->assertStatus(403);
+        $this->put(route('courses.reject', $course->id))->assertStatus(403);
+        $this->put(route('courses.lock', $course->id))->assertStatus(403);
+    }
 
     private function actionAsAdmin()
     {
@@ -117,18 +202,21 @@ class CourseTest extends TestCase
 
     private function createCourse()
     {
+        Storage::fake('local');
         $category = Category::factory()->create();
-        return [
-            "title"               => "required",
-            "slug"                => "required",
-            "priority"            => 12,
-            "price"               => 150000,
-            "percent"             => 90,
-            "teacher_id"          => auth()->id(),
-            "type"                => Course::TYPE_CASH,
-            "status"              => Course::STATUS_COMPLETED,
-            "category_id"         => $category->id,
-            "image"               => UploadedFile::fake()->image('bannerTest.jpg'),
+        $data     = [
+            "title"       => "required",
+            "slug"        => "required",
+            "priority"    => 12,
+            "price"       => 150000,
+            "percent"     => 90,
+            "teacher_id"  => auth()->id(),
+            "type"        => Course::TYPE_CASH,
+            "status"      => Course::STATUS_COMPLETED,
+            "category_id" => $category->id,
+            "image"       => UploadedFile::fake()->image('bannerTest.jpg'),
         ];
+        return $this->post(route('courses.store'), $data);
+
     }
 }

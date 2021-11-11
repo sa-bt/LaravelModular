@@ -29,7 +29,7 @@ class CourseController extends Controller
 
     public function index()
     {
-        $this->authorize('index',Course::class);
+        $this->authorize('index', Course::class);
         $courses = $this->courseRepository->all();
         return view('Course::index', compact('courses'));
 
@@ -37,7 +37,7 @@ class CourseController extends Controller
 
     public function create(UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
-        $this->authorize('create',Course::class);
+        $this->authorize('create', Course::class);
         $teachers   = $userRepository->getTeachers();
         $categories = $categoryRepository->all();
         return view('Course::create', compact('teachers', 'categories'));
@@ -61,9 +61,11 @@ class CourseController extends Controller
 
     public function update(Course $course, CourseRequest $request)
     {
+        $this->authorize('edit', $course);
         if ($request->hasFile('image'))
         {
-            $course->banner->delete();
+            if ($course->banner)
+                $course->banner->delete();
             $request->request->add(['banner_id' => MediaUploadService::upload($request->file('image'))->id]);
         }
         else
@@ -76,6 +78,8 @@ class CourseController extends Controller
 
     public function destroy(Course $course)
     {
+        $this->authorize('delete', $course);
+
         if ($course->banner)
         {
             $course->banner->delete();
@@ -86,6 +90,8 @@ class CourseController extends Controller
 
     public function accept(Course $course)
     {
+        $this->authorize('change_confirmation_status', Course::class);
+
         if ($this->courseRepository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_ACCEPTED))
         {
             return AjaxResponses::success();
@@ -95,6 +101,8 @@ class CourseController extends Controller
 
     public function reject(Course $course)
     {
+        $this->authorize('change_confirmation_status', Course::class);
+
         if ($this->courseRepository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_REJECTED))
         {
             return AjaxResponses::success();
@@ -104,6 +112,8 @@ class CourseController extends Controller
 
     public function lock(Course $course)
     {
+        $this->authorize('change_confirmation_status', Course::class);
+
         if ($this->courseRepository->updateStatus($course, Course::STATUS_LOCKED))
         {
             return AjaxResponses::success();

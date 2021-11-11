@@ -4,7 +4,9 @@ namespace Sabt\Course\Database\Factories;
 
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Sabt\Category\Models\Category;
 use Sabt\Course\Models\Course;
 
 class CourseFactory extends Factory
@@ -27,6 +29,7 @@ class CourseFactory extends Factory
         return [
             'title' => $title,
             'teacher_id' => auth()->id(),
+            'category_id' => Category::factory()->create()->id,
             'slug'=>$title,
             'priority'=>2,
             'price'=>150000,
