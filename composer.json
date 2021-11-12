@@ -27,6 +27,7 @@
         "psr-4": {
             "App\\": "app/",
             "Sabt\\User\\": "modules/Sabt/User/",
+            "Sabt\\Common\\": "modules/Sabt/Common/",
             "Sabt\\Dashboard\\": "modules/Sabt/Dashboard/",
             "Sabt\\Category\\": "modules/Sabt/Category/",
             "Sabt\\RolePermissions\\": "modules/Sabt/RolePermissions/",

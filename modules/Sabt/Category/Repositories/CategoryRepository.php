@@ -4,7 +4,7 @@ namespace Sabt\Category\Repositories;
 
 
 use Sabt\Category\Models\Category;
-use Sabt\Category\Responses\AjaxResponses;
+use Sabt\Common\Responses\AjaxResponses;
 
 class CategoryRepository
 {

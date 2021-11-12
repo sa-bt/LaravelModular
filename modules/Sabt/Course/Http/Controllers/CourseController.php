@@ -7,7 +7,7 @@ namespace Sabt\Course\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Sabt\Category\Repositories\CategoryRepository;
-use Sabt\Category\Responses\AjaxResponses;
+use Sabt\Common\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\CourseRequest;
 use Sabt\Course\Models\Course;
 use Sabt\Course\Repositories\CourseRepository;

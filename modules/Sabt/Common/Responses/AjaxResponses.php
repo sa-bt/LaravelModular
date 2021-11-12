@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sabt\Category\Responses;
+namespace Sabt\Common\Responses;
 
 
 use Illuminate\Http\Response;

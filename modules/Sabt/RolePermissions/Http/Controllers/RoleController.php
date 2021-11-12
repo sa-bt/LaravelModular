@@ -5,7 +5,7 @@ namespace Sabt\RolePermissions\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use Sabt\Category\Responses\AjaxResponses;
+use Sabt\Common\Responses\AjaxResponses;
 use Sabt\RolePermissions\Http\Requests\RoleUpdateRequest;
 use Sabt\RolePermissions\Http\Requests\RoleStoreRequest;
 use Sabt\RolePermissions\Models\Role;

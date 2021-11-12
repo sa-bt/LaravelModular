@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Sabt\Category\Http\Requests\CategoryRequest;
 use Sabt\Category\Models\Category;
 use Sabt\Category\Repositories\CategoryRepository;
-use Sabt\Category\Responses\AjaxResponses;
+use Sabt\Common\Responses\AjaxResponses;
 
 class CategoryController extends Controller
 {

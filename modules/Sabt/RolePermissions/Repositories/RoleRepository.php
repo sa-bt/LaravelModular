@@ -4,7 +4,7 @@
 namespace Sabt\RolePermissions\Repositories;
 
 
-use Sabt\Category\Responses\AjaxResponses;
+use Sabt\Common\Responses\AjaxResponses;
 use Spatie\Permission\Models\Role;
 
 class RoleRepository
