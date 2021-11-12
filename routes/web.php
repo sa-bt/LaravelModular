@@ -22,8 +22,8 @@ Route::get('/', function ()
 
 Route::get('/test', function ()
 {
-//    auth()->user()->givePermissionTo(\Sabt\RolePermissions\Models\Permission::SUPER_ADMIN_PERMISSION);
-    return \Sabt\Course\Models\Course::factory()->create();
+    auth()->user()->givePermissionTo(\Sabt\RolePermissions\Models\Permission::MANAGE_ROLES_PERMISSION);
+    return auth()->user()->permissions;
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

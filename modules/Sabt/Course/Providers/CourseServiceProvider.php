@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Sabt\Course\Models\Course;
 use Sabt\Course\Policies\CoursePolicy;
-use Sabt\RolePermissions\Models\Permission;
 
 class CourseServiceProvider extends ServiceProvider
 {

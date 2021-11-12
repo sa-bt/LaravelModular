@@ -139,7 +139,7 @@ class CourseTest extends TestCase
     public function test_permitted_user_can_delete_course()
     {
         $this->actionAsAdmin();
-        $course   = Course::factory()->create();
+        $course = Course::factory()->create();
         $this->delete(route('courses.destroy', $course->id))->assertOk();
         $this->assertEquals(0, Course::count());
     }
@@ -151,13 +151,13 @@ class CourseTest extends TestCase
 
         $this->actionAsUser();
         $this->delete(route('courses.destroy', $course->id))->assertStatus(403);
-        $this->assertEquals(1,Course::count());
+        $this->assertEquals(1, Course::count());
     }
 
     public function test_permitted_user_can_change_confirmation_status_course()
     {
         $this->actionAsAdmin();
-        $course   = Course::factory()->create();
+        $course = Course::factory()->create();
         $this->put(route('courses.accept', $course->id))->assertOk();
         $this->put(route('courses.reject', $course->id))->assertOk();
         $this->put(route('courses.lock', $course->id))->assertOk();
@@ -167,7 +167,7 @@ class CourseTest extends TestCase
     {
 
         $this->actionAsAdmin();
-        $course   = Course::factory()->create();
+        $course = Course::factory()->create();
 
         $this->actionAsUser();
         $this->put(route('courses.accept', $course->id))->assertStatus(403);
@@ -190,7 +190,6 @@ class CourseTest extends TestCase
     {
         $this->createUser();
         auth()->user()->givePermissionTo(Permission::SUPER_ADMIN_PERMISSION);
-
     }
 
     private function createUser()
@@ -217,6 +216,5 @@ class CourseTest extends TestCase
             "image"       => UploadedFile::fake()->image('bannerTest.jpg'),
         ];
         return $this->post(route('courses.store'), $data);
-
     }
 }

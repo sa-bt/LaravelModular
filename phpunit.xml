@@ -23,6 +23,9 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./modules/Sabt/Course/Tests/Feature</directory>
         </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./modules/Sabt/RolePermissions/Tests/Feature</directory>
+        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
