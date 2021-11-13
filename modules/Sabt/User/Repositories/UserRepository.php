@@ -22,4 +22,9 @@ class UserRepository
     {
         return User::permission(Permission::TEACH_PERMISSION)->get();
     }
+
+    public function paginate()
+    {
+        return  User::query()->paginate();
+    }
 }

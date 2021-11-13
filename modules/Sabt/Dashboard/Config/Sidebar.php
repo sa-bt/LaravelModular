@@ -1,6 +1,9 @@
 <?php
 return [
     "items"=>[
-        "dashboard"=>[]
+        "dashboard"=>[],
+        "categories"=>[],
+        "rolePermission"=>[],
+        "users"=>[],
     ]
 ];

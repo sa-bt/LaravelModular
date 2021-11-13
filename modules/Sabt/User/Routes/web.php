@@ -1,19 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Sabt\User\Http\Controllers\Auth\ForgotPasswordController;
 use Sabt\User\Http\Controllers\Auth\LoginController;
 use Sabt\User\Http\Controllers\Auth\RegisterController;
 use Sabt\User\Http\Controllers\Auth\ResetPasswordController;
 use Sabt\User\Http\Controllers\Auth\VerificationController;
+use Sabt\User\Http\Controllers\UserController;
 use Sabt\User\Models\User;
 
 Route::group([
-                 'namespace'  => 'Sabt\User\Http\Controllers',
+//                 'namespace'  => 'Sabt\User\Http\Controllers',
                  'middleware' => 'web'
              ], function ()
 {
+    Route::resource('users', UserController::class);
+    Route::post('users/{user}/add/role', [UserController::class,'addRole'])->name('users.addRole');
+
     Route::post('email/verify', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
     Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
