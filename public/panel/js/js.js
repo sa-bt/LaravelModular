@@ -296,3 +296,5 @@ function updateConfirmationStatus(event, route, message, status, class_name = 'c
         // }
     })
 }
+
+

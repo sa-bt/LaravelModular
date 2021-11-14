@@ -30,7 +30,8 @@
                                         @foreach($user->roles as $role)
                                             <li>{{$role->name}}</li>
                                         @endforeach
-                                        <li><a href="#roles-modal" onclick="setFormAction({{$user->id}})" rel="modal:open">اصلاح نقش کاربری</a></li>
+                                        <li><a href="#roles-modal" onclick="setFormAction({{$user->id}})"
+                                               rel="modal:open">اصلاح نقش کاربری</a></li>
                                     </ul>
                                 </a></td>
                             <td>
@@ -46,7 +47,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div id="roles-modal">
+                <div id="roles-modal" class="modal">
                     <form action="{{route('users.addRole',0)}}" id="role-form" method="post">
                         @csrf
                         <select name="role" id="">
@@ -72,5 +73,30 @@
         function setFormAction(id) {
             $('#role-form').attr('action', '{{route('users.addRole',0)}}'.replace('/0/', '/' + id + '/'))
         }
+        Swal.queue([{
+            icon: 'success',
+            title: 'success',
+            timer: 3000,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+        },
+       {
+            icon: 'error',
+            title: 'salam',
+            timer: 30000,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+        }])
+        @if(session()->has('feedback'))
+            @foreach(session()->get('feedback') as $feedback)
+        Toast.fire({
+            icon: '{{$feedback['type']}}',
+            title: '{{$feedback['message']}}'
+        })
+        @endforeach
+        @endif
+
     </script>
 @endsection

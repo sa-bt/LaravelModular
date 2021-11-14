@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->authorize('view' , User::class);
+        $this->authorize('view', User::class);
         $roles = $this->roleRepository->all();
         $users = $this->userRepository->paginate();
         return view('User::Admin.index', compact('users', 'roles'));
@@ -31,8 +31,11 @@ class UserController extends Controller
 
     public function addRole(AddRoleRequest $request, User $user)
     {
-        $this->authorize('addRole' , User::class);
+        $this->authorize('addRole', User::class);
         $user->assignRole($request->role);
+        newFeedback('error','عملیات با موفقیت اجام شد.');
+        newFeedback('success','عملیات با موفقیت اجام شد.');
+
         return back();
     }
 }

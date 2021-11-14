@@ -1900,3 +1900,6 @@ span.tagRemove:hover {
 .w-100{
     width: 100%;
 }
+.swal2-select{
+    display: none !important;
+}
