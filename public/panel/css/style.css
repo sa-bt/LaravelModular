@@ -932,6 +932,14 @@ textarea {
     margin-left: 10px;
 }
 
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
 .margin-bottom-12-p p {
     margin-bottom: 12px;
 }
@@ -993,6 +1001,14 @@ textarea {
 .item-delete:before {
     content: '\e129';
     font-size: 16px;
+    color: red;
+}
+
+.item-remove:before {
+    content: '\00D7';
+    font-size: 16px;
+    color: red;
+    font-family: 'Nunito', sans-serif;
 }
 
 .item-reject:before {
@@ -1019,6 +1035,14 @@ textarea {
     content: '\e037';
     font-size: 16px;
 }
+.item-add:before {
+    content: '\002B';
+    font-size: 16px;
+    color:green;
+    font-family: 'Nunito', sans-serif;
+}
+
+
 
 .item-edit:before {
     content: '\e141';
@@ -1902,4 +1926,17 @@ span.tagRemove:hover {
 }
 .swal2-select{
     display: none !important;
+}
+
+.delete-list-item:hover .item-remove{
+    display: inline-block;
+}
+.bold{
+    font-weight:bold ;
+}
+.text-xl{
+    font-size: x-large;
+}
+.text-l{
+    font-size: large;
 }

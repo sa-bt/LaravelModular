@@ -15,7 +15,18 @@ class UserPolicy
     {
         return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
     }
+
+    public function edit($user)
+    {
+        return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
+    }
+
     public function addRole($user)
+    {
+        return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
+    }
+
+    public function removeRole($user)
     {
         return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
     }

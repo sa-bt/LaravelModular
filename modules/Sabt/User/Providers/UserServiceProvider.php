@@ -27,6 +27,7 @@ class UserServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/');
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views/Front', 'User');
         Gate::policy(User::class, UserPolicy::class);
+        $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/Lang');
 
         config()->set('Sidebar.items.users', [
             "icon"  => "i-users",

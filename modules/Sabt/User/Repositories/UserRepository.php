@@ -13,6 +13,7 @@ class UserRepository
     {
         return User::query()->where('email', '=', $email)->first();
     }
+
     public function findById($id)
     {
         return User::query()->where('id', '=', $id)->first();
@@ -25,6 +26,31 @@ class UserRepository
 
     public function paginate()
     {
-        return  User::query()->paginate();
+        return User::query()->paginate();
+    }
+
+    public function update($user, $values)
+    {
+        $update = [
+            "name"      => $values->name,
+            "email"     => $values->email,
+            "mobile"    => $values->mobile,
+            "headline"  => $values->headline,
+            "website"   => $values->website,
+            "linkedin"  => $values->linkedin,
+            "instagram" => $values->instagram,
+            "twitter"   => $values->twitter,
+            "facebook"  => $values->facebook,
+            "youtube"   => $values->youtube,
+            "status"    => $values->status,
+            "bio"       => $values->bio,
+            "username"  => $values->username,
+            "image_id"  => $values->image_id,
+        ];
+        if (!is_null($values->password))
+        {
+            $update['password'] = bcrypt($values->password);
+        }
+        return $user->update($update);
     }
 }

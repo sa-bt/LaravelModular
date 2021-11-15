@@ -20,7 +20,11 @@ class Course extends Model
     const STATUS_COMPLETED = 'completed';
     const STATUS_NOT_COMPLETED = 'not-completed';
     const STATUS_LOCKED = 'locked';
-    static $statuses = [self::STATUS_COMPLETED, self::STATUS_NOT_COMPLETED, self::STATUS_LOCKED];
+    static $statuses = [
+        self::STATUS_COMPLETED,
+        self::STATUS_NOT_COMPLETED,
+        self::STATUS_LOCKED
+    ];
 
     const CONFIRMATION_STATUS_ACCEPTED = 'accepted';
     const CONFIRMATION_STATUS_REJECTED = 'rejected';

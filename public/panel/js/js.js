@@ -225,7 +225,7 @@ const Toast = Swal.mixin({
 })
 
 
-function deleteItem(event, route) {
+function deleteItem(event, route, element = 'tr') {
     event.preventDefault();
     Swal.fire({
         title: 'حذف رکورد',
@@ -243,7 +243,7 @@ function deleteItem(event, route) {
                 _token: $('meta[name="_token"]').attr('content')
             })
                 .done(function (response) {
-                    event.target.closest('tr').remove()
+                    event.target.closest(element).remove()
                     Toast.fire({
                         icon: 'success',
                         title: response.message

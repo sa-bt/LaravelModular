@@ -28,10 +28,13 @@
                             <td><a href="">
                                     <ul>
                                         @foreach($user->roles as $role)
-                                            <li>{{$role->name}}</li>
+                                            <li class="delete-list-item">{{$role->name}} <a href=""
+                                                                   onclick="deleteItem(event,'{{route('users.removeRole',['user'=>$user,'role'=>$role])}}','li')"
+                                                                   class="item-remove margin-right-5 bold " title="حذف"></a>
+                                            </li>
                                         @endforeach
                                         <li><a href="#roles-modal" onclick="setFormAction({{$user->id}})"
-                                               rel="modal:open">اصلاح نقش کاربری</a></li>
+                                               rel="modal:open" class="item-add mlg-15 bold text-l" title="اضافه کردن نقش کاربری"></a></li>
                                     </ul>
                                 </a></td>
                             <td>
@@ -73,30 +76,7 @@
         function setFormAction(id) {
             $('#role-form').attr('action', '{{route('users.addRole',0)}}'.replace('/0/', '/' + id + '/'))
         }
-        Swal.queue([{
-            icon: 'success',
-            title: 'success',
-            timer: 3000,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-        },
-       {
-            icon: 'error',
-            title: 'salam',
-            timer: 30000,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-        }])
-        @if(session()->has('feedback'))
-            @foreach(session()->get('feedback') as $feedback)
-        Toast.fire({
-            icon: '{{$feedback['type']}}',
-            title: '{{$feedback['message']}}'
-        })
-        @endforeach
-        @endif
+        @include('Common::layouts.feedback')
 
     </script>
 @endsection

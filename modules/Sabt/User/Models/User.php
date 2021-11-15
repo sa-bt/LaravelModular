@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Sabt\Media\Models\Media;
 use Sabt\User\Database\Factories\UserFactory;
 use Sabt\User\Notifications\ResetPasswordRequestNotification;
 use Sabt\User\Notifications\VerifyEmailNotification;
@@ -16,33 +17,24 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'mobile',
+    const ACTIVE_STATUS="active";
+    const INACTIVE_STATUS="inactive";
+    const BAN_STATUS="ban";
+
+    public static $statuses=[
+      self::ACTIVE_STATUS,
+      self::INACTIVE_STATUS,
+      self::BAN_STATUS
     ];
+
+    protected $guarded=[];
 protected $primaryKey='id';
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -60,5 +52,10 @@ protected $primaryKey='id';
     public function sendResetPasswordRequestNotification()
     {
         $this->notify(new ResetPasswordRequestNotification());
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Media::class, 'image_id');
     }
 }
