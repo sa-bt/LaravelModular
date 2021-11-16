@@ -34,7 +34,11 @@
             "Sabt\\Course\\": "modules/Sabt/Course/",
             "Sabt\\Media\\": "modules/Sabt/Media/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+
+        "files": [
+            "modules/Sabt/Common/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

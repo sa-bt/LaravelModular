@@ -53,4 +53,14 @@ class UserRepository
         }
         return $user->update($update);
     }
+
+    public function delete($user)
+    {
+        return $user->delete();
+    }
+
+    public function manualVerify($user)
+    {
+        return $user->markEmailAsverified();
+    }
 }

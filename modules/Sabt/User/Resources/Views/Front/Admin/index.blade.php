@@ -5,16 +5,21 @@
 @section('content')
     <div class="row no-gutters  ">
         <div class="col-12 margin-left-10 margin-bottom-15 border-radius-3">
-            <p class="box__title">دوره ها</p>
+            <p class="box__title">مدیریت کاربران</p>
             <div class="table__box">
                 <table class="table">
                     <thead role="rowgroup">
                     <tr role="row" class="title-row">
                         <th>ردیف</th>
                         <th>شناسه</th>
-                        <th>نام</th>
+                        <th>نام و نام خانوادگی</th>
                         <th>ایمیل</th>
+                        <th>موبایل</th>
+                        <th>تاریخ عضویت</th>
+                        <th>آی پی آدرس</th>
+                        <th>در حال یادگیری</th>
                         <th>نقش کاربری</th>
+                        <th>وضعیت تایید</th>
                         <th>عملیات</th>
                     </tr>
                     </thead>
@@ -25,6 +30,10 @@
                             <td>{{$user->id}}</td>
                             <td><a href="">{{$user->name}}</a></td>
                             <td><a href="">{{$user->email}}</a></td>
+                            <td><a href="">{{$user->mobile}}</a></td>
+                            <td><a href="">{{$user->created_at}}</a></td>
+                            <td><a href="">{{$user->ip}}</a></td>
+                            <td><a href="">{{5}}</a></td>
                             <td><a href="">
                                     <ul>
                                         @foreach($user->roles as $role)
@@ -37,7 +46,14 @@
                                                rel="modal:open" class="item-add mlg-15 bold text-l" title="اضافه کردن نقش کاربری"></a></li>
                                     </ul>
                                 </a></td>
+                            <td class="confirmation_status">{!! $user->hasverifiedEmail()?"<span class='text-success'>تایید شده</span>" : "<span class='text-error'>تایید نشده</span>"!!}</td>
                             <td>
+                                <a href="" class="item-confirm mlg-15"
+                                   onclick="updateConfirmationStatus(
+                                       event,
+                                       '{{route('users.manualVerify',$user->id)}}',
+                                       'آیا از تایید این کاربر اطمینان دارید؟',
+                                       'تایید شده')"></a>
                                 <a href=""
                                    onclick="deleteItem(event,'{{route('users.destroy',$user->id)}}')"
                                    class="item-delete mlg-15" title="حذف"></a>

@@ -31,4 +31,9 @@ class UserPolicy
         return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
     }
 
+    public function manualVerify($user)
+    {
+        return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
+    }
+
 }

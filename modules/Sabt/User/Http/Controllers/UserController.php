@@ -42,7 +42,6 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-//        dd($request->all());
         $this->authorize('edit', User::class);
         if ($request->hasFile('image'))
         {
@@ -60,6 +59,13 @@ class UserController extends Controller
         return back();
     }
 
+    public function destroy(User $user)
+    {
+        $this->authorize('delete', User::class);
+        $this->userRepository->delete($user);
+        return AjaxResponses::success();
+    }
+
     public function addRole(AddRoleRequest $request, User $user)
     {
         $this->authorize('addRole', User::class);
@@ -72,6 +78,13 @@ class UserController extends Controller
     {
         $this->authorize('removeRole', User::class);
         $user->removeRole($role);
+        return AjaxResponses::success();
+    }
+
+    public function manualVerify(User $user)
+    {
+        $this->authorize('manualVerify', User::class);
+        $this->userRepository->manualVerify($user);
         return AjaxResponses::success();
     }
 }
