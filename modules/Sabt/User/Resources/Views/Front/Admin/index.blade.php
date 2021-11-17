@@ -19,7 +19,8 @@
                         <th>آی پی آدرس</th>
                         <th>در حال یادگیری</th>
                         <th>نقش کاربری</th>
-                        <th>وضعیت تایید</th>
+                        <th>تایید حساب</th>
+                        <th>وضعیت حساب</th>
                         <th>عملیات</th>
                     </tr>
                     </thead>
@@ -37,7 +38,7 @@
                             <td><a href="">
                                     <ul>
                                         @foreach($user->roles as $role)
-                                            <li class="delete-list-item">{{$role->name}} <a href=""
+                                            <li class="delete-list-item">@lang($role->name) <a href=""
                                                                    onclick="deleteItem(event,'{{route('users.removeRole',['user'=>$user,'role'=>$role])}}','li')"
                                                                    class="item-remove margin-right-5 bold " title="حذف"></a>
                                             </li>
@@ -47,6 +48,7 @@
                                     </ul>
                                 </a></td>
                             <td class="confirmation_status">{!! $user->hasverifiedEmail()?"<span class='text-success'>تایید شده</span>" : "<span class='text-error'>تایید نشده</span>"!!}</td>
+                            <td>@lang($user->status)</td>
                             <td>
                                 <a href="" class="item-confirm mlg-15"
                                    onclick="updateConfirmationStatus(

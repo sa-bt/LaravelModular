@@ -10,6 +10,7 @@ use Sabt\Media\Services\MediaUploadService;
 use Sabt\RolePermissions\Models\Role;
 use Sabt\RolePermissions\Repositories\RoleRepository;
 use Sabt\User\Http\Requests\AddRoleRequest;
+use Sabt\User\Http\Requests\UpdateUserPhoto;
 use Sabt\User\Http\Requests\UpdateUserRequest;
 use Sabt\User\Models\User;
 use Sabt\User\Repositories\UserRepository;
@@ -66,6 +67,11 @@ class UserController extends Controller
         return AjaxResponses::success();
     }
 
+    public function editProfile()
+    {
+        return view('User::Admin.profile');
+    }
+
     public function addRole(AddRoleRequest $request, User $user)
     {
         $this->authorize('addRole', User::class);
@@ -86,5 +92,15 @@ class UserController extends Controller
         $this->authorize('manualVerify', User::class);
         $this->userRepository->manualVerify($user);
         return AjaxResponses::success();
+    }
+
+    public function updatePhoto(UpdateUserPhoto $request)
+    {
+        $media=MediaUploadService::upload($request->file('image'));
+        if (auth()->user()->image) auth()->user()->image->delete();
+        auth()->user()->image_id=$media->id;
+        auth()->user()->save();
+        newFeedback();
+        return back();
     }
 }

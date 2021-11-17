@@ -18,6 +18,9 @@ Route::group([
     Route::post('users/{user}/add/role', [UserController::class,'addRole'])->name('users.addRole');
     Route::delete('users/{user}/remove/{role}/role', [UserController::class,'removeRole'])->name('users.removeRole');
     Route::put('users/{user}/manualVerify', [UserController::class,'manualVerify'])->name('users.manualVerify');
+    Route::post('users/photo', [UserController::class,'updatePhoto'])->name('users.photo');
+    Route::get('users/profile', [UserController::class,'editProfile'])->name('users.profile');
+    Route::post('users/profile', [UserController::class,'updateProfile'])->name('users.profile');
 
     Route::post('email/verify', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');

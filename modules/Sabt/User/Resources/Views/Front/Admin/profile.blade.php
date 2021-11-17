@@ -1,11 +1,11 @@
 @extends('Dashboard::master')
 @section('breadcrumb')
     <li><a href="{{route('users.index')}}" title="مدیریت کاربران">مدیریت کاربران</a></li>
-    <li><a href="#" title="ویرایش اطلاعات کاربر">ویرایش اطلاعات کاربر</a></li>
+    <li><a href="#" title="ویرایش اطلاعات کاربر">ویرایش پروفایل</a></li>
 @endsection
 @section('content')
     <div class="col-10 bg-white" style="margin: auto ">
-        <p class="box__title">ویرایش اطلاعات کاربر </p>
+        <p class="box__title">ویرایش پروفایل </p>
         <form action="{{route('users.update',$user->id)}}" class="padding-30" method="post"
               enctype="multipart/form-data">
             @csrf

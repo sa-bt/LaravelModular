@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Sabt\Course\Models\Course;
 use Sabt\Media\Models\Media;
 use Sabt\User\Database\Factories\UserFactory;
 use Sabt\User\Notifications\ResetPasswordRequestNotification;
@@ -57,5 +58,10 @@ protected $primaryKey='id';
     public function image()
     {
         return $this->belongsTo(Media::class, 'image_id');
+    }
+
+    public function teaches()
+    {
+        return $this->hasMany(Course::class,'teacher_id');
     }
 }
