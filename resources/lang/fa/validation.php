@@ -177,4 +177,6 @@ return [
         'status'                => 'وضعیت',
         'category_id'           => 'دسته بندی',
         'image'                 => 'تصویر',
+        'shaba'                 => 'شماره شبا',
+        'cart_number'           => 'شماره کارت',
     ],];

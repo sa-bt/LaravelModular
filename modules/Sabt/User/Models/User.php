@@ -18,18 +18,18 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    const ACTIVE_STATUS="active";
-    const INACTIVE_STATUS="inactive";
-    const BAN_STATUS="ban";
+    const ACTIVE_STATUS = "active";
+    const INACTIVE_STATUS = "inactive";
+    const BAN_STATUS = "ban";
 
-    public static $statuses=[
-      self::ACTIVE_STATUS,
-      self::INACTIVE_STATUS,
-      self::BAN_STATUS
+    public static $statuses = [
+        self::ACTIVE_STATUS,
+        self::INACTIVE_STATUS,
+        self::BAN_STATUS
     ];
 
-    protected $guarded=[];
-protected $primaryKey='id';
+    protected $guarded    = [];
+    protected $primaryKey = 'id';
 
     protected $hidden = [
         'password',
@@ -62,6 +62,11 @@ protected $primaryKey='id';
 
     public function teaches()
     {
-        return $this->hasMany(Course::class,'teacher_id');
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    public function profilePath()
+    {
+        return $this->username ? route('viewProfile', $this->username) : route('viewProfile', 'username');
     }
 }

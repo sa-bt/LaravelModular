@@ -18,7 +18,8 @@ class UserPolicy
 
     public function edit($user)
     {
-        return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
+        return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION) || (auth()->id() === $user
+                ->id);
     }
 
     public function addRole($user)
@@ -35,5 +36,14 @@ class UserPolicy
     {
         return $user->hasPermissionTo(Permission::MANAGE_USERS_PERMISSION);
     }
+
+
+    public function editProfile($user)
+    {
+        return auth()->check();
+    }
+
+
+
 
 }
