@@ -13,16 +13,21 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table)
+        {
             $table->id();
             $table->string('name');
             $table->string('username')->nullable()->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('mobile',14)->nullable()->unique();
+            $table->string('mobile', 14)->nullable()->unique();
             $table->string('headline')->nullable();
             $table->text('bio')->nullable();
+
+            $table->text('card_number')->nullable();
+            $table->text('shaba')->nullable();
+
             $table->string('website')->nullable();
             $table->string('ip')->nullable();
             $table->string('linkedin')->nullable();
@@ -31,10 +36,11 @@ class CreateUsersTable extends Migration
             $table->string('youtube')->nullable();
             $table->string('instagram')->nullable();
             $table->string('telegram')->nullable();
+
             $table->unsignedBigInteger('image_id')->nullable();
 
             $table->rememberToken();
-            $table->enum('status',\Sabt\User\Models\User::$statuses)->default('inactive');
+            $table->enum('status', \Sabt\User\Models\User::$statuses)->default('inactive');
             $table->timestamps();
 
 //            $table->foreign('image_id')->references('id')->on('media')->onDelete('SET NULL');

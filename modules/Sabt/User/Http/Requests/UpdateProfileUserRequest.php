@@ -31,8 +31,9 @@ class UpdateProfileUserRequest extends FormRequest
         if (auth()->user()->hasPermissionTo(Permission::TEACH_PERMISSION))
         {
             $rules             += [
-                'cart_number' => 'required|string|size:16',
+                'card_number' => 'required|string|size:16',
                 'shaba'       => 'required|string|size:24',
+                'bio'         => 'required|string|max:1000',
             ];
             $rules['username'] = ['required', 'min:3', 'max:190', 'unique:users,email,' . auth()->id()];
         }

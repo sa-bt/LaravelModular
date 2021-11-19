@@ -78,19 +78,9 @@ class UserController extends Controller
 
     public function updateProfile(UpdateProfileUserRequest $request, User $user)
     {
-        dd(6);
         $this->authorize('editProfile', User::class);
-        if ($request->hasFile('image'))
-        {
-            if ($user->image)
-                $user->image->delete();
-            $request->request->add(['image_id' => MediaUploadService::upload($request->file('image'))->id]);
-        }
-        else
-        {
-            $request->request->add(['image_id' => $user->image_id]);
-        }
-        $this->userRepository->update($user, $request);
+
+        $this->userRepository->updateProfile($request);
         newFeedback();
 
         return back();

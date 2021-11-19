@@ -64,10 +64,10 @@
             />
             <x-input
                 type="text"
-                name="cart_number"
+                name="card_number"
                 class="text-left "
                 placeholder="شماره کارت"
-                value="{{auth()->user()->cart_number}}"
+                value="{{auth()->user()->card_number}}"
             />
             <x-input
                 type="text"

@@ -63,4 +63,32 @@ class UserRepository
     {
         return $user->markEmailAsverified();
     }
+
+    public function updateProfile($values)
+    {
+//        dd($values->all(),auth()->user()->toArray());
+        auth()->user()->name = $values->name;
+        if (auth()->user()->email != $values->email)
+        {
+            auth()->user()->email           = $values->email;
+            auth()->user()->email_verified_at = null;
+
+        }
+
+        if (auth()->user()->hasPermissionTo(Permission::TEACH_PERMISSION))
+        {
+            auth()->user()->card_number = $values->card_number;
+            auth()->user()->shaba       = $values->shaba;
+            auth()->user()->headline    = $values->headline;
+            auth()->user()->bio         = $values->bio;
+            auth()->user()->username    = $values->username;
+        }
+
+        if ($values->password)
+        {
+            auth()->user()->password = bcrypt($values->password);
+        }
+
+        auth()->user()->save();
+    }
 }

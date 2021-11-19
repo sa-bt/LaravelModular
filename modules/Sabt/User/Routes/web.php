@@ -9,21 +9,20 @@ use Sabt\User\Http\Controllers\Auth\VerificationController;
 use Sabt\User\Http\Controllers\UserController;
 use Sabt\User\Models\User;
 
-Route::group([
-//                 'namespace'  => 'Sabt\User\Http\Controllers',
-                 'middleware' => 'web'
-             ], function ()
+Route::group(['middleware' => ['web', 'auth']], function ()
 {
-    Route::post('users/{user}/add/role', [UserController::class,'addRole'])->name('users.addRole');
-    Route::delete('users/{user}/remove/{role}/role', [UserController::class,'removeRole'])->name('users.removeRole');
-    Route::put('users/{user}/manualVerify', [UserController::class,'manualVerify'])->name('users.manualVerify');
-    Route::post('users/photo', [UserController::class,'updatePhoto'])->name('users.photo');
-    Route::get('users/profile', [UserController::class,'editProfile'])->name('users.profile');
-    Route::post('users/profile', [UserController::class,'updateProfile'])->name('users.profile');
+    Route::post('users/{user}/add/role', [UserController::class, 'addRole'])->name('users.addRole');
+    Route::delete('users/{user}/remove/{role}/role', [UserController::class, 'removeRole'])->name('users.removeRole');
+    Route::put('users/{user}/manualVerify', [UserController::class, 'manualVerify'])->name('users.manualVerify');
+    Route::post('users/photo', [UserController::class, 'updatePhoto'])->name('users.photo');
+    Route::get('users/profile', [UserController::class, 'editProfile'])->name('users.profile');
+    Route::post('users/profile', [UserController::class, 'updateProfile'])->name('users.profile');
 //    Route::get('account/{username}', [UserController::class,'viewProfile'])->name('viewProfile');
     Route::resource('users', UserController::class);
+});
 
-
+Route::group(['middleware' => 'web'], function ()
+{
     Route::post('email/verify', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
     Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
@@ -45,26 +44,15 @@ Route::group([
          ->name('password.checkVerifyCode');
 
     Route::get('/password/change', [ResetPasswordController::class, 'showResetForm'])
-        ->middleware('auth')
-        ->name('password.showResetForm');
+         ->middleware('auth')
+         ->name('password.showResetForm');
     Route::post('/password/change', [ResetPasswordController::class, 'reset'])->name('password.update');
 
     //Register
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
-//    Route::get('/verify_sabt/{user}/', function ()
-//    {
-//        if (request()->hasValidSignature())
-//            return "salaaaaaaaaam";
-//
-//        return "Nooo";
-//    })->name('verify_sabt');
-//
-//    Route::get('/test', function ()
-//    {
-//        $url = \Illuminate\Support\Facades\URL::temporarySignedRoute('verify_sabt', now()->addSeconds(20), ['user' => 2]);
-//        dd($url);
-//    });
+
 
 });
+
