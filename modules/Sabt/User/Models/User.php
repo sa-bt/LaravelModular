@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Sabt\Course\Models\Course;
+use Sabt\Course\Models\Season;
 use Sabt\Media\Models\Media;
 use Sabt\User\Database\Factories\UserFactory;
 use Sabt\User\Notifications\ResetPasswordRequestNotification;
@@ -68,5 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profilePath()
     {
         return $this->username ? route('viewProfile', $this->username) : route('viewProfile', 'username');
+    }
+
+    
+    public function seasons()
+    {
+        return $this->hasMany(Season::class);
     }
 }

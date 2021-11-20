@@ -59,4 +59,9 @@ class Course extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function seasons()
+    {
+        return $this->hasMany(Season::class);
+    }
 }

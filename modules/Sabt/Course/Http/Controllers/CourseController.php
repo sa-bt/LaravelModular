@@ -10,6 +10,7 @@ use Sabt\Category\Repositories\CategoryRepository;
 use Sabt\Common\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\CourseRequest;
 use Sabt\Course\Models\Course;
+use Sabt\Course\Models\Season;
 use Sabt\Course\Repositories\CourseRepository;
 use Sabt\Media\Services\MediaUploadService;
 use Sabt\User\Repositories\UserRepository;
@@ -33,6 +34,11 @@ class CourseController extends Controller
         $courses = $this->courseRepository->all();
         return view('Course::index', compact('courses'));
 
+    }
+
+    public function show(Course $course)
+    {
+        return view('Course::show',compact('course'));
     }
 
     public function create(UserRepository $userRepository, CategoryRepository $categoryRepository)

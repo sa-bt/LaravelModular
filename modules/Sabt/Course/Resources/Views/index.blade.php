@@ -36,7 +36,7 @@
                                 <a href=""
                                    onclick="deleteItem(event,'{{route('courses.destroy',$course->id)}}')"
                                    class="item-delete mlg-15" title="حذف"></a>
-                                <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
+                                <a href="{{route('courses.show',$course->id)}}" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
                                 <a href="{{route('courses.edit',$course->id)}}" class="item-edit mlg-15"
                                    title="ویرایش"></a>
                                 <a href="" class="item-confirm mlg-15"
