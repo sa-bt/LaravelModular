@@ -176,7 +176,5 @@
 
 @endsection
 @section('js')
-    <script>
-        @include('Common::layouts.feedback')
-    </script>
+
 @endsection

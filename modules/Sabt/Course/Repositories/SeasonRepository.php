@@ -4,7 +4,9 @@
 namespace Sabt\Course\Repositories;
 
 
+use Sabt\Course\Models\Course;
 use Sabt\Course\Models\Season;
+use function PHPUnit\Framework\isInstanceOf;
 
 class SeasonRepository
 {
@@ -16,10 +18,10 @@ class SeasonRepository
     public function create($values)
     {
         return Season::create([
-                                  "title"       => $values->title,
-                                  "number"        => $values->number,
-                                  "course_id"        => $values->course_id,
-                                  "user_id"        => auth()->id()
+                                  "title"     => $values->title,
+                                  "number"    => $this->generateNumber($values->course_id, $values->number),
+                                  "course_id" => $values->course_id,
+                                  "user_id"   => auth()->id()
                               ]);
     }
 
@@ -28,20 +30,11 @@ class SeasonRepository
         return $season->delete();
     }
 
-    public function update($season, $values)
+    public function edit($season, $values)
     {
         return $season->update([
-                                   "teacher_id"  => $values->teacher_id,
-                                   "category_id" => $values->category_id,
-                                   "title"       => $values->title,
-                                   "slug"        => $values->slug,
-                                   "priority"    => $values->priority,
-                                   "price"       => $values->price,
-                                   "percent"     => $values->percent,
-                                   "type"        => $values->type,
-                                   "status"      => $values->status,
-                                   "banner_id"   => $values->banner_id,
-                                   "body"        => $values->body,
+                                   "title"  => $values->title,
+                                   "number" => $this->generateNumber($season->course, $values->number),
                                ]);
     }
 
@@ -52,4 +45,24 @@ class SeasonRepository
                                    'status' => $status
                                ]);
     }
+
+    private function generateNumber($course, $number)
+    {
+        $course = !$course instanceof Course ? Course::find($course) : $course;
+
+        if (is_null($number))
+        {
+            $number = $course->seasons()->orderBy('number', 'desc')->firstOrNew([])->number ?: 0;
+            $number++;
+        }
+        return $number;
+    }
+
+    public function updateConfirmationStatus($season, $status)
+    {
+        return $season->update([
+                                   'confirmation_status' => $status
+                               ]);
+    }
+
 }

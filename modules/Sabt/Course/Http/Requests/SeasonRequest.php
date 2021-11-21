@@ -17,7 +17,7 @@ class SeasonRequest extends FormRequest
     {
         return [
             "title"  => "required|min:3|max:190",
-            "number" => "required|numeric|min:0|max:250",
+            "number" => "nullable|numeric|min:0|max:250",
             ];
     }
 

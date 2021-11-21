@@ -29,4 +29,9 @@ class Season extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeOrderByNumber($query)
+    {
+        return $query->orderBy('number')->get();
+    }
 }

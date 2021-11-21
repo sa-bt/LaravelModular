@@ -278,7 +278,7 @@ function updateConfirmationStatus(event, route, message, status, class_name = 'c
                 _token: $('meta[name="_token"]').attr('content')
             })
                 .done(function (response) {
-                    if (status = 'تایید شده') {
+                    if (status == 'تایید شده') {
                         $(event.target).closest('tr').find('td.' + class_name).html("<span class='text-success'>" + status + "</span>");
                     }else{
                         $(event.target).closest('tr').find('td.' + class_name).html("<span class='text-error'>" + status + "</span>");
