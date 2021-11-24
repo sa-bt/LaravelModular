@@ -7,6 +7,14 @@
     <div class="col-10 bg-white" style="margin: auto ">
         <p class="box__title">ویرایش پروفایل </p>
         <x-user-photo/>
+        <div class="text-center">
+            <h4>{{trans_choice('roleCount', auth()->user()->roles->count())}}</h4>
+            <ul>
+                @foreach(auth()->user()->roles as $role)
+                    <li class="text-success">{{$loop->index+1 . ') '}}@lang($role->name)</li>
+                @endforeach
+            </ul>
+        </div>
         <form action="{{route('users.profile')}}" class="padding-30" method="post"
               enctype="multipart/form-data">
             @csrf
@@ -17,13 +25,13 @@
                 placeholder="نام"
                 required
                 value="{{auth()->user()->name}}"
-           />
+            />
 
-{{--TODO create link for per user--}}
-{{--            <p class="input-help margin-bottom-12 text-left">--}}
+            {{--TODO create link for per user--}}
+            {{--            <p class="input-help margin-bottom-12 text-left">--}}
 
-{{--                <a href="{{route(auth()->user()->profilePath())}}">{{auth()->user()->profilePath()}}</a>--}}
-{{--            </p>--}}
+            {{--                <a href="{{route(auth()->user()->profilePath())}}">{{auth()->user()->profilePath()}}</a>--}}
+            {{--            </p>--}}
             <x-input
                 type="text"
                 class=""

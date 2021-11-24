@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Sabt\Category\Database\Seeders\CategorySeeder;
 use Sabt\Category\Models\Category;
 use Sabt\Category\Policies\CategoryPolicy;
+use Sabt\RolePermissions\Models\Permission;
 
 class CategoryServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class CategoryServiceProvider extends ServiceProvider
             "icon"  => "i-categories",
             "url"   => route('categories.index'),
             "title" => "دسته بندی ها",
+            "permission"=>Permission::MANAGE_CATEGORIES_PERMISSION
         ]);
     }
 }

@@ -38,6 +38,7 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+        $this->authorize('show', $course);
         return view('Course::show',compact('course'));
     }
 

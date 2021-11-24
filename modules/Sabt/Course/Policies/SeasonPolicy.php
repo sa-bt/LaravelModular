@@ -7,26 +7,21 @@ use Sabt\Course\Models\Course;
 use Sabt\RolePermissions\Models\Permission;
 use Sabt\User\Models\User;
 
-class CoursePolicy
+class SeasonPolicy
 {
     use HandlesAuthorization;
 
 
     public function __construct()
     {
-        //
+        dd(1223);
     }
 
-    public function index(User $user)
+    public function create( $user , $course)
     {
+        dd(11);
         return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||
-               ($user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION));
-    }
-
-    public function create(User $user)
-    {
-        return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||
-               $user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
+               ($user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION) && $user->id == $course->teacher_id);
     }
 
     public function show(User $user, Course $course)
@@ -41,8 +36,9 @@ class CoursePolicy
         return $user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION) && $course->teacher_id == $user->id;
     }
 
-    public function delete($user, $course)
+    public function delete($user)
     {
+        dd('delete');
         return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION);
     }
 

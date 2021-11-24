@@ -74,7 +74,7 @@
                         <select name="role" id="">
                             <option value="">نقش کاربری را انتخاب کنید</option>
                             @foreach($roles as $role)
-                                <option value="{{$role->name}}">{{$role->name}}</option>
+                                <option value="{{$role->name}}">@lang($role->name)</option>
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-webamooz_net mt-10">افزودن</button>

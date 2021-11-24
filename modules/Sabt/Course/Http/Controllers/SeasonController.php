@@ -28,6 +28,7 @@ class SeasonController extends Controller
 
     public function store(SeasonRequest $request)
     {
+        $this->authorize('create');
         $this->seasonRepository->create($request);
         newFeedback();
         return back();
@@ -38,15 +39,17 @@ class SeasonController extends Controller
         return view('Course::seasons.edit', compact('season'));
     }
 
-    public function update(Season $season,SeasonRequest $request)
+    public function update(Season $season, SeasonRequest $request)
     {
-        $this->seasonRepository->edit($season,$request);
+        $this->seasonRepository->edit($season, $request);
         newFeedback();
-        return redirect(route("courses.show",$season->course->id));
+        return redirect(route("courses.show", $season->course->id));
     }
 
     public function destroy(Season $season)
     {
+        $this->authorize('delete');
+dd('destroy');
         $this->seasonRepository->delete($season);
         return AjaxResponses::success();
     }

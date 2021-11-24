@@ -5,14 +5,21 @@ namespace Sabt\Course\Repositories;
 
 
 use Sabt\Course\Models\Course;
+use Sabt\RolePermissions\Models\Permission;
 
 class CourseRepository
 {
     public function all()
     {
+        if (auth()->user()->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION))
+            return Course::query()->where('teacher_id', '=', auth()->id());
         return Course::all();
     }
 
+    public function findById($id)
+    {
+        return Course::query()->firstOrFail($id);
+    }
     public function store($values)
     {
         return Course::create([

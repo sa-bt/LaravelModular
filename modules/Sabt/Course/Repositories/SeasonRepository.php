@@ -15,6 +15,7 @@ class SeasonRepository
         return Season::all();
     }
 
+
     public function create($values)
     {
         return Season::create([

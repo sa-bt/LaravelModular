@@ -22,7 +22,7 @@ Route::get('/', function ()
 
 Route::get('/test', function ()
 {
-    auth()->user()->givePermissionTo(\Sabt\RolePermissions\Models\Permission::SUPER_ADMIN_PERMISSION);
+    auth()->user()->assignRole(\Sabt\RolePermissions\Models\Role::SUPER_ADMIN_ROLE);
     return auth()->user()->permissions;
 });
 

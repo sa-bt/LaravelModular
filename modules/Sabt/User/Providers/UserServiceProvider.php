@@ -7,6 +7,7 @@ namespace Sabt\User\Providers;
 use Carbon\Laravel\ServiceProvider;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\Facades\Gate;
+use Sabt\RolePermissions\Models\Permission;
 use Sabt\User\Database\Factories\UserFactory;
 use Sabt\User\Database\Seeders\UserSeeder;
 use Sabt\User\Http\Middleware\StoreUserIp;
@@ -35,11 +36,13 @@ class UserServiceProvider extends ServiceProvider
             "icon"  => "i-users",
             "url"   => route('users.index'),
             "title" => "مدیریت کاربران",
+            "permission"=>Permission::MANAGE_USERS_PERMISSION
+
         ]);
 
         $this->app->booted(function (){
             config()->set('Sidebar.items.profile', [
-                "icon"  => "i-users information",
+                "icon"  => "i-user__information",
                 "url"   => '/',
 //                "url"   => route('users.profile'),
                 "title" => "اطلاعات کاربری",
