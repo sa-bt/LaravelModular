@@ -9,7 +9,7 @@ class SeasonRequest extends FormRequest
 
     public function authorize()
     {
-        return auth()->check() == true;
+        return  true;
     }
 
 

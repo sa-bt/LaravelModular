@@ -6,6 +6,7 @@ namespace Sabt\Course\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Sabt\Category\Repositories\CategoryRepository;
 use Sabt\Common\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\CourseRequest;
@@ -38,6 +39,7 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+
         $this->authorize('show', $course);
         return view('Course::show',compact('course'));
     }

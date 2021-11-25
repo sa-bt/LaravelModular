@@ -19,7 +19,8 @@ class Season extends Model
         self::CONFIRMATION_STATUS_PENDING
     ];
 
-    protected $guarded=[];
+    protected $guarded = [];
+
     public function course()
     {
         return $this->belongsTo(Course::class);

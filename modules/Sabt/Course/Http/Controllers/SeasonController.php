@@ -5,6 +5,7 @@ namespace Sabt\Course\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Sabt\Common\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\SeasonRequest;
 use Sabt\Course\Models\Season;
@@ -28,7 +29,9 @@ class SeasonController extends Controller
 
     public function store(SeasonRequest $request)
     {
-        $this->authorize('create');
+//        dd('salam');
+//dd(Gate::getPolicyFor(Season::class));
+        $this->authorize('addSeason');
         $this->seasonRepository->create($request);
         newFeedback();
         return back();

@@ -52,4 +52,11 @@ class CoursePolicy
     }
 
 
+    public function addSeason($user)
+    {
+        dd('addSeason');
+        return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION);
+    }
+
+
 }
