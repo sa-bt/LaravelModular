@@ -29,6 +29,12 @@ class CoursePolicy
                $user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
     }
 
+    public function createSeason(User $user,Course $course)
+    {
+        return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||
+               ($user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION) && $user->id == $course->teacher->id);
+    }
+
     public function show(User $user, Course $course)
     {
         return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||

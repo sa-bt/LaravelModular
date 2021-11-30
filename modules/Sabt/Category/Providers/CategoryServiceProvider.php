@@ -20,17 +20,17 @@ class CategoryServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views/', 'Category');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/');
         DatabaseSeeder::$seeders[] = CategorySeeder::class;
-        Gate::policy(Category::class,CategoryPolicy::class);
+        Gate::policy(Category::class, CategoryPolicy::class);
 
     }
 
     public function boot()
     {
         config()->set('Sidebar.items.categories', [
-            "icon"  => "i-categories",
-            "url"   => route('categories.index'),
-            "title" => "دسته بندی ها",
-            "permission"=>Permission::MANAGE_CATEGORIES_PERMISSION
+            "icon"       => "i-categories",
+            "url"        => env('APP_URL') . '/categories',
+            "title"      => "دسته بندی ها",
+            "permission" => Permission::MANAGE_CATEGORIES_PERMISSION
         ]);
     }
 }

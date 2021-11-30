@@ -11,6 +11,7 @@ use Sabt\User\Models\User;
 
 Route::group(['middleware' => ['web', 'auth']], function ()
 {
+    Route::resource('users', UserController::class);
     Route::post('users/{user}/add/role', [UserController::class, 'addRole'])->name('users.addRole');
     Route::delete('users/{user}/remove/{role}/role', [UserController::class, 'removeRole'])->name('users.removeRole');
     Route::put('users/{user}/manualVerify', [UserController::class, 'manualVerify'])->name('users.manualVerify');
@@ -18,7 +19,6 @@ Route::group(['middleware' => ['web', 'auth']], function ()
     Route::get('users/profile', [UserController::class, 'editProfile'])->name('users.profile');
     Route::post('users/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
 //    Route::get('account/{username}', [UserController::class,'viewProfile'])->name('viewProfile');
-    Route::resource('users', UserController::class);
 });
 
 Route::group(['middleware' => 'web'], function ()
@@ -29,7 +29,7 @@ Route::group(['middleware' => 'web'], function ()
 
     //Login
 
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('users.login');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 
     //Logout
@@ -49,7 +49,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/password/change', [ResetPasswordController::class, 'reset'])->name('password.update');
 
     //Register
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('users.register');
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 

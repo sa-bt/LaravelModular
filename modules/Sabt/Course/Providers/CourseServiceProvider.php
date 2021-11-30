@@ -22,17 +22,17 @@ class CourseServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/');
         $this->loadJsonTranslationsFrom(__DIR__ . '/../Resources/Lang');
         Gate::policy(Course::class, CoursePolicy::class);
-        Gate::policy(Season::class, CoursePolicy::class);
+        Gate::policy(Season::class, SeasonPolicy::class);
 
     }
 
     public function boot()
     {
         config()->set('Sidebar.items.courses', [
-            "icon"  => "i-courses",
-            "url"   => route('courses.index'),
-            "title" => "دوره ها",
-            "permission"=>Permission::MANAGE_COURSES_PERMISSION
+            "icon"       => "i-courses",
+            "url"        => env('APP_URL') . '/courses',
+            "title"      => "دوره ها",
+            "permission" => Permission::MANAGE_COURSES_PERMISSION
         ]);
     }
 }

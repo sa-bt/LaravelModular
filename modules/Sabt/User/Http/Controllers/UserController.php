@@ -120,6 +120,9 @@ class UserController extends Controller
     }
 
 
+    public function show()
+    {
+    }
     public function viewProfile()
     {
         dd(5);

@@ -30,8 +30,11 @@
                         : "<span class='text-error'>تایید نشده</span>")!!}
                     </td>
                     <td>
+                        @can('delete',$season)
                         <a href="" class="item-delete mlg-15" title="حذف"
                            onclick="deleteItem(event,'{{route('seasons.destroy',$season->id)}}')"></a>
+                        @endcan
+                        @can('change_confirmation_status')
                         <a href="" class="item-confirm mlg-15"
                            onclick="updateConfirmationStatus(
                                event,
@@ -44,7 +47,10 @@
                                '{{route('seasons.reject',$season->id)}}',
                                'آیا از رد این آیتم اطمینان دارید؟',
                                'رد شده')"></a>
+                        @endcan
+                            @can('edit',$season)
                         <a href="{{route('seasons.edit',$season->id)}}" class="item-edit " title="ویرایش"></a>
+                            @endcan
                     </td>
                 </tr>
             @endforeach

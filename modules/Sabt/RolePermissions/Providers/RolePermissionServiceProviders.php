@@ -31,11 +31,11 @@ class RolePermissionServiceProviders extends ServiceProvider
 
     public function boot()
     {
-        config()->set('Sidebar.items.rolePermission', [
-            "icon"  => "i-role-permissions",
-            "url"   => route('roles.index'),
-            "title" => "دسترسی ها",
-            "permission"=>Permission::MANAGE_ROLES_PERMISSION
-        ]);
+            config()->set('Sidebar.items.rolePermission', [
+                "icon"       => "i-role-permissions",
+                "url"=>env('APP_URL').'/roles',
+                "title"      => "دسترسی ها",
+                "permission" => Permission::MANAGE_ROLES_PERMISSION
+            ]);
     }
 }

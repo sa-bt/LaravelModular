@@ -25,29 +25,25 @@ class UserServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/');
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views/Front', 'User');
         Gate::policy(User::class, UserPolicy::class);
-        $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/Lang');
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../Resources/Lang');
     }
 
     public function boot()
     {
-        $this->app['router']->pushMiddlewareToGroup('web',StoreUserIp::class);
+        $this->app['router']->pushMiddlewareToGroup('web', StoreUserIp::class);
 
         config()->set('Sidebar.items.users', [
-            "icon"  => "i-users",
-            "url"   => route('users.index'),
-            "title" => "مدیریت کاربران",
-            "permission"=>Permission::MANAGE_USERS_PERMISSION
+            "icon"       => "i-users",
+            "url"        => env('APP_URL') . '/users',
+            "title"      => "مدیریت کاربران",
+            "permission" => Permission::MANAGE_USERS_PERMISSION
 
         ]);
-
-        $this->app->booted(function (){
-            config()->set('Sidebar.items.profile', [
-                "icon"  => "i-user__information",
-                "url"   => '/',
-//                "url"   => route('users.profile'),
-                "title" => "اطلاعات کاربری",
-            ]);
-        });
+        config()->set('Sidebar.items.profile', [
+            "icon"  => "i-user__information",
+            "url"   => env('APP_URL') . '/users/profile',
+            "title" => "اطلاعات کاربری",
+        ]);
 
     }
 

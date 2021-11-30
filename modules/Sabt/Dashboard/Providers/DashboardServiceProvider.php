@@ -18,13 +18,11 @@ class DashboardServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->app->booted(function (){
             config()->set('Sidebar.items.dashboard',[
                 "icon"=>"i-dashboard",
                 "url"=>env('APP_URL').'/home',
                 "title"=>"پیشخوان",
             ]);
-        });
 
     }
 
