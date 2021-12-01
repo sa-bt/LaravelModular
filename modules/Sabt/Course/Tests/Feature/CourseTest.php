@@ -68,6 +68,29 @@ class CourseTest extends TestCase
         $this->get(route('courses.edit', $course->id))->assertOk();
     }
 
+    public function test_permitted_user_can_see_courses_show()
+    {
+        $this->actionAsAdmin();
+        $course=Course::factory()->create();
+        $this->get(route('courses.show',$course->id))->assertOk();
+
+        $this->actionAsTeacher();
+        $course->teacher_id=auth()->id();
+        $course->save();
+        $this->get(route('courses.show',$course->id))->assertOk();
+
+        $this->actionAsSuperUser();
+        $this->get(route('courses.show',$course->id))->assertOk();
+    }
+
+    public function test_normal_user_can_not_see_courses_show()
+    {
+        $this->actionAsAdmin();
+        $course=Course::factory()->create();
+
+        $this->actionAsUser();
+        $this->get(route('courses.show',$course->id))->assertStatus(403);
+    }
 
     public function test_permitted_user_can_not_edit_other_users_courses()
     {
@@ -184,6 +207,12 @@ class CourseTest extends TestCase
     private function actionAsUser()
     {
         $this->createUser();
+    }
+
+    private function actionAsTeacher()
+    {
+        $this->createUser();
+        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
     }
 
     private function actionAsSuperUser()
