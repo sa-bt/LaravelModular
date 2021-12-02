@@ -47,69 +47,66 @@ class SeasonTest extends TestCase
         ]))->assertStatus(403);
     }
 
-//    public function test_permitted_user_can_store_course()
-//    {
-//        $this->actionAsUser();
-//        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION, Permission::TEACH_PERMISSION);
-//        $response = $this->createCourse();
-//        $response->assertRedirect(route('courses.index'));
-//        $this->assertEquals(Course::count(), 1);
-//    }
-//
-//    public function test_permitted_user_can_see_edit_course_page()
-//    {
-//        $this->actionAsAdmin();
-//        $course = Course::factory()->create();
-//        $this->get(route('courses.edit', $course->id))->assertOk();
-//
-//        $this->actionAsUser();
-//        $course = Course::factory()->create();
-//        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
-//        $this->get(route('courses.edit', $course->id))->assertOk();
-//    }
-//
-//
-//    public function test_permitted_user_can_not_edit_other_users_courses()
-//    {
-//        $this->actionAsUser();
-//        $course = Course::factory()->create();
-//
-//        $this->actionAsUser();
-//        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
-//        $this->get(route('courses.edit', $course->id))->assertStatus(403);
-//    }
-//
-//    public function test_normal_user_can_not_see_edit_course_page()
-//    {
-//        $this->actionAsUser();
-//        $course = Course::factory()->create();
-//
-//        $this->get(route('courses.edit', $course->id))->assertStatus(403);
-//    }
-//
-//    public function test_permitted_user_can_update_course()
-//    {
-//        $this->actionAsUser();
-//        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION, Permission::TEACH_PERMISSION);
-//        $course   = Course::factory()->create();
-//        $response = $this->put(route('courses.update', $course->id), [
-//            "title"       => "update title",
-//            "slug"        => "test",
-//            "priority"    => 12,
-//            "price"       => 150000,
-//            "percent"     => 90,
-//            "body"        => 90,
-//            "teacher_id"  => auth()->id(),
-//            "category_id" => $course->category->id,
-//            "type"        => Course::TYPE_CASH,
-//            "status"      => Course::STATUS_COMPLETED,
-//            "image"       => UploadedFile::fake()->image('bannerTest.jpg'),
-//        ]);
-//        $response->assertRedirect(route('courses.index'));
-//        $course->refresh();
-//        $this->assertEquals('update title', $course->title);
-//    }
-//
+    public function test_permitted_user_can_see_edit_season_page()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $this->get(route('seasons.edit', $season->id))->assertOk();
+
+        $this->actionAsTeacher();
+        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
+    }
+
+
+    public function test_permitted_user_can_not_see_edit_season_page_other_users()
+    {
+        $this->actionAsTeacher();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+
+        $this->actionAsTeacher();
+        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
+
+        $this->actionAsUser();
+        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
+        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
+    }
+
+    public function test_normal_user_can_not_see_edit_season_page()
+    {
+        $this->actionAsTeacher();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+
+        $this->actionAsUser();
+        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
+    }
+
+    public function test_permitted_user_can_update_season()
+    {
+        $this->withoutExceptionHandling();
+        $this->actionAsTeacher();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+
+        $response=$this->put(route('seasons.update', $season->id),[
+            "title"=>"update title"
+        ])->assertOk();
+
+//        $response->assertRedirect(route('courses.show',$course->id));
+        $season->refresh();
+        $this->assertEquals('update title', $season->title);
+    }
+
 //    public function test_normal_user_can_not_update_course()
 //    {
 //        $this->actionAsAdmin();

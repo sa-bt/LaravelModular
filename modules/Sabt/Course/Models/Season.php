@@ -4,6 +4,7 @@ namespace Sabt\Course\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Sabt\Course\Database\Factories\SeasonFactory;
 use Sabt\User\Models\User;
 
 class Season extends Model
@@ -20,6 +21,12 @@ class Season extends Model
     ];
 
     protected $guarded = [];
+
+
+    protected static function newFactory()
+    {
+        return SeasonFactory::new();
+    }
 
     public function course()
     {

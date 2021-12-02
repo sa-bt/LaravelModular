@@ -22,7 +22,10 @@ class SeasonFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "title"=>$this->faker->title,
+            "user_id"   => auth()->id(),
+            "number"=>random_int(1,999)
+
         ];
     }
 }
