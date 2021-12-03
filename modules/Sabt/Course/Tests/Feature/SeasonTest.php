@@ -91,86 +91,126 @@ class SeasonTest extends TestCase
 
     public function test_permitted_user_can_update_season()
     {
-        $this->withoutExceptionHandling();
+        $this->actionAsTeacher();
+        $course   = Course::factory()->create();
+        $season   = Season::factory()->create([
+                                                  "course_id" => $course->id
+                                              ]);
+        $response = $this->put(route('seasons.update', $season->id), [
+            "title" => "update title"
+        ]);
+
+        $response->assertRedirect(route('courses.show', $course->id));
+        $season->refresh();
+        $this->assertEquals('update title', $season->title);
+    }
+
+    public function test_permitted_user_can_not_update_other_users_season()
+    {
         $this->actionAsTeacher();
         $course = Course::factory()->create();
         $season = Season::factory()->create([
                                                 "course_id" => $course->id
                                             ]);
+        $this->actionAsTeacher();
+        $this->put(route('seasons.update', $season->id), [
+            "title" => "update title"
+        ])->assertStatus(403);
 
-        $response=$this->put(route('seasons.update', $season->id),[
-            "title"=>"update title"
-        ])->assertOk();
-
-//        $response->assertRedirect(route('courses.show',$course->id));
         $season->refresh();
-        $this->assertEquals('update title', $season->title);
+        $this->assertNotEquals('update title', $season->title);
     }
 
-//    public function test_normal_user_can_not_update_course()
-//    {
-//        $this->actionAsAdmin();
-//        $course = Course::factory()->create();
-//        $title  = $course->title;
-//
-//        $this->actionAsUser();
-//        auth()->user()->givePermissionTo(Permission::TEACH_PERMISSION);
-//        $response = $this->put(route('courses.update', $course->id), [
-//            "title"       => "update title",
-//            "slug"        => "test",
-//            "priority"    => 12,
-//            "price"       => 150000,
-//            "percent"     => 90,
-//            "body"        => 90,
-//            "teacher_id"  => auth()->id(),
-//            "category_id" => $course->category->id,
-//            "type"        => Course::TYPE_CASH,
-//            "status"      => Course::STATUS_COMPLETED,
-//            "image"       => UploadedFile::fake()->image('bannerTest.jpg'),
-//        ]);
-//        $response->assertStatus(403);
-//        $course->refresh();
-//        $this->assertEquals($title, $course->title);
-//    }
-//
-//    public function test_permitted_user_can_delete_course()
-//    {
-//        $this->actionAsAdmin();
-//        $course = Course::factory()->create();
-//        $this->delete(route('courses.destroy', $course->id))->assertOk();
-//        $this->assertEquals(0, Course::count());
-//    }
-//
-//    public function test_normal_user_can_not_delete_course()
-//    {
-//        $this->actionAsAdmin();
-//        $course = Course::factory()->create();
-//
-//        $this->actionAsUser();
-//        $this->delete(route('courses.destroy', $course->id))->assertStatus(403);
-//        $this->assertEquals(1, Course::count());
-//    }
-//
-//    public function test_permitted_user_can_change_confirmation_status_course()
-//    {
-//        $this->actionAsAdmin();
-//        $course = Course::factory()->create();
-//        $this->put(route('courses.accept', $course->id))->assertOk();
-//        $this->put(route('courses.reject', $course->id))->assertOk();
-//        $this->put(route('courses.lock', $course->id))->assertOk();
-//    }
-//
-//    public function test_normal_user_can_not_change_confirmation_status_course()
-//    {
-//
-//        $this->actionAsAdmin();
-//        $course = Course::factory()->create();
-//
-//        $this->actionAsUser();
-//        $this->put(route('courses.accept', $course->id))->assertStatus(403);
-//        $this->put(route('courses.reject', $course->id))->assertStatus(403);
-//        $this->put(route('courses.lock', $course->id))->assertStatus(403);
-//    }
+    public function test_normal_user_can_not_update_season()
+    {
+        $this->actionAsTeacher();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $this->actionAsUser();
+        $this->put(route('seasons.update', $season->id), [
+            "title" => "update title"
+        ])->assertStatus(403);
+
+        $season->refresh();
+        $this->assertNotEquals('update title', $season->title);
+    }
+
+
+    public function test_permitted_user_can_delete_season()
+    {
+        $this->actionAsTeacher();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $this->delete(route('seasons.destroy', $season->id))->assertOk();
+        $this->assertEquals(0, Season::count());
+    }
+
+    public function test_permitted_user_can_not_delete_other_users_season()
+    {
+        $this->actionAsTeacher();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $this->actionAsTeacher();
+        $this->delete(route('seasons.destroy', $season->id))->assertStatus(403);
+        $this->assertEquals(1, Season::count());
+    }
+
+    public function test_normal_user_can_not_delete_season()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $this->actionAsUser();
+        $this->delete(route('seasons.destroy', $season->id))->assertStatus(403);
+        $this->assertEquals(1, Season::count());
+    }
+
+    public function test_permitted_user_can_change_confirmation_status_season()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $season->refresh();
+        $this->assertEquals(Season::CONFIRMATION_STATUS_PENDING,$season->confirmation_status);
+
+        $this->put(route('seasons.accept', $season->id))->assertOk();
+        $season->refresh();
+        $this->assertEquals(Season::CONFIRMATION_STATUS_ACCEPTED,$season->confirmation_status);
+
+        $this->put(route('seasons.reject', $season->id))->assertOk();
+        $season->refresh();
+        $this->assertEquals(Season::CONFIRMATION_STATUS_REJECTED,$season->confirmation_status);
+    }
+    public function test_normal_user_can_not_change_confirmation_status_season()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $season = Season::factory()->create([
+                                                "course_id" => $course->id
+                                            ]);
+        $season->refresh();
+        $this->actionAsUser();
+
+        $this->put(route('seasons.accept', $season->id))->assertStatus(403);
+        $season->refresh();
+        $this->assertEquals(Season::CONFIRMATION_STATUS_PENDING,$season->confirmation_status);
+
+        $this->put(route('seasons.reject', $season->id))->assertStatus(403);
+        $season->refresh();
+        $this->assertEquals(Season::CONFIRMATION_STATUS_PENDING,$season->confirmation_status);
+    }
+
+
 
     private function actionAsAdmin()
     {

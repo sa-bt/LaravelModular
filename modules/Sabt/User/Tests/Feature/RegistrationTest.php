@@ -5,6 +5,7 @@ namespace Sabt\User\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Sabt\RolePermissions\Database\Seeders\RoleAndPermissionSeeder;
 use Sabt\User\Models\User;
 use Sabt\User\Services\VerifyCodeService;
 use Tests\TestCase;
@@ -12,6 +13,12 @@ use Tests\TestCase;
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(RoleAndPermissionSeeder::class);
+    }
 
     /** @test */
     public function user_can_see_register_form()
