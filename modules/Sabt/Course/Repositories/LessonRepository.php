@@ -6,20 +6,15 @@ namespace Sabt\Course\Repositories;
 
 use Sabt\Course\Models\Course;
 use Sabt\Course\Models\Season;
-use Sabt\RolePermissions\Models\Permission;
 use function PHPUnit\Framework\isInstanceOf;
 
-class SeasonRepository
+class LessonRepository
 {
     public function all()
     {
         return Season::all();
     }
 
-    public function getAcceptSeasons($course_id){
-        return Season::query()->where('course_id','=',$course_id)
-            ->where('confirmation_status','=',Season::CONFIRMATION_STATUS_ACCEPTED)->get();
-    }
 
     public function create($values)
     {

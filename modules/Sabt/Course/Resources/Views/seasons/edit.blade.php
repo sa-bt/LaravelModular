@@ -1,6 +1,7 @@
 @extends('Dashboard::master')
 @section('breadcrumb')
-    <li><a href="{{route('courses.show',$season->course->id)}}" title="دوره ها">سرفصل ها</a></li>
+    <li><a href="{{route('courses.index')}}" title="دوره ها">دوره ها</a></li>
+    <li><a href="{{route('courses.show',$season->course->id)}}" title="{{$season->course->title}}">{{$season->course->title}}</a></li>
     <li><a href="#" title="ویرایش سرفصل ">ویرایش سرفصل</a></li>
 @endsection
 @section('content')

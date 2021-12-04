@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use Sabt\Course\Http\Controllers\CourseController;
 use Sabt\Course\Http\Controllers\SeasonController;
+use Sabt\Course\Http\Controllers\LessonController;
 
 //"namespace"=>"Sabt\Category\Http\Controllers",
 Route::group(['middleware' => ['web', 'auth', 'verified']], function ()
@@ -19,5 +20,8 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function ()
     Route::put('seasons/{season}/reject',[SeasonController::class,'reject'])->name('seasons.reject');
     Route::put('seasons/{season}/lock',[SeasonController::class,'lock'])->name('seasons.lock');
     Route::resource('seasons', SeasonController::class);
+
+
+    Route::resource('courses/{course}/lessons', LessonController::class);
 
 });

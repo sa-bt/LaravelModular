@@ -1,7 +1,7 @@
 @extends('Dashboard::master')
 @section('breadcrumb')
     <li><a href="{{route('courses.index')}}" title="دوره ها">دوره ها</a></li>
-    <li><a href="#" title="ویرایش دوره ها">ایجاد دوره</a></li>
+    <li><a href="#" title="ایجاد دوره">ایجاد دوره</a></li>
 @endsection
 @section('content')
     <div class="col-10 bg-white" style="margin: auto">
