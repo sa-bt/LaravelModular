@@ -14,10 +14,12 @@ class Lesson extends Model
     const CONFIRMATION_STATUS_ACCEPTED = 'accepted';
     const CONFIRMATION_STATUS_REJECTED = 'rejected';
     const CONFIRMATION_STATUS_PENDING = 'pending';
+    const CONFIRMATION_STATUS_LOCKED = 'locked';
     public static $confirmationStatuses = [
         self::CONFIRMATION_STATUS_ACCEPTED,
         self::CONFIRMATION_STATUS_REJECTED,
-        self::CONFIRMATION_STATUS_PENDING
+        self::CONFIRMATION_STATUS_PENDING,
+        self::CONFIRMATION_STATUS_LOCKED
     ];
 
     protected $guarded = [];

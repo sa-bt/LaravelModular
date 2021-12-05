@@ -7,13 +7,13 @@
 @section('content')
     <div class="col-10 bg-white" style="margin: auto">
         <p class="box__title">ایجاد جلسه جدید</p>
-        <form action="{{route('seasons.store')}}" class="padding-30" method="post" enctype="multipart/form-data">
+        <form action="{{route('lessons.store',[$course->id])}}" class="padding-30" method="post" enctype="multipart/form-data">
             @csrf
             <x-input
                 type="text"
                 class=""
                 name="title"
-                placeholder="عنوان جلسه"
+                placeholder="عنوان جلسه*"
                 required
             />
 
@@ -22,7 +22,18 @@
                 name="slug"
                 class="text-left "
                 placeholder="نام انگلیسی جلسه"
-                required
+            />
+            <x-input
+                type="number"
+                name="time"
+                class="text-left "
+                placeholder="زمان جلسه"
+            />
+            <x-input
+                type="number"
+                name="number"
+                class="text-left "
+                placeholder="شماره جلسه"
             />
             <div class="w-50 " style="margin:10px auto">
                 <p class="box__title">ایا این جلسه رایگان است ؟ </p>
@@ -38,19 +49,19 @@
 
             <x-select name="status">
                 <option value="">وضعیت جلسه</option>
-                @foreach(\Sabt\Course\Models\Course::$statuses as $status)
+                @foreach(\Sabt\Course\Models\Lesson::$confirmationStatuses as $status)
                     <option value="{{$status}}" @if($status == old('status')) selected @endif >@lang($status)</option>
                 @endforeach
             </x-select>
 
             <x-select name="season_id">
-                <option value="">سزفصل</option>
+                <option value="">سرفصل</option>
                 @foreach($seasons as $season)
                     <option value="{{$season->id}}">{{$season->title}}</option>
                 @endforeach
             </x-select>
 
-            <x-file placeholder="آپلود جلسه" name="image"/>
+            <x-file placeholder="آپلود جلسه*" name="lessonFile"/>
             <x-textarea placeholder="توضیحات جلسه" name="body"/>
             <br>
             <button type="submit" class="btn btn-webamooz_net">ایجاد جلسه</button>

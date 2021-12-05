@@ -5,6 +5,7 @@ namespace Sabt\Course\Repositories;
 
 
 use Sabt\Course\Models\Course;
+use Sabt\Course\Models\Lesson;
 use Sabt\Course\Models\Season;
 use function PHPUnit\Framework\isInstanceOf;
 
@@ -18,10 +19,16 @@ class LessonRepository
 
     public function create($values)
     {
-        return Season::create([
+        return Lesson::create([
                                   "title"     => $values->title,
+                                  "slug"     => $values->slug,
+                                  "time"     => $values->time,
+                                  "free"     => $values->free,
                                   "number"    => $this->generateNumber($values->course_id, $values->number),
                                   "course_id" => $values->course_id,
+                                  "season_id" => $values->season_id,
+                                  "media_id" => $values->media_id,
+                                  "body"     => $values->body,
                                   "user_id"   => auth()->id()
                               ]);
     }

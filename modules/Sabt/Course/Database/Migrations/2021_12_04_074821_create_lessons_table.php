@@ -18,10 +18,14 @@ class CreateLessonsTable extends Migration
             $table->foreignId('course_id')->constrained()->onDelete('CASCADE');
             $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
             $table->foreignId('season_id')->nullable()->constrained()->onDelete('SET NULL');
-//            $table->unsignedBigInteger('media_id');
-//            $table->foreign('media_id')->references('id')->on('media')->onDelete('SET NULL');
+            $table->unsignedBigInteger('media_id')->nullable();
+            $table->foreign('media_id')->references('id')->on('media')->onDelete('SET NULL');
+            $table->enum('confirmation_status', \Sabt\Course\Models\Lesson::$confirmationStatuses)
+                  ->default(\Sabt\Course\Models\Season::CONFIRMATION_STATUS_PENDING);
             $table->string('title');
             $table->string('slug');
+            $table->tinyInteger('time')->unsigned()->nullable();
+            $table->integer('number')->unsigned()->nullable();
             $table->boolean('free')->default(false);
             $table->longText('body');
             $table->timestamps();

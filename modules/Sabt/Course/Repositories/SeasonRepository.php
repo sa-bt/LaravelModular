@@ -16,9 +16,10 @@ class SeasonRepository
         return Season::all();
     }
 
-    public function getAcceptSeasons($course_id){
-        return Season::query()->where('course_id','=',$course_id)
-            ->where('confirmation_status','=',Season::CONFIRMATION_STATUS_ACCEPTED)->get();
+    public function getAcceptSeasons($course_id)
+    {
+        return Season::query()->where('course_id', '=', $course_id)
+                     ->where('confirmation_status', '=', Season::CONFIRMATION_STATUS_ACCEPTED)->get();
     }
 
     public function create($values)
@@ -71,4 +72,9 @@ class SeasonRepository
                                ]);
     }
 
+
+    public function fetchAllSeason($course_id, $season_id)
+    {
+        return Season::query()->where('course_id', '=', $course_id)->where('id', '=', $season_id)->first();
+    }
 }

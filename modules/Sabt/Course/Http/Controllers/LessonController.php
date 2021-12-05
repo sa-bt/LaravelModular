@@ -7,6 +7,7 @@ namespace Sabt\Course\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Sabt\Common\Responses\AjaxResponses;
+use Sabt\Course\Http\Requests\LessonRequest;
 use Sabt\Course\Http\Requests\SeasonRequest;
 use Sabt\Course\Models\Course;
 use Sabt\Course\Models\Season;
@@ -33,14 +34,14 @@ class LessonController extends Controller
     public function create(Course $course)
     {
 //        $this->authorize('createSeason', Course::findOrFail($request->course_id));
-        $seasons=$this->seasonRepository->getAcceptSeasons($course->id);
-        return view('Course::lessons.create', compact('seasons','course'));
+        $seasons = $this->seasonRepository->getAcceptSeasons($course->id);
+        return view('Course::lessons.create', compact('seasons', 'course'));
     }
 
-    public function store(SeasonRequest $request)
+    public function store(Course $course, LessonRequest $request)
     {
-        $this->authorize('createSeason', Course::findOrFail($request->course_id));
-        $this->seasonRepository->create($request);
+//        $this->authorize('createSeason', Course::findOrFail($request->course_id));
+        $this->lessonRepository->create($request);
         newFeedback();
         return back();
     }
