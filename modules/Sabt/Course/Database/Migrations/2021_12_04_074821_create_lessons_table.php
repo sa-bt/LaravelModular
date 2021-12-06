@@ -27,7 +27,7 @@ class CreateLessonsTable extends Migration
             $table->tinyInteger('time')->unsigned()->nullable();
             $table->integer('number')->unsigned()->nullable();
             $table->boolean('free')->default(false);
-            $table->longText('body');
+            $table->longText('body')->nullable();
             $table->timestamps();
         });
     }

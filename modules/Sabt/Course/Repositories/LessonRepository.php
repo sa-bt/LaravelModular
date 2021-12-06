@@ -4,6 +4,7 @@
 namespace Sabt\Course\Repositories;
 
 
+use Illuminate\Support\Str;
 use Sabt\Course\Models\Course;
 use Sabt\Course\Models\Lesson;
 use Sabt\Course\Models\Season;
@@ -17,19 +18,19 @@ class LessonRepository
     }
 
 
-    public function create($values)
+    public function create($course_id,$values)
     {
         return Lesson::create([
                                   "title"     => $values->title,
-                                  "slug"     => $values->slug,
+                                  "slug"     => $values->slug?Str::slug($values->slug):Str::slug($values->title),
                                   "time"     => $values->time,
                                   "free"     => $values->free,
                                   "number"    => $this->generateNumber($values->course_id, $values->number),
-                                  "course_id" => $values->course_id,
+                                  "course_id" => $course_id,
                                   "season_id" => $values->season_id,
                                   "media_id" => $values->media_id,
-                                  "body"     => $values->body,
-                                  "user_id"   => auth()->id()
+                                  "user_id"   => auth()->id(),
+                                  "body"     => $values->body
                               ]);
     }
 
@@ -60,7 +61,7 @@ class LessonRepository
 
         if (is_null($number))
         {
-            $number = $course->seasons()->orderBy('number', 'desc')->firstOrNew([])->number ?: 0;
+            $number = $course->lessons()->orderBy('number', 'desc')->firstOrNew([])->number ?: 0;
             $number++;
         }
         return $number;

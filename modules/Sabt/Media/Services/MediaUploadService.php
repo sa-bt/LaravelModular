@@ -23,8 +23,19 @@ class MediaUploadService
                 $media->filename = $file->getClientOriginalName();
                 $media->save();
                 return $media;
-
                 break;
+
+            case 'avi':
+            case 'mp4':
+            case 'mkv':
+            $media           = new Media();
+            $media->files    = VideoFileService::upload($file);
+            $media->type     = 'video';
+            $media->user_id  = auth()->id();
+            $media->filename = $file->getClientOriginalName();
+            $media->save();
+            return $media;
+            break;
         }
     }
 

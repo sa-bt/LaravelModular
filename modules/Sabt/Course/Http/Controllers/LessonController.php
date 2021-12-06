@@ -13,6 +13,7 @@ use Sabt\Course\Models\Course;
 use Sabt\Course\Models\Season;
 use Sabt\Course\Repositories\LessonRepository;
 use Sabt\Course\Repositories\SeasonRepository;
+use Sabt\Media\Services\MediaUploadService;
 
 class LessonController extends Controller
 {
@@ -41,9 +42,10 @@ class LessonController extends Controller
     public function store(Course $course, LessonRequest $request)
     {
 //        $this->authorize('createSeason', Course::findOrFail($request->course_id));
-        $this->lessonRepository->create($request);
+        $request->request->add(["media_id"=>MediaUploadService::upload($request->file('lessonFile'))->id]);
+        $this->lessonRepository->create($course->id,$request);
         newFeedback();
-        return back();
+        return view('Course::show',compact('course'));
     }
 
     public function edit(Season $season)

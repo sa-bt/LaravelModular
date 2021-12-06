@@ -21,7 +21,7 @@ class LessonRequest extends FormRequest
             "slug"       => "nullable|min:3|max:190|unique:courses,slug",
             "number"     => "nullable|numeric",
             "time"       => "nullable|numeric|min:0|max:255",
-            "season_id"  => [new ValidSeason()],
+            "season_id"  => ["nullable",new ValidSeason()],
             "free"       => 'required|boolean',
             "lessonFile" => "required|file|mimes:avi,mkv,mp4,zip,rar",
         ];
