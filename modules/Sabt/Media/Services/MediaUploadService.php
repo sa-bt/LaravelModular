@@ -4,46 +4,63 @@
 namespace Sabt\Media\Services;
 
 
+use Sabt\Media\Contracts\FileServiceContract;
 use Sabt\Media\Models\Media;
 
 class MediaUploadService
 {
+    private static $file;
+    private static $dir;
+
     public static function upload($file)
     {
-        $extension = strtolower($file->getClientOriginalExtension());
-        switch ($extension)
-        {
-            case 'jpg':
-            case 'png':
-            case 'jpeg':
-                $media           = new Media();
-                $media->files    = ImageFileService::upload($file);
-                $media->type     = 'image';
-                $media->user_id  = auth()->id();
-                $media->filename = $file->getClientOriginalName();
-                $media->save();
-                return $media;
-                break;
+        $extension = self::getExtension($file);
+        foreach (config('Media.MediaTypeService') as $mediaType => $service)
+            if (in_array($extension, $service['extensions']))
+            {
+                self::$dir = $service['direction'];
+                self::$file=$file;
+                return self::uploadHandler(new $service['handler'], $mediaType);
+            }
 
-            case 'avi':
-            case 'mp4':
-            case 'mkv':
-            $media           = new Media();
-            $media->files    = VideoFileService::upload($file);
-            $media->type     = 'video';
-            $media->user_id  = auth()->id();
-            $media->filename = $file->getClientOriginalName();
-            $media->save();
-            return $media;
-            break;
-        }
     }
 
     public static function delete($media)
     {
-        switch ($media->type){
+        switch ($media->type)
+        {
             case 'image':
                 ImageFileService::delete($media);
         }
+    }
+
+    /**
+     * @param $file
+     * @param $service
+     * @param $mediaType
+     * @return Media
+     */
+    public static function uploadHandler(FileServiceContract $service, $mediaType): Media
+    {
+        $media           = new Media();
+        $media->files    = $service::upload(self::$file, self::fileNameGenerator(), self::$dir);
+        $media->type     = $mediaType;
+        $media->user_id  = auth()->id();
+        $media->filename = self::$file->getClientOriginalName();
+        $media->save();
+        return $media;
+    }
+
+    private static function getExtension($file)
+    {
+        return strtolower($file->getClientOriginalExtension());
+    }
+
+    /**
+     * @return string
+     */
+    private static function fileNameGenerator(): string
+    {
+        return time().uniqid();
     }
 }

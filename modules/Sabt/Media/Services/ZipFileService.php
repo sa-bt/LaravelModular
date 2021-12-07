@@ -4,14 +4,15 @@
 namespace Sabt\Media\Services;
 
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Sabt\Media\Contracts\FileServiceContract;
 use Sabt\Media\Models\Media;
 
-class VideoFileService implements FileServiceContract
+class ZipFileService implements FileServiceContract
 {
 
-    public static function upload($file,string $fileName, string $dir)
+    public static function upload(UploadedFile $file,string $fileName, string $dir)
     {
         $extension=$file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
@@ -20,6 +21,6 @@ class VideoFileService implements FileServiceContract
 
     public static function delete(Media $media)
     {
-
+        // TODO: Implement delete() method.
     }
 }

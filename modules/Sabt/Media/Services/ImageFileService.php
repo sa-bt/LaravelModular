@@ -6,16 +6,15 @@ namespace Sabt\Media\Services;
 
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Sabt\Media\Contracts\FileServiceContract;
 
-class ImageFileService
+class ImageFileService implements FileServiceContract
 {
     protected static $sizes = ['100', '300', '600'];
 
-    public static function upload($file)
+    public static function upload($file, $fileName,  $dir)
     {
-        $fileName  = uniqid();
-        $extension = $file->getClientOriginalExtension();
-        $dir       = 'public\\';
+        $extension=$file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
         $path = $dir . $fileName . '.' . $extension;
         return self::resize(Storage::path($path), $dir, $fileName, $extension);
