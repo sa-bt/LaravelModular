@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Sabt\Media\Contracts\FileServiceContract;
 
-class ImageFileService implements FileServiceContract
+class ImageFileService extends DefaultFileService implements FileServiceContract
 {
     protected static $sizes = ['100', '300', '600'];
 
-    public static function upload($file, $fileName,  $dir)
+    public static function upload($file, $fileName,  $dir):array
     {
         $extension=$file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
@@ -35,11 +35,4 @@ class ImageFileService implements FileServiceContract
         return $images;
     }
 
-    public static function delete($media)
-    {
-        foreach ($media->files as $file)
-        {
-            Storage::delete('public\\' . $file);
-        }
-    }
 }

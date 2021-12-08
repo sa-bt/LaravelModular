@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Storage;
 use Sabt\Media\Contracts\FileServiceContract;
 use Sabt\Media\Models\Media;
 
-class VideoFileService implements FileServiceContract
+class VideoFileService extends  DefaultFileService implements FileServiceContract
 {
 
-    public static function upload($file,string $fileName, string $dir)
+    public static function upload($file, string $fileName, string $dir):array
     {
-        $extension=$file->getClientOriginalExtension();
+        $extension = $file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
-        return $dir . $fileName . '.' . $extension;
+        return ["video" => $dir . $fileName . '.' . $extension];
     }
 
     public static function delete(Media $media)
