@@ -25,7 +25,7 @@ class LessonRepository
                                   "slug"     => $values->slug?Str::slug($values->slug):Str::slug($values->title),
                                   "time"     => $values->time,
                                   "free"     => $values->free,
-                                  "number"    => $this->generateNumber($values->course_id, $values->number),
+                                  "number"    => $this->generateNumber($course_id, $values->number),
                                   "course_id" => $course_id,
                                   "season_id" => $values->season_id,
                                   "media_id" => $values->media_id,
@@ -34,23 +34,23 @@ class LessonRepository
                               ]);
     }
 
-    public function delete($season)
+    public function delete($lesson)
     {
-        return $season->delete();
+        return $lesson->delete();
     }
 
-    public function edit($season, $values)
+    public function edit($lesson, $values)
     {
-        return $season->update([
+        return $lesson->update([
                                    "title"  => $values->title,
-                                   "number" => $this->generateNumber($season->course, $values->number),
+                                   "number" => $this->generateNumber($lesson->course, $values->number),
                                ]);
     }
 
 
-    public function updateStatus(Season $season, $status)
+    public function updateStatus(Season $lesson, $status)
     {
-        return $season->update([
+        return $lesson->update([
                                    'status' => $status
                                ]);
     }
@@ -58,7 +58,6 @@ class LessonRepository
     private function generateNumber($course, $number)
     {
         $course = !$course instanceof Course ? Course::find($course) : $course;
-
         if (is_null($number))
         {
             $number = $course->lessons()->orderBy('number', 'desc')->firstOrNew([])->number ?: 0;
@@ -67,9 +66,9 @@ class LessonRepository
         return $number;
     }
 
-    public function updateConfirmationStatus($season, $status)
+    public function updateConfirmationStatus($lesson, $status)
     {
-        return $season->update([
+        return $lesson->update([
                                    'confirmation_status' => $status
                                ]);
     }

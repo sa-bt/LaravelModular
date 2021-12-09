@@ -8,12 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class DefaultFileService
 {
-    public static function delete($media)
+    public static function delete($media, $direction)
     {
-        foreach ($media->files as $file)
-        {
-//            dd($media);
-            Storage::delete('public\\' . $file);
+//        dd($media,$direction);
+        foreach ($media->files as $file) {
+            Storage::delete($direction . $file);
         }
-}
+    }
 }

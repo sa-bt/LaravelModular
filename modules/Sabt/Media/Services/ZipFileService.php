@@ -12,11 +12,11 @@ use Sabt\Media\Models\Media;
 class ZipFileService extends DefaultFileService implements FileServiceContract
 {
 
-    public static function upload(UploadedFile $file, string $fileName, string $dir): array
+    public static function upload(UploadedFile $file, string $fileName, string $dir)
     {
         $extension = $file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
-        return ["zip" => $dir . $fileName . '.' . $extension];
+        return  [$fileName . '.' . $extension];
     }
 
 }

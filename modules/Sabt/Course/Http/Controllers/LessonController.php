@@ -10,6 +10,7 @@ use Sabt\Common\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\LessonRequest;
 use Sabt\Course\Http\Requests\SeasonRequest;
 use Sabt\Course\Models\Course;
+use Sabt\Course\Models\Lesson;
 use Sabt\Course\Models\Season;
 use Sabt\Course\Repositories\LessonRepository;
 use Sabt\Course\Repositories\SeasonRepository;
@@ -48,57 +49,60 @@ class LessonController extends Controller
         return view('Course::show',compact('course'));
     }
 
-    public function edit(Season $season)
+    public function edit(Course $course, Lesson $lesson)
     {
-        $this->authorize('edit', $season);
-        return view('Course::seasons.edit', compact('season'));
+//        $this->authorize('edit', $lesson);
+//        return view('Course::seasons.edit', compact('lesson'));
     }
 
-    public function update(Season $season, SeasonRequest $request)
+    public function update(Course $course, Lesson $lesson, SeasonRequest $request)
     {
-        $this->authorize('edit', $season);
-        $this->seasonRepository->edit($season, $request);
+        $this->authorize('edit', $lesson);
+        $this->lessonRepository->edit($lesson, $request);
         newFeedback();
-        return redirect(route("courses.show", $season->course->id));
+        return redirect(route("courses.show", $lesson->course->id));
     }
 
-    public function destroy(Season $season)
+    public function destroy(Course $course, Lesson $lesson)
     {
-        $this->authorize('delete', $season);
-        $this->seasonRepository->delete($season);
+//        $this->authorize('delete', $lesson);
+        if ($lesson->media){
+            $lesson->media->delete();
+        }
+        $this->lessonRepository->delete($lesson);
         return AjaxResponses::success();
     }
 
-    public function accept(Season $season)
+    public function accept(Course $course, Lesson $lesson)
     {
-        $this->authorize('change_confirmation_status', $season);
-
-        if ($this->seasonRepository->updateConfirmationStatus($season, Season::CONFIRMATION_STATUS_ACCEPTED))
-        {
-            return AjaxResponses::success();
-        };
-        return AjaxResponses::failed();
+//        $this->authorize('change_confirmation_status', $lesson);
+//
+//        if ($this->seasonRepository->updateConfirmationStatus($lesson, Season::CONFIRMATION_STATUS_ACCEPTED))
+//        {
+//            return AjaxResponses::success();
+//        };
+//        return AjaxResponses::failed();
     }
 
-    public function reject(Season $season)
+    public function reject(Course $course, Lesson $lesson)
     {
-        $this->authorize('change_confirmation_status', $season);
-
-        if ($this->seasonRepository->updateConfirmationStatus($season, Season::CONFIRMATION_STATUS_REJECTED))
-        {
-            return AjaxResponses::success();
-        };
-        return AjaxResponses::failed();
+//        $this->authorize('change_confirmation_status', $lesson);
+//
+//        if ($this->seasonRepository->updateConfirmationStatus($lesson, Season::CONFIRMATION_STATUS_REJECTED))
+//        {
+//            return AjaxResponses::success();
+//        };
+//        return AjaxResponses::failed();
     }
 
-    public function lock(Season $season)
+    public function lock(Course $course, Lesson $lesson)
     {
-        $this->authorize('change_confirmation_status', Season::class);
-
-        if ($this->seasonRepository->updateStatus($season, Season::STATUS_LOCKED))
-        {
-            return AjaxResponses::success();
-        };
-        return AjaxResponses::failed();
+//        $this->authorize('change_confirmation_status', Season::class);
+//
+//        if ($this->seasonRepository->updateStatus($lesson, Season::STATUS_LOCKED))
+//        {
+//            return AjaxResponses::success();
+//        };
+//        return AjaxResponses::failed();
     }
 }

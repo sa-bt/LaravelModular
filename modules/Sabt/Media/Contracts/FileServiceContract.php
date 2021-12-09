@@ -9,7 +9,7 @@ use Sabt\Media\Models\Media;
 
 interface FileServiceContract
 {
-    public static function upload(UploadedFile $file, string $fileName, string $dir):array ;
+    public static function upload(UploadedFile $file, string $fileName, string $dir) ;
 
-    public static function delete(Media $media);
+    public static function delete(Media $media , string $direction);
 }

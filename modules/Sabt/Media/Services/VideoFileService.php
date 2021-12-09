@@ -11,15 +11,11 @@ use Sabt\Media\Models\Media;
 class VideoFileService extends  DefaultFileService implements FileServiceContract
 {
 
-    public static function upload($file, string $fileName, string $dir):array
+    public static function upload($file, string $fileName, string $dir)
     {
         $extension = $file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
-        return ["video" => $dir . $fileName . '.' . $extension];
+        return  [ $fileName . '.' . $extension];
     }
 
-    public static function delete(Media $media)
-    {
-
-    }
 }

@@ -12,9 +12,9 @@ class ImageFileService extends DefaultFileService implements FileServiceContract
 {
     protected static $sizes = ['100', '300', '600'];
 
-    public static function upload($file, $fileName,  $dir):array
+    public static function upload($file, $fileName, $dir): array
     {
-        $extension=$file->getClientOriginalExtension();
+        $extension = $file->getClientOriginalExtension();
         Storage::putFileAs($dir, $file, $fileName . '.' . $extension);
         $path = $dir . $fileName . '.' . $extension;
         return self::resize(Storage::path($path), $dir, $fileName, $extension);
@@ -22,13 +22,11 @@ class ImageFileService extends DefaultFileService implements FileServiceContract
 
     private static function resize($img, $dir, $fileName, $extension)
     {
-        $img                = Image::make($img);
+        $img = Image::make($img);
         $images['original'] = $fileName . '.' . $extension;
-        foreach (self::$sizes as $size)
-        {
+        foreach (self::$sizes as $size) {
             $images[$size] = $fileName . '_' . $size . '.' . $extension;
-            $img->resize($size, null, function ($aspect)
-            {
+            $img->resize($size, null, function ($aspect) {
                 $aspect->aspectRatio();
             })->save(Storage::path($dir) . $fileName . '_' . $size . '.' . $extension);
         }
