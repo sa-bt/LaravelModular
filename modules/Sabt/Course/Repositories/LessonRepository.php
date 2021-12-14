@@ -73,4 +73,9 @@ class LessonRepository
                                ]);
     }
 
+    public function findById($id)
+    {
+        return Lesson::query()->findOrFail($id);
+    }
+
 }

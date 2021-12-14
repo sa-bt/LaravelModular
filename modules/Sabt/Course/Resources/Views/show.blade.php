@@ -17,7 +17,7 @@
                     <button class="btn all-confirm-btn">تایید همه جلسات</button>
                     <button class="btn confirm-btn">تایید جلسات</button>
                     <button class="btn reject-btn">رد جلسات</button>
-                    <button class="btn delete-btn">حذف جلسات</button>
+                    <button class="btn delete-btn" onclick="deleteMultiple('{{route("lessons.deleteMultiple",$course->id)}}')">حذف جلسات</button>
 
                 </div>
                 <div class="table__box">
@@ -44,7 +44,7 @@
                             <tr role="row" class="" data-row-id="1">
                                 <td>
                                     <label class="ui-checkbox">
-                                        <input type="checkbox" class="sub-checkbox" data-id="1">
+                                        <input type="checkbox" class="sub-checkbox" data-id="{{$lesson->id}}">
                                         <span class="checkmark"></span>
                                     </label>
                                 </td>

@@ -5,6 +5,7 @@ namespace Sabt\Course\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Sabt\Common\Responses\AjaxResponses;
 use Sabt\Course\Http\Requests\LessonRequest;
@@ -43,10 +44,10 @@ class LessonController extends Controller
     public function store(Course $course, LessonRequest $request)
     {
 //        $this->authorize('createSeason', Course::findOrFail($request->course_id));
-        $request->request->add(["media_id"=>MediaUploadService::upload($request->file('lessonFile'))->id]);
-        $this->lessonRepository->create($course->id,$request);
+        $request->request->add(["media_id" => MediaUploadService::upload($request->file('lessonFile'))->id]);
+        $this->lessonRepository->create($course->id, $request);
         newFeedback();
-        return view('Course::show',compact('course'));
+        return view('Course::show', compact('course'));
     }
 
     public function edit(Course $course, Lesson $lesson)
@@ -66,11 +67,25 @@ class LessonController extends Controller
     public function destroy(Course $course, Lesson $lesson)
     {
 //        $this->authorize('delete', $lesson);
-        if ($lesson->media){
+        if ($lesson->media) {
             $lesson->media->delete();
         }
         $this->lessonRepository->delete($lesson);
         return AjaxResponses::success();
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+        foreach ($ids as $id) {
+            $lesson = $this->lessonRepository->findById($id);
+            $this->authorize('delete', $lesson);
+            if ($lesson->media) {
+                $lesson->media->delete();
+            }
+            $this->lessonRepository->delete($lesson);
+        }
+        return back();
     }
 
     public function accept(Course $course, Lesson $lesson)

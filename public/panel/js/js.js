@@ -140,45 +140,37 @@ $('.checkedAll').on('click', function (e) {
     }
 });
 
-jQuery('.delete-btn').on('click', function (e) {
+function deleteMultiple(route) {
+    console.log(route)
     var allVals = [];
     $(".sub-checkbox:checked").each(function () {
         allVals.push($(this).attr('data-id'));
     });
     //alert(allVals.length); return false;
     if (allVals.length <= 0) {
-        alert("یک سطر انتخاب کنید");
+        Swal.fire({
+            text: "سطری انتخاب نشده است",
+        })
     } else {
-        //$("#loading").show();
-        WRN_PROFILE_DELETE = "آیا مطمئن هستید که می خواهید این سطر را حذف کنید؟";
-        var check = confirm(WRN_PROFILE_DELETE);
-        if (check == true) {
-            //for server side
-            /*
-            var join_selected_values = allVals.join(",");
-
-            $.ajax({
-
-                type: "POST",
-                url: "delete.php",
-                cache:false,
-                data: 'ids='+join_selected_values,
-                success: function(response)
-                {
-                    $("#loading").hide();
-                    $("#msgdiv").html(response);
-                    //referesh table
-                }
-            });*/
-            //for client side
-            $.each(allVals, function (index, value) {
-                $('table tr').filter("[data-row-id='" + value + "']").remove();
-            });
-
-
-        }
+        Swal.fire({
+            title: 'حذف رکورد',
+            text: "آیا از حذف این رکورد(ها) اطمینان دارید؟",
+            icon: 'error',
+            showDenyButton: true,
+            // showCancelButton: true,
+            confirmButtonText: 'بله',
+            denyButtonText: `خیر`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("<form action='" + route + "' method='post'>" +
+                    "<input type='hidden' name='_token' value='" + $('meta[name="_token"]').attr('content') + "'/>" +
+                    "<input type='hidden' name='_method' value='delete'/>" +
+                    "<input type='hidden' name='ids' value='" + allVals + "'/>" +
+                    "</form>").appendTo('body').submit();
+            }
+        })
     }
-});
+}
 
 $('.course__detial .item-delete').on('click', function (e) {
     WRN_PROFILE_DELETE = "آیا مطمئن هستید که می خواهید این سطر را حذف کنید؟";
@@ -280,7 +272,7 @@ function updateConfirmationStatus(event, route, message, status, class_name = 'c
                 .done(function (response) {
                     if (status == 'تایید شده') {
                         $(event.target).closest('tr').find('td.' + class_name).html("<span class='text-success'>" + status + "</span>");
-                    }else{
+                    } else {
                         $(event.target).closest('tr').find('td.' + class_name).html("<span class='text-error'>" + status + "</span>");
 
                     }

@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function ()
     Route::put('courses/{course}/lessons/{lesson}/accept',[LessonController::class,'accept'])->name('lessons.accept');
     Route::put('courses/{course}/lessons/{lesson}/reject',[LessonController::class,'reject'])->name('lessons.reject');
     Route::put('courses/{course}/lessons/{lesson}/lock',[LessonController::class,'lock'])->name('lessons.lock');
+    Route::delete('courses/{course}/lessons',[LessonController::class,'deleteMultiple'])->name('lessons.deleteMultiple');
     Route::resource('courses/{course}/lessons', LessonController::class);
 
 });
