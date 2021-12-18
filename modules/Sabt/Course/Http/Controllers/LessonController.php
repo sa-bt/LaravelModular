@@ -90,24 +90,24 @@ class LessonController extends Controller
 
     public function accept(Course $course, Lesson $lesson)
     {
-//        $this->authorize('change_confirmation_status', $lesson);
-//
-//        if ($this->seasonRepository->updateConfirmationStatus($lesson, Season::CONFIRMATION_STATUS_ACCEPTED))
-//        {
-//            return AjaxResponses::success();
-//        };
-//        return AjaxResponses::failed();
+        $this->authorize('change_confirmation_status', $lesson);
+
+        if ($this->lessonRepository->updateConfirmationStatus($lesson, Lesson::CONFIRMATION_STATUS_ACCEPTED))
+        {
+            return AjaxResponses::success();
+        };
+        return AjaxResponses::failed();
     }
 
     public function reject(Course $course, Lesson $lesson)
     {
-//        $this->authorize('change_confirmation_status', $lesson);
-//
-//        if ($this->seasonRepository->updateConfirmationStatus($lesson, Season::CONFIRMATION_STATUS_REJECTED))
-//        {
-//            return AjaxResponses::success();
-//        };
-//        return AjaxResponses::failed();
+        $this->authorize('change_confirmation_status', $lesson);
+
+        if ($this->lessonRepository->updateConfirmationStatus($lesson, Lesson::CONFIRMATION_STATUS_REJECTED))
+        {
+            return AjaxResponses::success();
+        };
+        return AjaxResponses::failed();
     }
 
     public function lock(Course $course, Lesson $lesson)

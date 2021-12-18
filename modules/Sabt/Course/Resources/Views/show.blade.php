@@ -52,28 +52,28 @@
                                 <td><a href="">{{$lesson->title}}</a></td>
                                 <td>{{$lesson->season?$lesson->season->title:''}}</td>
                                 <td>{{$lesson->time}}</td>
-                                <td>@lang($lesson->confirmation_status)</td>
+                                <td  class="confirmation_status">@lang($lesson->confirmation_status)</td>
                                 <td>{{$lesson->access}}</td>
                                 <td>
-                                    <a href=""
+                                    <a href="#"
                                        onclick="deleteItem(event,'{{route('lessons.destroy',[$course->id,$lesson->id])}}')"
                                        class="item-delete mlg-15" title="حذف"></a>
                                     <a href="{{route('lessons.show',[$course->id,$lesson->id])}}" class="item-eye mlg-15" title="مشاهده"></a>
                                     <a href="{{route('lessons.edit',[$course->id,$lesson->id])}}" class="item-edit mlg-15"
                                        title="ویرایش"></a>
-                                    <a href="" class="item-confirm mlg-15"
+                                    <a href="#" class="item-confirm mlg-15"
                                        onclick="updateConfirmationStatus(
                                            event,
                                            '{{route('lessons.accept',[$course->id,$lesson->id])}}',
                                            'آیا از تایید این آیتم اطمینان دارید؟',
                                            'تایید شده')"></a>
-                                    <a href="" class="item-reject mlg-15"
+                                    <a href="#" class="item-reject mlg-15"
                                        onclick="updateConfirmationStatus(
                                            event,
                                            '{{route('lessons.reject',[$course->id,$lesson->id])}}',
                                            'آیا از رد این آیتم اطمینان دارید؟',
                                            'رد شده')"></a>
-                                    <a href="" class="item-lock mlg-15"
+                                    <a href="#" class="item-lock mlg-15"
                                        onclick="updateConfirmationStatus(
                                            event,
                                            '{{route('lessons.lock',[$course->id,$lesson->id])}}',
