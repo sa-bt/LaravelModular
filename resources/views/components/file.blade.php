@@ -5,9 +5,11 @@
     </div>
     <span class="filesize"></span>
     @if(isset($value))
-        <span class="selectedFiles">
-            <img src="{{$value->thumb}}" alt="">
-        </span>
+
+        <p class="selectedFiles">
+            <p>فایل انتخاب شده: {{$value->filename}}</p>
+            <img src="{{$value->thumb}}" alt="" width="100" height="100">
+        </p>
     @else
         <span class="selectedFiles">فایلی انتخاب نشده است</span>
     @endif

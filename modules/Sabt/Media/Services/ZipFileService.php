@@ -19,4 +19,8 @@ class ZipFileService extends DefaultFileService implements FileServiceContract
         return  [$fileName . '.' . $extension];
     }
 
+    public static function thumb($media)
+    {
+        return url('/img/zip.png');
+    }
 }

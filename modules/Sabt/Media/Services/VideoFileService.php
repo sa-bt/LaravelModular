@@ -18,4 +18,8 @@ class VideoFileService extends  DefaultFileService implements FileServiceContrac
         return  [ $fileName . '.' . $extension];
     }
 
+    public static function thumb($media)
+    {
+        return url('/img/video.jpg');
+    }
 }

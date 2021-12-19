@@ -33,4 +33,9 @@ class ImageFileService extends DefaultFileService implements FileServiceContract
         return $images;
     }
 
+    public static function thumb($media)
+    {
+        return '/storage/'.$media->files[100];
+    }
+
 }

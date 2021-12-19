@@ -55,4 +55,13 @@ class MediaUploadService
     {
         return time().uniqid();
     }
+
+    public static function thumb(Media $media)
+    {
+        foreach (config('Media.MediaTypeService') as $mediaType => $service)
+        {
+            if ($mediaType==$media->type)
+                return $service['handler']::thumb($media);
+        }
+    }
 }

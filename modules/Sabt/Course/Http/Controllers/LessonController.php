@@ -52,8 +52,9 @@ class LessonController extends Controller
 
     public function edit(Course $course, Lesson $lesson)
     {
-//        $this->authorize('edit', $lesson);
-//        return view('Course::seasons.edit', compact('lesson'));
+        $this->authorize('edit', $lesson);
+        $seasons = $this->seasonRepository->getAcceptSeasons($course->id);
+        return view('Course::lessons.edit', compact('course','lesson','seasons'));
     }
 
     public function update(Course $course, Lesson $lesson, SeasonRequest $request)
