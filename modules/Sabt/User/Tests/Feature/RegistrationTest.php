@@ -27,6 +27,26 @@ class RegistrationTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_validate_email_and_password()
+    {
+        $response=$this->post(route('register'), [
+            "name"                  => "sabt",
+            "email"                 => "",
+            "mobile"                => "09169630567",
+            "password"              => "",
+            "password_confirmation" => "q@Q111111",
+        ]);
+        $response->assertInvalid([
+            'email'=>__('validation.required', ['attribute' => 'email'])]);
+//        $errors = session('errors');
+//$this->assertEquals($response->me);
+//        $response->assertSessionHasErrors([
+//            'email' => __('validation.required', ['attribute' => 'ایمیل'])]);
+//        $this->assertSame($errors->first('email'), __('validation.required', ['attribute' => 'ایمیل']));
+//        $this->assertSame($errors->first('password'), __('validation.required', ['attribute' => 'رمز عبور']));
+    }
+
+
     /** @test */
     public function user_can_register()
     {
@@ -84,4 +104,6 @@ class RegistrationTest extends TestCase
             "password_confirmation" => "q@Q111111",
         ]);
     }
+
+
 }

@@ -26,20 +26,19 @@ class MediaUploadService
 
     public static function delete(Media $media)
     {
-        foreach (config('Media.MediaTypeService') as $mediaType => $service)
-        {
-            if ($mediaType==$media->type)
-                return $service['handler']::delete($media,$service['direction']);
+        foreach (config('Media.MediaTypeService') as $mediaType => $service) {
+            if ($mediaType == $media->type)
+                return $service['handler']::delete($media, $service['direction']);
         }
     }
 
 
     public static function uploadHandler(FileServiceContract $service, $mediaType): Media
     {
-        $media           = new Media();
-        $media->files    = $service::upload(self::$file, self::fileNameGenerator(), self::$dir);
-        $media->type     = $mediaType;
-        $media->user_id  = auth()->id();
+        $media = new Media();
+        $media->files = $service::upload(self::$file, self::fileNameGenerator(), self::$dir);
+        $media->type = $mediaType;
+        $media->user_id = auth()->id();
         $media->filename = self::$file->getClientOriginalName();
         $media->save();
         return $media;
@@ -53,15 +52,25 @@ class MediaUploadService
 
     private static function fileNameGenerator(): string
     {
-        return time().uniqid();
+        return time() . uniqid();
     }
 
     public static function thumb(Media $media)
     {
-        foreach (config('Media.MediaTypeService') as $mediaType => $service)
-        {
-            if ($mediaType==$media->type)
+        foreach (config('Media.MediaTypeService') as $mediaType => $service) {
+            if ($mediaType == $media->type)
                 return $service['handler']::thumb($media);
         }
+    }
+
+    public static function getExtensions()
+    {
+        $extensions = [];
+        foreach (config('Media.MediaTypeService') as $service) {
+            foreach ($service['extensions'] as $extension) {
+                $extensions[] = $extension;
+            }
+        }
+        return implode(',',$extensions);
     }
 }

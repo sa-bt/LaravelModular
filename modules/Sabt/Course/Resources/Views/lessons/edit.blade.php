@@ -7,8 +7,9 @@
 @section('content')
     <div class="col-10 bg-white" style="margin: auto">
         <p class="box__title">بروزرسانی جلسه</p>
-        <form action="{{route('lessons.update',[$course->id,$lesson->id])}}" class="padding-30" method="post" enctype="multipart/form-data">
-
+        <form action="{{route('lessons.update',[$course->id,$lesson->id])}}" class="padding-30" method="post"
+              enctype="multipart/form-data">
+            @method('put')
             @csrf
             <x-input
                 type="text"
@@ -43,31 +44,28 @@
             <div class="w-50 " style="margin:10px auto">
                 <p class="box__title">ایا این جلسه رایگان است ؟ </p>
                 <div class="notificationGroup">
-                    <input id="lesson-upload-field-1" name="free" type="radio" value="0" @if(! $lesson->free) checked="" @endif>
-                    <label for="free-1">خیر</label>
+                    <input id="lesson-upload-field-1" name="free" type="radio" value="0" @if(!$lesson->free) checked="" @endif>
+                    <label for="lesson-upload-field-1">خیر</label>
                 </div>
                 <div class="notificationGroup">
-                    <input id="free-2" name="free" type="radio" value="1" @if($lesson->free) checked="" @endif>
+                    <input id="lesson-upload-field-2" name="free" type="radio" value="1"@if($lesson->free) checked="" @endif>
                     <label for="lesson-upload-field-2">بله</label>
                 </div>
             </div>
 
-
             <x-select name="season_id">
                 <option value="">سرفصل</option>
                 @foreach($seasons as $season)
-                    <option value="{{$season->id}}" @if($lesson->season_id && $lesson->season_id ==$seeson->id) checked="" @endif>{{$season->title}}</option>
+                    <option value="{{$season->id}}"
+                            @if($lesson->season_id && $lesson->season_id ==$seeson->id) checked="" @endif>{{$season->title}}</option>
                 @endforeach
             </x-select>
 
-            <x-file placeholder="آپلود جلسه*" name="lessonFile" :value="$lesson->media" />
-            <x-textarea placeholder="توضیحات جلسه" name="body"/>
+            <x-file placeholder="آپلود جلسه*" name="lessonFile" :value="$lesson->media"/>
+            <x-textarea placeholder="توضیحات جلسه" name="body" value="{{$lesson->body}}"/>
             <br>
             <button type="submit" class="btn btn-webamooz_net">بروزرسانی جلسه</button>
         </form>
     </div>
 
-@endsection
-@section('js')
-    <script src="/panel/js/tagsInput.js"></script>
 @endsection

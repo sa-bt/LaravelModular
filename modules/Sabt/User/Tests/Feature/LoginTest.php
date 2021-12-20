@@ -19,13 +19,16 @@ class LoginTest extends TestCase
     public function test_validate_email_and_password()
     {
         $user = User::factory(1)->create()->first();
-        $this->post(route('login'), [
+        $response=$this->post(route('login'), [
             "email" => "",
             "password" => "",
         ]);
-        $errors = session('errors');
-        $this->assertSame($errors->first('email'), __('validation.required', ['attribute' => 'ایمیل']));
-        $this->assertSame($errors->first('password'), __('validation.required', ['attribute' => 'رمز عبور']));
+//        $errors = session('errors');
+
+        $response->assertSessionHasErrors([
+            'email' => __('validation.required', ['attribute' => 'ایمیل'])]);
+//        $this->assertSame($errors->first('email'), __('validation.required', ['attribute' => 'ایمیل']));
+//        $this->assertSame($errors->first('password'), __('validation.required', ['attribute' => 'رمز عبور']));
     }
 
     public function test_user_can_login_by_email()

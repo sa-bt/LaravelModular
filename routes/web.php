@@ -22,6 +22,7 @@ Route::get('/', function ()
 
 Route::get('/test', function ()
 {
+    dd(\Sabt\Media\Services\MediaUploadService::getExtensions());
     $user = \Sabt\User\Models\User::find(6)->first();
     dd($user->course->count());
     $filename='ahmad.txt';
