@@ -140,8 +140,37 @@ $('.checkedAll').on('click', function (e) {
     }
 });
 
-function deleteMultiple(route) {
-    console.log(route)
+function changeMultiple(route,title,text,method='put') {
+    var allVals = [];
+    $(".sub-checkbox:checked").each(function () {
+        allVals.push($(this).attr('data-id'));
+    });
+    //alert(allVals.length); return false;
+    if (allVals.length <= 0) {
+        Swal.fire({
+            text: "سطری انتخاب نشده است",
+        })
+    } else {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: 'error',
+            showDenyButton: true,
+            // showCancelButton: true,
+            confirmButtonText: 'بله',
+            denyButtonText: `خیر`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("<form action='" + route + "' method='post'>" +
+                    "<input type='hidden' name='_token' value='" + $('meta[name="_token"]').attr('content') + "'/>" +
+                    "<input type='hidden' name='_method' value='"+method+"'/>" +
+                    "<input type='hidden' name='ids' value='" + allVals + "'/>" +
+                    "</form>").appendTo('body').submit();
+            }
+        })
+    }
+}
+function acceptMultiple(route) {
     var allVals = [];
     $(".sub-checkbox:checked").each(function () {
         allVals.push($(this).attr('data-id'));

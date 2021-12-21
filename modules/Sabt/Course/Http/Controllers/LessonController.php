@@ -54,17 +54,17 @@ class LessonController extends Controller
     {
         $this->authorize('edit', $lesson);
         $seasons = $this->seasonRepository->getAcceptSeasons($course->id);
-        return view('Course::lessons.edit', compact('course','lesson','seasons'));
+        return view('Course::lessons.edit', compact('course', 'lesson', 'seasons'));
     }
 
     public function update(Course $course, Lesson $lesson, LessonRequest $request)
     {
         $this->authorize('edit', $lesson);
-        if ($request->hasFile('lessonFile')){
+        if ($request->hasFile('lessonFile')) {
             if ($lesson->media) $lesson->media->delete();
-            $request->request->add(['media_id'=>MediaUploadService::upload($request->file('lessonFile'))->id]);
-        }else{
-            $request->request->add(['media_id'=>$lesson->media_id]);
+            $request->request->add(['media_id' => MediaUploadService::upload($request->file('lessonFile'))->id]);
+        } else {
+            $request->request->add(['media_id' => $lesson->media_id]);
         }
         $this->lessonRepository->edit($lesson, $request);
         newFeedback();
@@ -92,6 +92,7 @@ class LessonController extends Controller
             }
             $this->lessonRepository->delete($lesson);
         }
+        newFeedback();
         return back();
     }
 
@@ -99,8 +100,7 @@ class LessonController extends Controller
     {
         $this->authorize('change_confirmation_status', $lesson);
 
-        if ($this->lessonRepository->updateConfirmationStatus($lesson, Lesson::CONFIRMATION_STATUS_ACCEPTED))
-        {
+        if ($this->lessonRepository->updateConfirmationStatus($lesson, Lesson::CONFIRMATION_STATUS_ACCEPTED)) {
             return AjaxResponses::success();
         };
         return AjaxResponses::failed();
@@ -110,11 +110,28 @@ class LessonController extends Controller
     {
         $this->authorize('change_confirmation_status', $lesson);
 
-        if ($this->lessonRepository->updateConfirmationStatus($lesson, Lesson::CONFIRMATION_STATUS_REJECTED))
-        {
+        if ($this->lessonRepository->updateConfirmationStatus($lesson, Lesson::CONFIRMATION_STATUS_REJECTED)) {
             return AjaxResponses::success();
         };
         return AjaxResponses::failed();
+    }
+
+    public function rejectMultiple(Request $request, Course $course)
+    {
+//        $this->authorize('change_confirmation_status', $lesson);
+        $ids = explode(',', $request->ids);
+        $this->lessonRepository->updateStatusAllLessons($ids, Lesson::CONFIRMATION_STATUS_REJECTED);
+        newFeedback();
+        return back();
+    }
+    public function acceptMultiple(Request $request, Course $course)
+    {
+
+//        $this->authorize('change_confirmation_status', $lesson);
+        $ids = explode(',', $request->ids);
+        $this->lessonRepository->updateStatusAllLessons($ids, Lesson::CONFIRMATION_STATUS_ACCEPTED);
+        newFeedback();
+        return back();
     }
 
     public function lock(Course $course, Lesson $lesson)

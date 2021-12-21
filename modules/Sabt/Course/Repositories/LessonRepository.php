@@ -84,4 +84,11 @@ class LessonRepository
         return Lesson::query()->findOrFail($id);
     }
 
+    public function updateStatusAllLessons($ids, string $status)
+    {
+        return Lesson::query()->whereIn('id', $ids)->update([
+            'confirmation_status' => $status
+        ]);
+    }
+
 }

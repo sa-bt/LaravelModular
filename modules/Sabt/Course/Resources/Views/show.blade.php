@@ -11,13 +11,29 @@
             <div class="col-8 bg-white padding-30 margin-left-10 margin-bottom-15 border-radius-3">
                 <div class="margin-bottom-20 flex-wrap font-size-14 d-flex bg-white padding-0">
                     <p class="mlg-15">دوره مقدماتی تا پیشرفته لاراول</p>
-                    <a class="color-2b4a83" href="{{route('lessons.create',$course->id)}}">آپلود جلسه جدید</a>
+                    <a class="btn all-confirm-btn" href="{{route('lessons.create',$course->id)}}">آپلود جلسه جدید</a>
                 </div>
                 <div class="d-flex item-center flex-wrap margin-bottom-15 operations__btns">
-                    <button class="btn all-confirm-btn">تایید همه جلسات</button>
-                    <button class="btn confirm-btn">تایید جلسات</button>
-                    <button class="btn reject-btn">رد جلسات</button>
-                    <button class="btn delete-btn" onclick="deleteMultiple('{{route("lessons.deleteMultiple",$course->id)}}')">حذف جلسات</button>
+                    <button class="btn confirm-btn" onclick="changeMultiple(
+                        '{{route("lessons.acceptMultiple",$course->id)}}',
+                        'تایید جلسات',
+                        'آیا از تایید جلسات انتخاب شده اطمینان دارید؟')"
+                    >تایید جلسات</button>
+
+                    <button class="btn reject-btn" onclick="changeMultiple(
+                        '{{route("lessons.rejectMultiple",$course->id)}}',
+                        'رد جلسات',
+                        'آیا از رد جلسات انتخاب شده اطمینان دارید؟')"
+                    >رد جلسات</button>
+
+                    <button
+                        class="btn delete-btn"
+                            onclick="changeMultiple(
+                                '{{route("lessons.deleteMultiple",$course->id)}}',
+                                'حذف رکورد',
+                                'آیا از حذف این رکورد(ها) اطمینان دارید؟',
+                                'delete')"
+                    >حذف جلسات</button>
 
                 </div>
                 <div class="table__box">
