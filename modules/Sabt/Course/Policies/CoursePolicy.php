@@ -58,10 +58,11 @@ class CoursePolicy
     }
 
 
-    public function addSeason($user)
+    public function createLesson($user,$course)
     {
-        dd('addSeason');
-        return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION);
+        return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||
+            ($user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION)
+                && $user->id == $course->teacher->id);
     }
 
 
