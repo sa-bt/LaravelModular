@@ -4,6 +4,7 @@ namespace Sabt\Course\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Sabt\Course\Database\Factories\LessonFactory;
 use Sabt\Course\Database\Factories\SeasonFactory;
 use Sabt\Media\Models\Media;
 use Sabt\User\Models\User;
@@ -25,11 +26,6 @@ class Lesson extends Model
 
     protected $guarded = [];
 
-
-    protected static function newFactory()
-    {
-        return SeasonFactory::new();
-    }
 
     public function course()
     {
@@ -64,4 +60,10 @@ class Lesson extends Model
 //    {
 //        return $this->season ? $this->season->title : "";
 //    }
+
+    protected static function newFactory()
+    {
+        return LessonFactory::new();
+    }
+
 }
