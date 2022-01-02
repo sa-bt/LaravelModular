@@ -84,15 +84,15 @@ class LessonTest extends TestCase
 
     public function test_only_allowed_extensions_can_be_uploaded()
     {
-        $notAllowedExtensions=['jpg','png','mp3'];
+        $notAllowedExtensions = ['jpg', 'png', 'mp3'];
         $this->actionAsAdmin();
         $course = Course::factory()->create();
-        foreach ($notAllowedExtensions as $extension){
+        foreach ($notAllowedExtensions as $extension) {
             $this->post(route('lessons.store', $course->id), [
                 "title" => "lesson 1",
                 "time" => 20,
                 "free" => 1,
-                "lessonFile" => UploadedFile::fake()->create('fileTest.'.$extension, 10024),
+                "lessonFile" => UploadedFile::fake()->create('fileTest.' . $extension, 10024),
             ]);
         }
 
@@ -100,22 +100,17 @@ class LessonTest extends TestCase
     }
 
 
-
-
-
     public function test_permitted_user_can_see_edit_lesson_form()
     {
-        $this->withoutExceptionHandling();
         $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $lesson=Lesson::factory()->create([
-            'course_id'=>$course->id
+        $lesson = Lesson::factory()->create([
+            'course_id' => $course->id
         ]);
-        dd($lesson->toArray());
-        $this->get(route('lessons.edit', $lesson->id))->assertOk();
+        $this->get(route('lessons.edit', [$course->id, $lesson->id]))->assertOk();
 
         $this->actionAsTeacher();
-        $this->get(route('lessons.edit', $lesson->id))->assertStatus(403);
+        $this->get(route('lessons.edit', [$course->id, $lesson->id]))->assertStatus(403);
     }
 
 
@@ -123,16 +118,13 @@ class LessonTest extends TestCase
     {
         $this->actionAsTeacher();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'course_id' => $course->id
         ]);
+        $this->get(route('lessons.edit', [$course->id, $lesson->id]))->assertOk();
 
         $this->actionAsTeacher();
-        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
-
-        $this->actionAsUser();
-        auth()->user()->givePermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION);
-        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
+        $this->get(route('lessons.edit', [$course->id, $lesson->id]))->assertStatus(403);
     }
 
     public function test_normal_user_can_not_see_edit_lesson_page()
@@ -140,27 +132,28 @@ class LessonTest extends TestCase
         $this->actionAsTeacher();
         $course = Course::factory()->create();
         $lesson = Lesson::factory()->create([
-            "course_id" => $course->id
+            'course_id' => $course->id
         ]);
+        $this->get(route('lessons.edit', [$course->id, $lesson->id]))->assertOk();
 
         $this->actionAsUser();
-        $this->get(route('seasons.edit', $season->id))->assertStatus(403);
+        $this->get(route('lessons.edit', [$course->id, $lesson->id]))->assertStatus(403);
     }
 
     public function test_permitted_user_can_update_lesson()
     {
         $this->actionAsTeacher();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'course_id' => $course->id
         ]);
-        $response = $this->put(route('seasons.update', $season->id), [
-            "title" => "update title"
+        $response = $this->put(route('lessons.update', [$course->id, $lesson->id]), [
+            "title" => "updated lesson"
         ]);
 
-        $response->assertRedirect(route('courses.show', $course->id));
-        $season->refresh();
-        $this->assertEquals('update title', $season->title);
+//        $response->assertRedirect(route('courses.show', $course->id));
+        $lesson->refresh();
+        $this->assertEquals('updated lesson', $lesson->title);
     }
 
     public function test_permitted_user_can_not_update_other_users_lesson()

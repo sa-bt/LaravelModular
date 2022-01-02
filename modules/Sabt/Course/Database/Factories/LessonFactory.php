@@ -33,7 +33,7 @@ class LessonFactory extends Factory
             "number"=>random_int(1,999),
             "time" => 10,
             "free" => 1,
-            "media_id" =>  UploadedFile::fake()->create('fileTest.rar', 10024),
+//            "media_id" =>  UploadedFile::fake()->create('fileTest.rar', 10024),
             "body" => $this->faker->text
         ];
     }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sabt\Course\Models\Course;
+use Sabt\Course\Models\Lesson;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,11 @@ Route::get('/', function ()
 
 Route::get('/test', function ()
 {
+    $course = Course::factory()->create();
+        $lesson=Lesson::factory()->create([
+            'course_id'=>$course->id
+        ]);
+        dd($lesson->toArray());
     dd(\Sabt\Media\Services\MediaUploadService::getExtensions());
     $user = \Sabt\User\Models\User::find(6)->first();
     dd($user->course->count());
