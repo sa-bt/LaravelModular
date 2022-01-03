@@ -31,7 +31,6 @@ class LessonPolicy
 
     public function edit(User $user, Lesson $lesson)
     {
-        dd(22);
         return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||
                ($user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION)
                 && $user->id == $lesson->course->teacher_id);

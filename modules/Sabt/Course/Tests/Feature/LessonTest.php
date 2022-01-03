@@ -142,86 +142,97 @@ class LessonTest extends TestCase
 
     public function test_permitted_user_can_update_lesson()
     {
-        $this->actionAsTeacher();
+        $this->actionAsAdmin();
         $course = Course::factory()->create();
         $lesson = Lesson::factory()->create([
             'course_id' => $course->id
         ]);
         $response = $this->put(route('lessons.update', [$course->id, $lesson->id]), [
-            "title" => "updated lesson"
+            "title" => "updated lesson",
+            "free"=>1
         ]);
 
-//        $response->assertRedirect(route('courses.show', $course->id));
+        $response->assertRedirect(route('courses.show', $course->id));
         $lesson->refresh();
         $this->assertEquals('updated lesson', $lesson->title);
     }
 
     public function test_permitted_user_can_not_update_other_users_lesson()
     {
-        $this->actionAsTeacher();
+        $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
         ]);
         $this->actionAsTeacher();
-        $this->put(route('seasons.update', $season->id), [
-            "title" => "update title"
+        $response = $this->put(route('lessons.update', [$course->id, $lesson->id]), [
+            "title" => "updated lesson",
+            "free"=>1
         ])->assertStatus(403);
 
-        $season->refresh();
-        $this->assertNotEquals('update title', $season->title);
+        $lesson->refresh();
+        $this->assertEquals('title', $lesson->title);
     }
 
     public function test_normal_user_can_not_update_lesson()
     {
-        $this->actionAsTeacher();
+        $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
         ]);
         $this->actionAsUser();
-        $this->put(route('seasons.update', $season->id), [
-            "title" => "update title"
+        $response = $this->put(route('lessons.update', [$course->id, $lesson->id]), [
+            "title" => "updated lesson",
+            "free"=>1
         ])->assertStatus(403);
 
-        $season->refresh();
-        $this->assertNotEquals('update title', $season->title);
+        $lesson->refresh();
+        $this->assertEquals('title', $lesson->title);
     }
 
 
     public function test_permitted_user_can_delete_lesson()
     {
-        $this->actionAsTeacher();
+        $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
         ]);
-        $this->delete(route('seasons.destroy', $season->id))->assertOk();
-        $this->assertEquals(0, Season::count());
+        $this->delete(route('lessons.destroy', [$course->id, $lesson->id]))->assertOk();
+
+        $this->assertEquals(0, Lesson::count());
     }
 
     public function test_permitted_user_can_not_delete_other_users_lesson()
     {
-        $this->actionAsTeacher();
+        $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
         ]);
         $this->actionAsTeacher();
-        $this->delete(route('seasons.destroy', $season->id))->assertStatus(403);
-        $this->assertEquals(1, Season::count());
+        $this->delete(route('lessons.destroy', [$course->id, $lesson->id]))->assertStatus(403);
+
+        $this->assertEquals(1, Lesson::count());
     }
 
     public function test_normal_user_can_not_delete_lesson()
     {
         $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
         ]);
         $this->actionAsUser();
-        $this->delete(route('seasons.destroy', $season->id))->assertStatus(403);
-        $this->assertEquals(1, Season::count());
+        $this->delete(route('lessons.destroy', [$course->id, $lesson->id]))->assertStatus(403);
+
+        $this->assertEquals(1, Lesson::count());
     }
 
     public function test_permitted_user_can_change_confirmation_status_lesson()

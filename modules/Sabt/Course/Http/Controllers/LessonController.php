@@ -59,7 +59,7 @@ class LessonController extends Controller
     }
 
     public function update(Course $course, Lesson $lesson, LessonRequest $request)
-    {dd(1);
+    {
         $this->authorize('edit', $lesson);
         if ($request->hasFile('lessonFile')) {
             if ($lesson->media) $lesson->media->delete();
