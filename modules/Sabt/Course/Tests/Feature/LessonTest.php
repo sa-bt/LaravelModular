@@ -235,42 +235,93 @@ class LessonTest extends TestCase
         $this->assertEquals(1, Lesson::count());
     }
 
-    public function test_permitted_user_can_change_confirmation_status_lesson()
+    public function test_permitted_user_can_accept_lesson()
     {
         $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
         ]);
-        $season->refresh();
-        $this->assertEquals(Season::CONFIRMATION_STATUS_PENDING, $season->confirmation_status);
+        $this->put(route('lessons.accept', [$course->id, $lesson->id]))->assertOk();
 
-        $this->put(route('seasons.accept', $season->id))->assertOk();
-        $season->refresh();
-        $this->assertEquals(Season::CONFIRMATION_STATUS_ACCEPTED, $season->confirmation_status);
+        $lesson->refresh();
+        $this->assertEquals(Lesson::CONFIRMATION_STATUS_ACCEPTED, $lesson->confirmation_status);
+    }
 
-        $this->put(route('seasons.reject', $season->id))->assertOk();
-        $season->refresh();
-        $this->assertEquals(Season::CONFIRMATION_STATUS_REJECTED, $season->confirmation_status);
+    public function test_permitted_user_can_accept_all_lessons()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $lesson1 = Lesson::factory()->create([
+            'title'=>'title1',
+            'course_id' => $course->id
+        ]);
+        $lesson2 = Lesson::factory()->create([
+            'title'=>'title2',
+            'course_id' => $course->id
+        ]);
+
+        $this->assertEquals($course->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_PENDING)->count(), $course->lessons()->count());
+        $this->put(route('lessons.acceptMultiple', $course->id),["ids"=>"$lesson1->id,$lesson2->id"]);
+
+        $this->assertEquals($course->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_ACCEPTED)->count(), $course->lessons()->count());
+    }
+
+    public function test_permitted_user_can_reject_lesson()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $lesson = Lesson::factory()->create([
+            'title'=>'title',
+            'course_id' => $course->id
+        ]);
+        $lesson->refresh();
+        $this->assertEquals(Lesson::CONFIRMATION_STATUS_PENDING, $lesson->confirmation_status);
+        $this->put(route('lessons.reject', [$course->id, $lesson->id]))->assertOk();
+
+        $lesson->refresh();
+        $this->assertEquals(Lesson::CONFIRMATION_STATUS_REJECTED, $lesson->confirmation_status);
+    }
+
+
+    public function test_permitted_user_can_reject_all_lessons()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $lesson1 = Lesson::factory()->create([
+            'title'=>'title1',
+            'course_id' => $course->id
+        ]);
+        $lesson2 = Lesson::factory()->create([
+            'title'=>'title2',
+            'course_id' => $course->id
+        ]);
+
+        $this->assertEquals($course->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_PENDING)->count(), $course->lessons()->count());
+        $this->put(route('lessons.rejectMultiple', $course->id),["ids"=>"$lesson1->id,$lesson2->id"]);
+
+        $this->assertEquals($course->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_REJECTED)->count(), $course->lessons()->count());
     }
 
     public function test_normal_user_can_not_change_confirmation_status_lesson()
     {
         $this->actionAsAdmin();
         $course = Course::factory()->create();
-        $season = Season::factory()->create([
-            "course_id" => $course->id
+        $lesson1 = Lesson::factory()->create([
+            'title'=>'title1',
+            'course_id' => $course->id
         ]);
-        $season->refresh();
+        $lesson2 = Lesson::factory()->create([
+            'title'=>'title2',
+            'course_id' => $course->id
+        ]);
+        $this->assertEquals($course->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_PENDING)->count(), $course->lessons()->count());
+
         $this->actionAsUser();
+        $this->put(route('lessons.rejectMultiple', $course->id),["ids"=>"$lesson1->id,$lesson2->id"]);
 
-        $this->put(route('seasons.accept', $season->id))->assertStatus(403);
-        $season->refresh();
-        $this->assertEquals(Season::CONFIRMATION_STATUS_PENDING, $season->confirmation_status);
-
-        $this->put(route('seasons.reject', $season->id))->assertStatus(403);
-        $season->refresh();
-        $this->assertEquals(Season::CONFIRMATION_STATUS_PENDING, $season->confirmation_status);
+        $this->assertEquals($course->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_PENDING)->count(), $course->lessons()->count());
     }
 
 

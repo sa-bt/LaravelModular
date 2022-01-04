@@ -21,7 +21,7 @@ class CreateLessonsTable extends Migration
             $table->unsignedBigInteger('media_id')->nullable();
             $table->foreign('media_id')->references('id')->on('media')->onDelete('SET NULL');
             $table->enum('confirmation_status', \Sabt\Course\Models\Lesson::$confirmationStatuses)
-                  ->default(\Sabt\Course\Models\Season::CONFIRMATION_STATUS_PENDING);
+                  ->default(\Sabt\Course\Models\Lesson::CONFIRMATION_STATUS_PENDING);
             $table->string('title');
             $table->string('slug');
             $table->tinyInteger('time')->unsigned()->nullable();

@@ -127,7 +127,6 @@ class LessonController extends Controller
     }
     public function acceptMultiple(Request $request, Course $course)
     {
-
         $this->authorize('change_status_all',Lesson::class);
         $ids = explode(',', $request->ids);
         $this->lessonRepository->updateStatusAllLessons($ids, Lesson::CONFIRMATION_STATUS_ACCEPTED);
