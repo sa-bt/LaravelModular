@@ -235,6 +235,24 @@ class LessonTest extends TestCase
         $this->assertEquals(1, Lesson::count());
     }
 
+    public function test_permitted_user_can_delete_all_lesson()
+    {
+        $this->actionAsAdmin();
+        $course = Course::factory()->create();
+        $lesson1 = Lesson::factory()->create([
+            'title'=>'title1',
+            'course_id' => $course->id
+        ]);
+        $lesson2 = Lesson::factory()->create([
+            'title'=>'title2',
+            'course_id' => $course->id
+        ]);
+
+        $this->delete(route('lessons.deleteMultiple',$course->id),["ids"=>"$lesson1->id,$lesson2->id"]);
+
+        $this->assertEquals($course->lessons()->count(), 0);
+    }
+
     public function test_permitted_user_can_accept_lesson()
     {
         $this->actionAsAdmin();
