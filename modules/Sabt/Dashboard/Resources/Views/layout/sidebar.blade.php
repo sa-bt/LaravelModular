@@ -6,7 +6,7 @@
     <ul>
         @foreach(config()->get('Sidebar.items') as $sidebar)
             @if(!array_key_exists('permission',$sidebar) ||
-             auth()->user()->hasPermissionTo($sidebar['permission'])||
+             auth()->user()->hasAnyPermission($sidebar['permission'])||
              auth()->user()->hasPermissionTo(\Sabt\RolePermissions\Models\Permission::SUPER_ADMIN_PERMISSION)
              )
                 <li class="item-li {{$sidebar['icon']}} @if(str_starts_with(request()->url(), $sidebar['url'])) is-active @endif">

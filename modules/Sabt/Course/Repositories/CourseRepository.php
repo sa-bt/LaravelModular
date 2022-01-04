@@ -72,4 +72,9 @@ class CourseRepository
                                    'status' => $status
                                ]);
     }
+
+    public function getCourseByTeacherId(int $id)
+    {
+        return Course::query()->where('teacher_id',$id)->get();
+    }
 }

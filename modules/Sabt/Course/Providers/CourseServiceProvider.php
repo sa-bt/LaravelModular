@@ -35,13 +35,7 @@ class CourseServiceProvider extends ServiceProvider
             "icon"       => "i-courses",
             "url"        => env('APP_URL') . '/courses',
             "title"      => "دوره ها",
-            "permission" => Permission::MANAGE_COURSES_PERMISSION
-        ]);
-        config()->set('Sidebar.items.courses', [
-            "icon"       => "i-courses",
-            "url"        => env('APP_URL') . '/courses',
-            "title"      => "دوره ها",
-            "permission" => Permission::MANAGE_COURSES_OWN_PERMISSION
+            "permission" => [Permission::MANAGE_COURSES_PERMISSION,Permission::MANAGE_COURSES_OWN_PERMISSION]
         ]);
     }
 }

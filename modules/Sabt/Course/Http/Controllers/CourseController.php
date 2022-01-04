@@ -14,6 +14,7 @@ use Sabt\Course\Models\Course;
 use Sabt\Course\Models\Season;
 use Sabt\Course\Repositories\CourseRepository;
 use Sabt\Media\Services\MediaUploadService;
+use Sabt\RolePermissions\Models\Permission;
 use Sabt\User\Repositories\UserRepository;
 
 class CourseController extends Controller
@@ -32,7 +33,14 @@ class CourseController extends Controller
     public function index()
     {
         $this->authorize('index', Course::class);
-        $courses = $this->courseRepository->all();
+
+        if (auth()->user()->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION)||auth()->user()->hasPermissionTo(Permission::SUPER_ADMIN_PERMISSION)){
+            $courses = $this->courseRepository->all();
+        }else{
+            $courses = $this->courseRepository->getCourseByTeacherId(auth()->id());
+
+        }
+
         return view('Course::index', compact('courses'));
 
     }

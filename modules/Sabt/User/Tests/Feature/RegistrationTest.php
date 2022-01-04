@@ -33,11 +33,11 @@ class RegistrationTest extends TestCase
             "name"                  => "sabt",
             "email"                 => "",
             "mobile"                => "09169630567",
-            "password"              => "",
+            "password"              => "q@Q111111",
             "password_confirmation" => "q@Q111111",
         ]);
         $response->assertInvalid([
-            'email'=>__('validation.required', ['attribute' => 'email'])]);
+            'email'=>__('validation.required', ['attribute' => 'ایمیل'])]);
 //        $errors = session('errors');
 //$this->assertEquals($response->me);
 //        $response->assertSessionHasErrors([
