@@ -8,12 +8,12 @@ class FrontServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->loadRoutesFrom(__DIR__."/../Routes/web.php");
-        $this->loadViewsFrom(__DIR__."/Resources/views","Front");
-}
+        $this->loadRoutesFrom(__DIR__ . "/../Routes/web.php");
+        $this->loadViewsFrom(__DIR__ . "./../Resources/views", "Front");
+    }
 
     public function boot()
     {
 
-}
+    }
 }

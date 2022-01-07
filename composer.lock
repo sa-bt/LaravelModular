@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b73f35fa1c5c309720e393646c7b20ab",
+    "content-hash": "093b554250dbac251b110026e724309c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2908,6 +2908,42 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "sabt/front",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "modules/Sabt/Front",
+                "reference": "19821559651282ad43db23c05cabee233f791f5a"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "\\Sabt\\Front\\Providers\\FrontServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sabt\\Front\\": "src"
+                },
+                "files": []
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "sabt",
+                    "email": "bakhshian2020$gmail.com"
+                }
+            ],
+            "description": "front project",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "spatie/laravel-permission",
@@ -8090,7 +8126,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "sabt/front": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

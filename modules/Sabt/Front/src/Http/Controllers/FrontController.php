@@ -7,6 +7,6 @@ class FrontController extends Controller
 {
     public function index()
     {
-        dd(11);
-}
+        return view('Front::index');
+    }
 }
