@@ -16,8 +16,8 @@ Route::group(['middleware' => ['web', 'auth']], function ()
     Route::delete('users/{user}/remove/{role}/role', [UserController::class, 'removeRole'])->name('users.removeRole');
     Route::put('users/{user}/manualVerify', [UserController::class, 'manualVerify'])->name('users.manualVerify');
     Route::post('users/photo', [UserController::class, 'updatePhoto'])->name('users.photo');
-    Route::get('users/profile', [UserController::class, 'editProfile'])->name('users.profile');
-    Route::post('users/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
+    Route::get('edit-profile', [UserController::class, 'editProfile'])->name('users.profile');
+    Route::post('edit-profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
 //    Route::get('account/{username}', [UserController::class,'viewProfile'])->name('viewProfile');
 });
 
@@ -33,7 +33,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 
     //Logout
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::any('/logout', [LoginController::class, 'logout'])->name('logout');
 
     // Reset Password
     Route::get('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');

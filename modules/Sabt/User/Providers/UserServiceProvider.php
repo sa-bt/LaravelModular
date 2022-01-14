@@ -41,7 +41,7 @@ class UserServiceProvider extends ServiceProvider
         ]);
         config()->set('Sidebar.items.profile', [
             "icon"  => "i-user__information",
-            "url"   => env('APP_URL') . '/users/profile',
+            "url"   => env('APP_URL') . '/edit-profile',
             "title" => "اطلاعات کاربری",
         ]);
 

@@ -82,4 +82,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function getThumbAttribute()
+    {
+        if ($this->image)
+            return '/storage/'.$this->image->file[100];
+        return '/panel/img/pro.jpg';
+    }
 }

@@ -44,4 +44,9 @@ class CategoryRepository
     {
         return $category->delete();
     }
+
+    public function tree()
+    {
+        return Category::query()->where('parent_id','=',null)->with('subCategories')->get();
+    }
 }

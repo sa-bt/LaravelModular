@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Sabt\Category\Models\Category;
 use Sabt\Course\Database\Factories\CourseFactory;
+use Sabt\Course\Repositories\CourseRepository;
 use Sabt\Media\Models\Media;
 use Sabt\User\Models\User;
 
@@ -69,4 +70,23 @@ class Course extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function getDuration()
+    {
+        return (new CourseRepository())->getDuration($this->id);
+    }
+
+    public function formattedDuration()
+    {
+        $duration = $this->getDuration();
+        $h = round($duration / 60) < 10 ? '0' . round($duration / 60) : round($duration / 60);
+        $m = $duration % 60 < 10 ? '0' . $duration % 60 : $duration % 60;
+        return $h . ':' . $m . ':00';
+    }
+
+    public function formattedPrice()
+    {
+        return number_format($this->price);
+    }
+
 }
