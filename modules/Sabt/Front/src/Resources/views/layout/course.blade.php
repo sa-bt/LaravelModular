@@ -1,5 +1,5 @@
 <div class="col">
-    <a href="react.html">
+    <a href="{{route("singleCourse",$course->id)}}">
         <div class="course-status">
             @lang($course->status)
         </div>
