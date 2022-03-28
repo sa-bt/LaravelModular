@@ -2,7 +2,9 @@
 namespace Sabt\Front\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Sabt\Course\Models\Course;
+use Sabt\Course\Repositories\CourseRepository;
 
 class FrontController extends Controller
 {
@@ -11,9 +13,10 @@ class FrontController extends Controller
         return view('Front::index');
     }
 
-    public function singleCourse(Course $course)
+    public function singleCourse($slug,CourseRepository $courseRepository)
     {
-        dd($course);
+        $courseId=Str::before(Str::after($slug,'c-'),'-');
+        $course=$courseRepository->findOrFailById($courseId);
         return view('Front::singleCourse',compact('course'));
     }
 }

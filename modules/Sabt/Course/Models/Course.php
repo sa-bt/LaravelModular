@@ -89,4 +89,14 @@ class Course extends Model
         return number_format($this->price);
     }
 
+    public function path()
+    {
+        return route('singleCourse', $this->id . '-' . $this->slug);
+    }
+
+    public function lessonsCount()
+    {
+        return $this->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_ACCEPTED)->count();
+    }
+
 }

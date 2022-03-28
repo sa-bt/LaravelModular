@@ -22,6 +22,11 @@ class CourseRepository
         return Course::query()->firstOrFail($id);
     }
 
+    public function findOrFailById($id)
+    {
+        return Course::query()->findOrFail($id);
+    }
+
     public function store($values)
     {
         return Course::create([

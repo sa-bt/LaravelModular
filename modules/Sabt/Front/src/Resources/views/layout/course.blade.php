@@ -1,5 +1,5 @@
 <div class="col">
-    <a href="{{route("singleCourse",$course->id)}}">
+    <a href="{{$course->path()}}">
         <div class="course-status">
             @lang($course->status)
         </div>

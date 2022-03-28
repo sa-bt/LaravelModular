@@ -165,20 +165,20 @@
         @endauth
         <div class="container">
             <ul class="nav">
-                @foreach($categories as $category)
-                    <li class="main-menu {{count($category->subCategories) ? 'has-sub':''}}"><a href="{{$category->path()}}">{{$category->name}}</a>
-                        @if(count($category->subCategories))
-                            <div class="sub-menu">
-                                <div class="container">
-                                    @foreach($category->subCategories as $subCategory )
-                                        <div><a href="{{$subCategory->path()}}">{{$subCategory->name}}</a></div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="triangle"></div>
-                        @endif
-                    </li>
-                @endforeach
+{{--                @foreach($categories as $category)--}}
+{{--                    <li class="main-menu {{count($category->subCategories) ? 'has-sub':''}}"><a href="{{$category->path()}}">{{$category->name}}</a>--}}
+{{--                        @if(count($category->subCategories))--}}
+{{--                            <div class="sub-menu">--}}
+{{--                                <div class="container">--}}
+{{--                                    @foreach($category->subCategories as $subCategory )--}}
+{{--                                        <div><a href="{{$subCategory->path()}}">{{$subCategory->name}}</a></div>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="triangle"></div>--}}
+{{--                        @endif--}}
+{{--                    </li>--}}
+{{--                @endforeach--}}
             </ul>
 
             <div class="dark-light">
