@@ -91,4 +91,28 @@ class LessonRepository
         ]);
     }
 
+    public function getAcceptedLessons($course_id)
+    {
+        return Lesson::query()->where('course_id', $course_id)->where('confirmation_status', Lesson::CONFIRMATION_STATUS_ACCEPTED)->get();
+    }
+
+    public function getFirstLesson($course_id)
+    {
+        return Lesson::query()
+            ->where('course_id', $course_id)
+            ->where('confirmation_status', Lesson::CONFIRMATION_STATUS_ACCEPTED)
+            ->orderBy('number', 'asc')
+            ->first();
+    }
+
+    public function getLesson(int $courseId, int $lessonId)
+    {
+        return Lesson::query()
+            ->where('course_id', $courseId)
+            ->where('id', $lessonId)
+            ->where('confirmation_status', Lesson::CONFIRMATION_STATUS_ACCEPTED)
+            ->first();
+    }
+
+
 }

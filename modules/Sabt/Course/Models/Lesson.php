@@ -66,4 +66,8 @@ class Lesson extends Model
         return LessonFactory::new();
     }
 
+    public function path()
+    {
+        return $this->course->path().'?lesson=l-'.$this->id.'-'.$this->slug;
+    }
 }
