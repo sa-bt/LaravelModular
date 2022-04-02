@@ -99,4 +99,9 @@ class Course extends Model
         return $this->lessons()->where('confirmation_status',Lesson::CONFIRMATION_STATUS_ACCEPTED)->count();
     }
 
+    public function shortUrl()
+    {
+        return route('singleCourse', $this->id );
+
+    }
 }

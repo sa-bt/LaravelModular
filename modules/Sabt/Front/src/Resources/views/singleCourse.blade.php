@@ -40,7 +40,7 @@
                         </div>
                         @if(auth()->id()==$course->teacher_id)
                             <p class="mycourse ">شما مدرس این دوره هستید</p>
-                        @elseif(auth()->user())
+                        @elseif(auth()->user()&&auth()->user()->hasAccessToCourse($course->id))
                             <p class="mycourse ">شما این دوره رو خریداری کرده اید</p>
                         @else
                             <button class="btn buy ">خرید دوره</button>
@@ -108,7 +108,7 @@
                         <div class="top-part">
                             <a href="https://webamooz.net/tutor/mohammadnikoo/"><img alt="{{$course->teacher->name}}"
                                                                                      class="img-fluid lazyloaded"
-                                                                                     src="img/profile.jpg"
+                                                                                     src="{{$course->teacher->thumb}}"
                                                                                      loading="lazy">
                                 <noscript>
                                     <img class="img-fluid" src="img/profile.jpg" alt="{{$course->teacher->name}}">
@@ -122,36 +122,17 @@
                             </div>
                         </div>
                         <div class="job-content">
-                                               <p>{{$course->teacher->bio}}</p>
+{{--                            <p>{{$course->teacher->bio}}</p>--}}
                         </div>
                     </div>
                     <div class="short-link">
                         <div class="">
                             <span>لینک کوتاه</span>
-                            <input class="short--link" value="webamooz.net/c/Y33x3">
-                            <a href="" class="short-link-a" data-link="https://webamooz.net/c/Y33x3"></a>
+                            <input class="short--link" value="{{$course->shortUrl()}}">
+                            <a href="{{$course->shortUrl()}}" class="short-link-a" data-link="{{$course->shortUrl()}}"></a>
                         </div>
                     </div>
-                    <di class="sidebar-banners">
-
-                        <div class="sidebar-pic">
-                            <a href="https://t.me/webmooz_net"><img src="img/telgram.png" alt="کانال تلگرام"></a>
-                        </div>
-
-                        <div class="sidebar-pic">
-                            <a href="https://t.me/webmooz_net"><img src="img/laravel-tel.png" alt="کانال تلگرام"></a>
-                        </div>
-                        <div class="sidebar-pic">
-                            <a href="https:webamooz.net/blog"><img src="img/podcast.png" alt="وبلاگ وب آموز"></a>
-                        </div>
-                        <div class="sidebar-pic">
-                            <a href="https://t.me/webmooz_net"><img src="img/workinja.png" alt="کانال تلگرام"></a>
-                        </div>
-                        <div class="sidebar-pic">
-                            <a href="https://t.me/webmooz_net"><img src="img/blog-pic.png" alt="کانال تلگرام"></a>
-                        </div>
-                    </di>
-
+@include('Front::layout.sidebar-banners')
                 </div>
             </div>
             <div class="content-left">
@@ -162,99 +143,9 @@
                 </div>
                 <a href="#" class="episode-download">دانلود این قسمت (قسمت 1)</a>
                 <div class="course-description">
-                    <div class="course-description-title">توضیحات دوره</div>
-                    <p>
-                        در این مقاله ما یاد می گیریم که ReactJs چیه و چرا ما باید از اون به جای فریمورک های دیگه جاوا
-                        اسکریپت
-                        مثل angular استفاده کنیم.
-                    </p>
-                    <p>ری اکت (reactjs) اساسا یک کتابخونه open-source جاوا اسکریپتی برای
-                        ساخت رابط کاربری(user interfaces) برای
-                        <a href="" target="_blank" rel="noopener nofollow">single page
-                            applications(اپلیکیشن های تک صفحه ای</a>) است.این کتابخونه برای مدیریت لایه View برای وب
-                        استفاده
-                        می
-                        شود.همچنین React این امکان رو در اختیار ما میذاره که reusable UI components(کامپوننت های قابل
-                        استفاده
-                        مجدد رابط کاریری) ایجاد کنیم.React&nbsp; در ابتدا توسط Jordan Walke یکی از مهندسین ارشد فیسبوک
-                        ایجاد
-                        شد.React ابتدا در سال 2011 در فیسبوک مورد استفاده قرار گرفت و سپس در سال 2012 در اینستاگرام
-                        استفاده
-                        شد.
-                    </p>
-                    <p>
-                        ری اکت این امکان را در اختیار توسعه دهندگان می گذارد که وب اپلیکیشن های خیلی بزرگ که می تواند
-                        date
-                        را
-                        تغییر بدهد،بدون reload صفحه ایجاد کنند.مهم ترین اهداف React را میتوان سادگی،سرعت و مقیاس پذیر
-                        بودن
-                        دانست.تمرکز اصلی React بر روی رابط کاربری است و فقط در لایه View در معماری MVC مطابقت دارد.این
-                        کتابخانه
-                        می تواند با کتابخانه های و فریمورک های دیگر جاوا اسکریپت مثل Angular ترکیب و مورد استفاده قرار
-                        گیرد.
-                    </p>
-                    <h2 class="">ویژگی های React Js چیست</h2>
-                    <p>بیایید نگاهی به ویژگی های مهم React بیاندازیم:</p>
-                    <p><strong> JSX</strong></p>
-                    <p>در React به جای استفاده از جاوا اسکریپت معمولی،از JSX برای templating استفاده می شود.jsx یک فرمت
-                        جاوا
-                        اسکریپتی برای ایجاد DOM های HTML در قالب یک کامپوننت است </p>
-                    <p>
-                        <img alt="آموزش جاوا اسکریپت" src="img/banner/lara.png"></p>
-                    <p><strong>React Native </strong></p>
-                    <p> یک فریمورک جاوا اسکریپتی برای توسعه اپلیکیشن های موبایل به صورت
-                        Native برای دو سیستم عامل Android و&nbsp; ios است که در سال 2015 معرفی شد.این فریمورک بر پایه
-                        زبان
-                        جاوا
-                        اسکریپت و کتابخانه React است.یعنی شما با تسلط بر React می توانید در یادگیریReact Native خیلی
-                        جلوتر
-                        از
-                        بقیه باشید.البته توجه داشته باشید که بین این کتابخونه و فریمورک تفاوت های اساسی وجود دارد که
-                        برای
-                        درک
-                        این تفاوت های پیشنهاد می کنم مقاله <a href="" target="_blank" rel="noopener nofollow">تفاوت های
-                            اصلی
-                            بین
-                            React و
-                            React Native</a> را بخوانید. </p>
-                    <p>
-                        <strong>Single-Way data flow</strong>
-                    </p>
-                    <p>
-                        در React مجموعه ای از value های تغییر ناپذیر بین کامپوننت ها به عنوان properties به تگ های HTML
-                        پاس
-                        داده
-                        می شوند.کامپوننت ها به صورت مستقیم نمی توانند هر properties را تغییر دهند اما می توانند آن ها را
-                        به
-                        call
-                        back function پاس دهند و به کمک آن ها تغییرات را انجام دهند.این فراآیند به طور کامل با
-                        “properties
-                        flow
-                        down; actions flow up” شناخته می شود
-                    </p>
-                    <p>
-                        <strong> Virtual Document Object Model </strong>
-                    </p>
-                    <p>ری اکت React یک ساختار کش in-memory ایجاد می کند. در این ساختار اگر تغییری رخ داده باشد DOM را
-                        بروزرسانی
-                        می کند.این ویژگی برنامه نویس را قادر می سازد درحالی که در یک wtpi تغییرات ایجاد میشود تنها
-                        کامپوننتی
-                        rerender شود که تغییر پیدا کرده است.Virtual DOM ی مانند DOM یک درخت از گره هایی هست که شامل
-                        element
-                        ها و
-                        attributes هایشان و محتوا به عنوان objects است.متدrender() یک درخت از کلمپوننت های React ایجاد
-                        می
-                        کند و
-                        تغییر در هر کامپوننت باعث می شود این گره بروز رسانی شو</p>
-                    <div class="tags">
-                        <ul>
-                            <li><a href="">ری اکت</a></li>
-                            <li><a href="">reactjs</a></li>
-                            <li><a href="">جاوااسکریپت</a></li>
-                            <li><a href="">javascript</a></li>
-                            <li><a href="">reactjs چیست</a></li>
-                        </ul>
-                    </div>
+                    {{
+                    $course->body
+                    }}
                 </div>
                 <div class="episodes-list">
                     <div class="episodes-list--title">فهرست جلسات</div>

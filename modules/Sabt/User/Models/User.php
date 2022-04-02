@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         self::BAN_STATUS
     ];
 
-    protected $guarded    = [];
+    protected $guarded = [];
     protected $primaryKey = 'id';
 
     protected $hidden = [
@@ -86,7 +86,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getThumbAttribute()
     {
         if ($this->image)
-            return '/storage/'.$this->image->file[100];
+            return '/storage/' . $this->image->file[100];
         return '/panel/img/pro.jpg';
+    }
+
+    public function hasAccessToCourse($course_id)
+    {
+        dd(55);
+        return false;
     }
 }
