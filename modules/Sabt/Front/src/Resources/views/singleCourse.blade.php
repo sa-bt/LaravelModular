@@ -25,24 +25,25 @@
             <div class="sidebar-right">
                 <div class="sidebar-sticky" style="top: 104px;">
                     <div class="product-info-box">
-                        <div class="discountBadge d-none">
-                            <p>45%</p>
-                            تخفیف
-                        </div>
-                        <div class="sell_course d-none">
-                            <strong>قیمت :</strong>
-                            <del class="discount-Price">900,000</del>
-                            <p class="price">
-                        <span class="woocommerce-Price-amount amount">495,000
-                            <span class="woocommerce-Price-currencySymbol">تومان</span>
-                        </span>
-                            </p>
-                        </div>
+
                         @if(auth()->id()==$course->teacher_id)
                             <p class="mycourse ">شما مدرس این دوره هستید</p>
                         @elseif(auth()->user()&&auth()->user()->hasAccessToCourse($course->id))
                             <p class="mycourse ">شما این دوره رو خریداری کرده اید</p>
                         @else
+                            <div class="discountBadge ">
+                                <p>45%</p>
+                                تخفیف
+                            </div>
+                            <div class="sell_course ">
+                                <strong>قیمت :</strong>
+                                <del class="discount-Price">{{$course->formattedPrice()}}</del>
+                                <p class="price">
+                        <span class="woocommerce-Price-amount amount">{{$course->formattedPrice()}}
+                            <span class="woocommerce-Price-currencySymbol">تومان</span>
+                        </span>
+                                </p>
+                            </div>
                             <button class="btn buy ">خرید دوره</button>
                         @endif
                         <div class="average-rating-sidebar">
@@ -138,7 +139,7 @@
             <div class="content-left">
                 <div class="preview">
                     <video width="100%" controls="">
-                        <source src="intro.mp4" type="video/mp4">
+                        <source src="{{$lesson->downloadLink()}}" type="video/mp4">
                     </video>
                 </div>
                 <a href="#" class="episode-download">دانلود این قسمت (قسمت {{$lesson->number}})</a>
@@ -149,5 +150,16 @@
 
             </div>
         </div>
+    </div>
+
+
+    <div class="toast bg-toast-info" style="display: none;">
+        <div>
+            <div class="toast__icon toast-info"></div>
+            <div class="toast__message">برای مشاهده دوره باید ابتدا آن را خریداری کنید</div>
+            <div class="toast__close" onclick="toast__close()"></div>
+        </div>
+
+
     </div>
 @endsection

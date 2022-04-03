@@ -4,6 +4,7 @@ namespace Sabt\Course\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Sabt\Course\Database\Factories\LessonFactory;
 use Sabt\Course\Database\Factories\SeasonFactory;
 use Sabt\Media\Models\Media;
@@ -69,5 +70,11 @@ class Lesson extends Model
     public function path()
     {
         return $this->course->path().'?lesson=l-'.$this->id.'-'.$this->slug;
+    }
+
+    public function downloadLink()
+    {
+        return URL::temporarySignedRoute('media.download',now()->addDay(),['media'=>$this->media_id]);
+//        return route('media.download',$this->media_id)
     }
 }
