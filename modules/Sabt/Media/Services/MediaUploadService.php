@@ -73,4 +73,8 @@ class MediaUploadService
         }
         return implode(',',$extensions);
     }
+
+    public static function stream(Media $media)
+    {
+    }
 }
