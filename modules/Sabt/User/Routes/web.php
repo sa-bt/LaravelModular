@@ -29,8 +29,8 @@ Route::group(['middleware' => 'web'], function ()
 
     //Login
 
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.get');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
     //Logout
     Route::any('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -49,8 +49,8 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/password/change', [ResetPasswordController::class, 'reset'])->name('password.update');
 
     //Register
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register'])->name('register');
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.get');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
 
 

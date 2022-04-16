@@ -76,5 +76,9 @@ class MediaUploadService
 
     public static function stream(Media $media)
     {
+        foreach (config('Media.MediaTypeService') as $mediaType => $service) {
+            if ($mediaType == $media->type)
+                return $service['handler']::stream($media, $service['direction']);
+        }
     }
 }

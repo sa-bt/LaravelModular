@@ -9,9 +9,10 @@ use Sabt\Media\Services\MediaUploadService;
 
 class MediaController extends Controller
 {
-    public function download(Media $media,Request $request)
+    public function download($media, Request $request)
     {
-        if (!$request->hasValidSignature()){
+        $media = Media::query()->find($media);
+        if (!$request->hasValidSignature()) {
             abort(401);
         }
         return MediaUploadService::stream($media);

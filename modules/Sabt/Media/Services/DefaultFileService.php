@@ -5,14 +5,24 @@ namespace Sabt\Media\Services;
 
 
 use Illuminate\Support\Facades\Storage;
+use Sabt\Media\Models\Media;
 
 class DefaultFileService
 {
     public static function delete($media, $direction)
     {
-//        dd($media,$direction);
         foreach ($media->files as $file) {
             Storage::delete($direction . $file);
         }
+    }
+
+    public static function stream(Media $media,$direction)
+    {
+        $path = $media->type == 'image' ?  $media->files['original'] :  $media->files[0];
+        $stream = Storage::readStream($direction.$path);
+        return response()->stream(function ()use($stream){
+            fpassthru($stream);
+        });
+
     }
 }

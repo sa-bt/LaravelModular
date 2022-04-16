@@ -123,26 +123,30 @@
                             </div>
                         </div>
                         <div class="job-content">
-{{--                            <p>{{$course->teacher->bio}}</p>--}}
+                            {{--                            <p>{{$course->teacher->bio}}</p>--}}
                         </div>
                     </div>
                     <div class="short-link">
                         <div class="">
                             <span>لینک کوتاه</span>
                             <input class="short--link" value="{{$course->shortUrl()}}">
-                            <a href="{{$course->shortUrl()}}" class="short-link-a" data-link="{{$course->shortUrl()}}"></a>
+                            <a href="{{$course->shortUrl()}}" class="short-link-a"
+                               data-link="{{$course->shortUrl()}}"></a>
                         </div>
                     </div>
-@include('Front::layout.sidebar-banners')
+                    @include('Front::layout.sidebar-banners')
                 </div>
             </div>
             <div class="content-left">
-                <div class="preview">
-                    <video width="100%" controls="">
-                        <source src="{{$lesson->downloadLink()}}" type="video/mp4">
-                    </video>
-                </div>
-                <a href="#" class="episode-download">دانلود این قسمت (قسمت {{$lesson->number}})</a>
+                @if($lesson->media->type=='video')
+                    <div class="preview">
+                        <video width="100%" controls="">
+                            <source src="{{$lesson->downloadLink()}}" type="video/mp4">
+                        </video>
+                    </div>
+                @endif
+                <a href="{{$lesson->downloadLink()}}" class="episode-download">دانلود این قسمت (قسمت {{$lesson->number}}
+                    )</a>
                 <div class="course-description">
                     {{$course->body}}
                 </div>
