@@ -2,25 +2,26 @@
     <div class="episodes-list--title">فهرست جلسات</div>
     <div class="episodes-list-section">
         @foreach($lessons as $lesson)
-        <div class="episodes-list-item ">
-            <div class="section-right">
-                <span class="episodes-list-number">{{$lesson->number}}</span>
-                <div class="episodes-list-title">
-                    <a href="{{$lesson->path()}}">{{$lesson->title}}</a>
+            <div
+                class="episodes-list-item  {{auth()->user() && auth()->user()->hasAccessToCourse($lesson->course)?'':'lock'}}">
+                <div class="section-right">
+                    <span class="episodes-list-number">{{$lesson->number}}</span>
+                    <div class="episodes-list-title">
+                        <a href="{{$lesson->path()}}">{{$lesson->title}}</a>
+                    </div>
                 </div>
-            </div>
-            <div class="section-left">
-                <div class="episodes-list-details">
+                <div class="section-left">
                     <div class="episodes-list-details">
-                        <span class="detail-type">@lang($lesson->type)</span>
-                        <span class="detail-time">{{$lesson->time}}</span>
-                        <a class="detail-download">
-                            <i class="icon-download"></i>
-                        </a>
+                        <div class="episodes-list-details">
+                            <span class="detail-type">@lang($lesson->type)</span>
+                            <span class="detail-time">{{$lesson->time}}</span>
+                            <a class="detail-download">
+                                <i class="icon-download"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endforeach
         <div class="episodes-list-item">
             <div class="section-right">

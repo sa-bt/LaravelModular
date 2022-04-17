@@ -90,9 +90,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return '/panel/img/pro.jpg';
     }
 
-    public function hasAccessToCourse($course_id)
+    public function parchases()
     {
-        dd(55);
+        return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id');
+    }
+
+    public function hasAccessToCourse(Course $course)
+    {
+        if ($this->can('manage', Course::class) ||
+            $this->id === $course->teacher_id ||
+            $course->students->contains($this)
+        ) {
+            return true;
+        }
         return false;
     }
 }

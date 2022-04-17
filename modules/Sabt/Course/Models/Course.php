@@ -104,4 +104,11 @@ class Course extends Model
         return route('singleCourse', $this->id );
 
     }
+
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class,'course_user','course_id','user_id');
+    }
+
 }

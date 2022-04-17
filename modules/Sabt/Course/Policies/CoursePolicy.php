@@ -22,6 +22,10 @@ class CoursePolicy
         return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION) ||
                ($user->hasPermissionTo(Permission::MANAGE_COURSES_OWN_PERMISSION));
     }
+    public function manage(User $user)
+    {
+        return $user->hasPermissionTo(Permission::MANAGE_COURSES_PERMISSION);
+    }
 
     public function create(User $user)
     {

@@ -126,7 +126,7 @@
                 @auth()
                     <div class="user-menu-account">
                         <div class="user-image">
-                            <img src="{{auth()->user()->image->thumb}}" alt="{{auth()->user()->name}}">
+                            <img src="{{auth()->user()->thumb}}" alt="{{auth()->user()->name}}">
                         </div>
                         <span>پروفایل کاربری من </span>
                         <div class="user-menu-account-dropdown">
