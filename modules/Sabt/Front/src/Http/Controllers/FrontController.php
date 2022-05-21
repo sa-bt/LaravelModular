@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 use Sabt\Course\Models\Course;
 use Sabt\Course\Repositories\CourseRepository;
 use Sabt\Course\Repositories\LessonRepository;
+use Sabt\RolePermissions\Models\Permission;
+use Sabt\User\Models\User;
 
 class FrontController extends Controller
 {
@@ -31,5 +33,11 @@ class FrontController extends Controller
     public function extractId($slug,$key)
     {
         return Str::before(Str::after($slug,$key.'-'),'-');
+    }
+
+    public function singleTutor($username)
+    {
+        $tutor=User::permission(Permission::TEACH_PERMISSION)->where('name',$username)->first();
+        return view('Front::tutor',compact('tutor'));
     }
 }

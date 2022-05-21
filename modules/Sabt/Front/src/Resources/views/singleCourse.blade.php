@@ -107,7 +107,7 @@
                     </div>
                     <div class="course-teacher-details">
                         <div class="top-part">
-                            <a href="https://webamooz.net/tutor/mohammadnikoo/"><img alt="{{$course->teacher->name}}"
+                            <a href="{{route('singleTutor',$course->teacher->name)}}"><img alt="{{$course->teacher->name}}"
                                                                                      class="img-fluid lazyloaded"
                                                                                      src="{{$course->teacher->thumb}}"
                                                                                      loading="lazy">
@@ -116,7 +116,7 @@
                                 </noscript>
                             </a>
                             <div class="name">
-                                <a href="https://webamooz.net/tutor/mohammadnikoo/" class="btn-link">
+                                <a href="{{route('singleTutor',$course->teacher->name)}}" class="btn-link">
                                     <h6>{{$course->teacher->name}}</h6>
                                 </a>
                                 <span class="job-title">{{$course->teacher->headline}}</span>
