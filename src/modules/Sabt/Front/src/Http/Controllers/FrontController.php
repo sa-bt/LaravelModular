@@ -3,7 +3,6 @@ namespace Sabt\Front\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
-use Sabt\Course\Models\Course;
 use Sabt\Course\Repositories\CourseRepository;
 use Sabt\Course\Repositories\LessonRepository;
 use Sabt\RolePermissions\Models\Permission;

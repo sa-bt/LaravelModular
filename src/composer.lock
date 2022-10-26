@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "093b554250dbac251b110026e724309c",
+    "content-hash": "fffdae924df0f934c2b6c11ec24aa251",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2911,7 +2911,7 @@
         },
         {
             "name": "sabt/front",
-            "version": "dev-master",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "modules/Sabt/Front",
@@ -8135,5 +8135,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }
