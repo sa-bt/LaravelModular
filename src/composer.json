@@ -34,6 +34,7 @@
             "Sabt\\RolePermissions\\": "modules/Sabt/RolePermissions/",
             "Sabt\\Course\\": "modules/Sabt/Course/",
             "Sabt\\Media\\": "modules/Sabt/Media/",
+            "Sabt\\Discount\\": "modules/Sabt/Discount/src",
             "Database\\Seeders\\": "database/seeders/"
         },
 
