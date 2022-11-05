@@ -22,8 +22,7 @@ class RolePermissionServiceProviders extends ServiceProvider
         $this->loadJsonTranslationsFrom(__DIR__ . '/../Resources/Lang');
         DatabaseSeeder::$seeders[] = RoleAndPermissionSeeder::class;
         Gate::policy(Role::class, RolePolicy::class);
-        Gate::before(function ($user)
-        {
+        Gate::before(function ($user) {
             return $user->hasPermissionTo(Permission::SUPER_ADMIN_PERMISSION) ? true : null;
         });
 
@@ -31,11 +30,11 @@ class RolePermissionServiceProviders extends ServiceProvider
 
     public function boot()
     {
-            config()->set('Sidebar.items.rolePermission', [
-                "icon"       => "i-role-permissions",
-                "url"=>env('APP_URL').'/roles',
-                "title"      => "دسترسی ها",
-                "permission" => Permission::MANAGE_ROLES_PERMISSION
-            ]);
+        config()->set('Sidebar.items.rolePermission', [
+            "icon" => "i-role-permissions",
+            "url" => route('roles.index'),
+            "title" => "دسترسی ها",
+            "permission" => Permission::MANAGE_ROLES_PERMISSION
+        ]);
     }
 }

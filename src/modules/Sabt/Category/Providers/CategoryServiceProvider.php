@@ -28,7 +28,7 @@ class CategoryServiceProvider extends ServiceProvider
     {
         config()->set('Sidebar.items.categories', [
             "icon"       => "i-categories",
-            "url"        => env('APP_URL') . '/categories',
+            "url"        => route('categories.index'),
             "title"      => "دسته بندی ها",
             "permission" => Permission::MANAGE_CATEGORIES_PERMISSION
         ]);

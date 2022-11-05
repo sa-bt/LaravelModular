@@ -168,6 +168,7 @@ return [
         \Sabt\Course\Providers\CourseServiceProvider::class,
         \Sabt\Media\Providers\MediaServiceProvider::class,
         \Sabt\Common\Providers\CommonServiceProvider::class,
+        \Sabt\Discount\Providers\DiscountServiceProvider::class,
         /*
          * Package Service Providers...
          */

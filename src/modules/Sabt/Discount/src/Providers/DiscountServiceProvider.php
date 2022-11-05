@@ -18,7 +18,6 @@ class DiscountServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(__DIR__ . '/../Routes/discount_routes.php');
         $this->loadViewsFrom(__DIR__  .'/../Resources/Views/', 'Discounts');
-        dd(65);
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         $this->loadJsonTranslationsFrom(__DIR__ . "/../Resources/Lang/");
         Gate::policy(Discount::class, DiscountPolicy::class);
@@ -26,7 +25,8 @@ class DiscountServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        config()->set('sidebar.items.discounts', ["icon" => "i-discounts",
+        config()->set('sidebar.items.discounts', [
+            "icon" => "i-discounts",
             "title" => "تخفیف ها",
             "url" => route('discounts.index'),
             "permission" => Permission::PERMISSION_MANAGE_DISCOUNT

@@ -7,5 +7,6 @@ return [
         "rolePermission"=>[],
         "users"=>[],
         "profile"=>[],
+//        "discounts"=>[],
     ]
 ];

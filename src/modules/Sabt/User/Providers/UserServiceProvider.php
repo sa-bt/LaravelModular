@@ -34,7 +34,7 @@ class UserServiceProvider extends ServiceProvider
 
         config()->set('Sidebar.items.users', [
             "icon"       => "i-users",
-            "url"        => env('APP_URL') . '/users',
+            "url"        => route('users.index'),
             "title"      => "مدیریت کاربران",
             "permission" => Permission::MANAGE_USERS_PERMISSION
 
